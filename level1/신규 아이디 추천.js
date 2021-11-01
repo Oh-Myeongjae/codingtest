@@ -86,3 +86,28 @@ function solution(new_id) {
     }
     return answer;
 }
+
+/*
+위의 문제는 
+function solution(new_id) {
+    const answer = new_id
+        .toLowerCase() // 1
+        .replace(/[^\w-_.]/g, '') // 2
+        .replace(/\.+/g, '.') // 3
+        .replace(/^\.|\.$/g, '') // 4
+        .replace(/^$/, 'a') // 5
+        .slice(0, 15).replace(/\.$/, ''); // 6
+    const len = answer.length;
+    return len > 2 ? answer : answer + answer.charAt(len - 1).repeat(3 - len);
+}
+이런식으로 정규식과 체이닝을 이용하여 간단하게 표현하는 방식이 있을수 있다.
+하지만 지금의 나로는 정규표현식에 대하여 익숙하지 않은 문제가 있다.
+또한 위의 표현으로 문제를 해결하면 성능은 오히려 떨어지는 문제가 발생했다.
+아직 정규식이 익숙하지 않아서 성능이 왜 이렇게 나오는지 정확히는 모르지만
+기존의 내방식은 조건식을 많이 쓰지만 필요에 따라서는 코드실행을 안할때도 있지만
+정규표현식은 반드시 코드를 실행하여서 원하는 표현으로 만들어 버리는 방식을 
+취하고 있기 때문에 이부분에서 성능에서 차이가 발생하는것 같다.
+
+나중에 정규표현식이 조금더 익숙해지면 조건문과 정규표현식을 적절히 사용하여
+코드를 개선해 봐야겠다.
+*/
