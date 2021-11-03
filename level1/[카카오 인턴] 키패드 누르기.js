@@ -16,3 +16,51 @@ hand는 "left" 또는 "right" 입니다.
 "left"는 왼손잡이, "right"는 오른손잡이를 의미합니다.
 왼손 엄지손가락을 사용한 경우는 L, 오른손 엄지손가락을 사용한 경우는 R을 순서대로 이어붙여 문자열 형태로 return 해주세요.
 */
+function solution(numbers, hand) {
+    var answer = '';
+    let right = [3,2]
+    let left = [3,0]
+    let point = {1:[0,0],2:[0,1],3:[0,2],4:[1,0],5:[1,1],6:[1,2],7:[2,0],
+                 8:[2,1],9:[2,2],0:[3,1]}
+    for(let el of numbers){
+        if(el === 1 || el === 4 || el === 7){
+            left = point[el]
+            answer += 'L'
+        }else if(el === 3 || el === 6 || el === 9){
+            right = point[el]
+            answer += 'R'
+        }else{
+            let now = point[el]
+            let lsize = [left[0]-now[0],left[1]-now[1],0]
+            let rsize = [right[0]-now[0],right[1]-now[1],0]
+            for(let i=0;i<=1;i++){
+                if(lsize[i]<0){
+                 lsize[i]*=-1
+                }
+                lsize[2] += lsize[i]
+                
+                if(rsize[i]<0){
+                 rsize[i]*=-1
+                }
+                 rsize[2] += rsize[i]
+            }
+            if(rsize[2]>lsize[2]){
+                left = point[el]
+                answer += 'L'
+            }else if(rsize[2] === lsize[2]){
+                if(hand === 'left'){
+                    left = point[el]
+                    answer += 'L'
+                }else{
+                    right = point[el]
+                    answer += 'R'
+                }
+            }else{
+                right = point[el]
+                    answer += 'R'
+            }
+
+        }    
+    }
+    return answer;
+}
