@@ -31,9 +31,12 @@ function solution(numbers, hand) {
             answer += 'R'
         }else{
             let now = point[el]
+            //각각이 의미하는것은 [x좌표거리차이,Y좌표거리차이,총거리]
             let lsize = [left[0]-now[0],left[1]-now[1],0]
             let rsize = [right[0]-now[0],right[1]-now[1],0]
+
             for(let i=0;i<=1;i++){
+                //x,y각각의 거리차이를 더해서 총거리를 구해주나 거리는 음수가 될수 없으므로 음수인경우는 양수로 변경해서 더함
                 if(lsize[i]<0){
                  lsize[i]*=-1
                 }
@@ -44,10 +47,12 @@ function solution(numbers, hand) {
                 }
                  rsize[2] += rsize[i]
             }
+            // 총거리를 비교하여 어느손을 이용하여 누를지 결정
             if(rsize[2]>lsize[2]){
                 left = point[el]
                 answer += 'L'
             }else if(rsize[2] === lsize[2]){
+                //총거리가 같은경우 어느손잡이인지에 따라 손을 선택
                 if(hand === 'left'){
                     left = point[el]
                     answer += 'L'
