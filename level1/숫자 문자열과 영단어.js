@@ -31,3 +31,20 @@ s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해
 - s가 "zero" 또는 "0"으로 시작하는 경우는 주어지지 않습니다.
 - return 값이 1 이상 2,000,000,000 이하의 정수가 되는 올바른 입력만 s로 주어집니다.
 */
+function solution(s) {
+    var answer = 0;
+    let str = s.slice()
+    let arr = ["zero","one","two","three","four","five","six","seven","eight","nine"]
+    for(let i=0;i<arr.length;i++){
+        if(str.includes(arr[i])){
+            let idx = str.indexOf(arr[i])
+            let size = arr[i].length
+            str = str.slice(0,idx)+(""+i)+str.slice(idx+size)
+        }
+         if(str.includes(arr[i])){
+             i-=1
+         }
+    }
+    answer = Number(str)
+    return answer;
+}
