@@ -33,3 +33,6 @@ function solution(nums) {
     answer = arr2.length
     return answer;
 }
+/*
+해결방법을 보면 3중 for문을 사용하고 있는데 추후에 가능하면 재귀함수를 이용해서 해결해 보고싶다.
+*/
