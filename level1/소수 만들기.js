@@ -5,3 +5,31 @@
 nums에 들어있는 숫자의 개수는 3개 이상 50개 이하입니다.
 nums의 각 원소는 1 이상 1,000 이하의 자연수이며, 중복된 숫자가 들어있지 않습니다.
 */
+function solution(nums) {
+    var answer = 0;
+    let arr1 = []
+    let arr2 = []
+    let check = true
+    
+    for(let i=0;i<nums.length;i++){
+        for(let j=i+1;j<nums.length;j++){
+            for(let y=j+1;y<nums.length;y++){             
+                    arr1.push(nums[i]+nums[j]+nums[y])
+            }
+        }
+    }
+    for(let el of arr1){
+        for(let z=2;z<=Math.sqrt(el);z++){
+            if(el%z === 0){   
+                check = false
+            }
+        }
+        if(check){
+            arr2.push(el)
+        }else{
+            check = true
+        }   
+    }
+    answer = arr2.length
+    return answer;
+}
