@@ -22,3 +22,5 @@ function solution(participant, completion) {
     }
 
 }
+//해쉬라는것을 이용하여 풀면 성능을 반정도 개선가능하나
+//아직은 개념을 잘모르기때문에 조금더 공부해서 도전해 보도록 해야겠다
