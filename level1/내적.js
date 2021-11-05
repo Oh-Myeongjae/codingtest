@@ -7,3 +7,10 @@
 a, b의 길이는 1 이상 1,000 이하입니다.
 a, b의 모든 수는 -1,000 이상 1,000 이하입니다.
 */
+function solution(a, b) {
+    var answer = 0;
+    for(let i=0;i<a.length;i++){
+        answer += a[i]*b[i]
+    }
+    return answer;
+}
