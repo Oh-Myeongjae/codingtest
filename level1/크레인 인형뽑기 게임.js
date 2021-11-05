@@ -17,3 +17,32 @@ board의 각 칸에는 0 이상 100 이하인 정수가 담겨있습니다.
 moves 배열의 크기는 1 이상 1,000 이하입니다.
 moves 배열 각 원소들의 값은 1 이상이며 board 배열의 가로 크기 이하인 자연수입니다.
 */
+function solution(board, moves) {
+    var answer = 0;
+    let stack = [];
+    for(let el of moves){
+        for(let i=0;i<board.length;i++){
+            if(board[i][el-1] !== 0){
+              if(board[i][el-1] !== stack[stack.length-1] || stack.length === 0){
+                  stack.push(board[i][el-1])
+              }else{
+                  stack.pop()
+                  answer += 2
+              }
+                board[i][el-1] = 0
+                break;
+            }            
+        }
+    }
+    return answer;
+}
+/*
+[0, 0, 0, 0, 0], 
+[0, 0, 1, 0, 3], 
+[0, 2, 5, 0, 1], 
+[4, 2, 4, 4, 2], 
+[3, 5, 1, 3, 1]
+
+43113204
+11 사라지고 -> 사라지면서 33이 붙으므로 33도 사라짐
+*/
