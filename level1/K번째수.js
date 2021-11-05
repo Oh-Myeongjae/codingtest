@@ -14,3 +14,14 @@ array의 각 원소는 1 이상 100 이하입니다.
 commands의 길이는 1 이상 50 이하입니다.
 commands의 각 원소는 길이가 3입니다.
 */
+function solution(array, commands) {
+    var answer = [];
+    
+    for(let el of commands){
+        let copy = array.slice(el[0]-1,el[1])
+        copy.sort((a,b)=>a-b)
+        answer.push(copy[el[2]-1])
+    }
+    
+    return answer;
+}
