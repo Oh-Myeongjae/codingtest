@@ -7,3 +7,31 @@
 2016년은 윤년입니다.
 2016년 a월 b일은 실제로 있는 날입니다. (13월 26일이나 2월 45일같은 날짜는 주어지지 않습니다)
 */
+function solution(a, b) {
+    var answer = '';
+    let arr = []
+    
+    for(let i=0;i<Number(a)-1;i++){
+        arr.push(i+1)
+    }
+    
+    let c = [1,3,5,7,8,10,12]
+    let d = [4,6,9,11]
+    
+    let sum = 0
+    
+    for(let el of arr){
+        if(c.includes(el)){
+            sum += 31
+        }else if(d.includes(el)){
+            sum += 30
+        }else{
+            sum += 29
+        }
+    }
+    sum += Number(b)
+    let day = ['THU','FRI','SAT','SUN','MON','TUE','WED']
+    
+    answer = day[sum%7]
+    return answer;
+}
