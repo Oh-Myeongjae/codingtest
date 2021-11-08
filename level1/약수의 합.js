@@ -6,3 +6,20 @@
 n은 0 이상 3000이하인 정수입니다.
 
 */
+function solution(n) {
+    var answer = 0;
+    if(n <= 1){
+        return n
+    }
+    let max = Math.sqrt(n)
+    for(let i=1;i<=max;i++){
+        if(n%i === 0){
+            if(i === n/i){
+                answer += i
+            }else{
+                answer += i+n/i
+            }
+        }
+    }
+    return answer;
+}
