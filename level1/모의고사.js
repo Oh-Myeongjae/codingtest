@@ -16,3 +16,42 @@
 가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.
 
 */
+function solution(answers) {
+    var answer = [];
+    let size = answers.length
+    let a = [1,2,3,4,5]
+    let b = [2,1,2,3,2,4,2,5]
+    let c = [3,3,1,1,2,2,4,4,5,5]
+    let check = [0,0,0]
+    let max = 0
+    const func = (arr)=>{
+        let num = arr.length
+        let count = 0
+        let temp = 0 
+        for(let i=0;i<size;i++){
+            if(answers[i] === arr[temp]){
+                count++
+            }
+            if(temp<num){
+                temp++
+            }
+            if(temp === num){
+                temp = 0
+            }
+        }
+        if(count >= max){
+            max = count
+        }
+        return count
+    }
+    check[0] = func(a)
+    check[1] = func(b)
+    check[2] = func(c)
+
+    for(let i=0;i<check.length;i++){
+        if(check[i] === max){
+            answer.push(i+1)
+        }
+    }
+    return answer;
+}
