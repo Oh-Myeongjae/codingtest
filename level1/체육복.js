@@ -18,5 +18,38 @@
 - 여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다. 
   이때 이 학생은 체육복을 하나만 도난당했다고 가정하며,
   남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
-
 */
+function solution(n, lost, reserve) {
+    var answer = n-lost.length;
+    let copy = []
+   
+    for(let el of reserve){
+        if(lost.includes(el)){
+            answer++
+            lost.splice(lost.indexOf(el),1)
+        }else{
+            copy.push(el)
+        }
+    }
+    
+    console.log('lost',lost)
+    console.log('copy',copy)
+    lost.sort()
+    copy.sort()
+    let size = copy.length;
+    for(let i=0;i<size;i++){
+        if(lost.length === 0 || copy.length === 0){
+            break;
+        }
+        
+        for(let x=0;x<lost.length;x++){
+            if(lost[x]-copy[i] > -2 && lost[x]-copy[i] < 2){
+                answer++;
+                lost.splice(x,1)
+                break;
+            }
+        }
+    }
+    
+    return answer;
+}
