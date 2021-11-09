@@ -29,3 +29,17 @@ N/2마리의 폰켓몬을 선택하는 방법 중, 가장 많은 종류의 폰�
 - 가장 많은 종류의 폰켓몬을 선택하는 방법이 여러 가지인 경우에도, 
   선택할 수 있는 폰켓몬 종류 개수의 최댓값 하나만 return 하면 됩니다.
 */
+function solution(nums) {
+    var answer = 0;
+    let kind = []
+    
+    for(let el of nums){
+        if(!kind.includes(el)){
+            kind.push(el)
+        }
+    }
+    
+    answer = Math.min(nums.length/2,kind.length)
+    
+    return answer;
+}
