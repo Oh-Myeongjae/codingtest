@@ -6,3 +6,34 @@
 제한사항
 1 ≤ left ≤ right ≤ 1,000
 */
+function solution(left, right) {
+    var answer = 0;
+    const func = (num)=>{
+        let sqrt = Math.sqrt(num)
+        let arr = []
+        for(let i=1;i<=sqrt;i++){
+            if(num%i === 0){
+                if(num/i === i){
+                    arr.push(i)
+                }else{
+                    arr.push(i)
+                    arr.push(num/i)
+                }
+            }
+        }
+        let count = arr.length
+        if(count%2 === 1){
+            return false
+        }else{
+            return true
+        }
+    }
+    for(let i=left;i<=right;i++){
+        if(func(i)){
+            answer+=i
+        }else{
+            answer-=i
+        }
+    }
+    return answer;
+}
