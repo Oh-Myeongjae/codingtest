@@ -25,3 +25,36 @@ arr1, arr2는 길이 n인 정수 배열로 주어진다.
 
 
 */
+function solution(n, arr1, arr2) {
+    var answer = [];
+    let size = arr1.length
+    for(let i=0;i<size;i++){
+        arr1[i] = arr1[i].toString(2)
+        if(arr1[i].length<size){
+            while(arr1[i].length<size){
+                arr1[i] = 0+arr1[i]
+            }
+        }
+        
+        arr2[i] = arr2[i].toString(2)
+        if(arr2[i].length<size){
+            while(arr2[i].length<size){
+                arr2[i] = 0+arr2[i]
+            }
+        }
+    }
+
+    for(let i=0;i<size;i++){
+        let str = ''
+        for(let x=0;x<size;x++){
+            if(arr1[i][x] === '1' || arr2[i][x] === '1'){
+                str += '#'
+            }else{
+                str += ' '
+            }
+            
+        }
+        answer.push(str)
+    }
+    return answer;
+}
