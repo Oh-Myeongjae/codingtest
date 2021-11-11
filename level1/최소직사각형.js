@@ -24,3 +24,26 @@ w는 명함의 가로 길이를 나타냅니다.
 h는 명함의 세로 길이를 나타냅니다.
 w와 h는 1 이상 1,000 이하인 자연수입니다.
 */
+
+function solution(sizes) {
+    var answer = 0;
+    let w = 0;
+    let h = 0;
+    
+    for(let el of sizes){
+        el.sort((a,b)=>a-b)       
+    }
+    
+    for(let el of sizes){
+        if(el[0]>w){
+            w = el[0]
+        }
+        if(el[1]>h){
+            h = el[1]
+        }
+    }
+    
+    
+    answer = w*h
+    return answer;
+}
