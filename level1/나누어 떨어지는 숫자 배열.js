@@ -9,3 +9,16 @@ arr은 자연수를 담은 배열입니다.
 divisor는 자연수입니다.
 array는 길이 1 이상인 배열입니다.
 */
+function solution(arr, divisor) {
+    var answer = [];
+    let check = false;
+    for(let el of arr){
+        if(el%divisor === 0 ){
+            answer.push(el)
+            check = true
+        }
+    }
+    answer.sort((a,b)=>a-b)
+   return check ?  answer :  [-1]
+ 
+}
