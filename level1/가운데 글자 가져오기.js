@@ -6,3 +6,12 @@
 s는 길이가 1 이상, 100이하인 스트링입니다.
 
 */
+function solution(s) {
+    var answer = '';
+    if(s.length%2 === 0){
+        answer += s[s.length/2-1]+s[s.length/2]        
+    }else{
+        answer += s[(s.length-1)/2]
+    }
+    return answer;
+}
