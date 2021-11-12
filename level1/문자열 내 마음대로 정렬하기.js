@@ -12,3 +12,14 @@ strings의 원소는 길이 1 이상, 100이하인 문자열입니다.
 인덱스 1의 문자가 같은 문자열이 여럿 일 경우, 사전순으로 앞선 문자열이 앞쪽에 위치합니다.
 
 */
+function solution(strings, n) {
+    var answer = [];
+    strings.sort((a,b)=>{
+        if (a[n] < b[n]) return -1;
+        if (a[n] > b[n]) return 1;
+        if (a < b) return -1;
+        if (a> b) return 1;
+    })
+    answer=strings
+    return answer;
+}
