@@ -6,3 +6,20 @@ s는 영문 대소문자로만 구성되어 있으며, 대문자는 소문자보
 제한 사항
 str은 길이 1 이상인 문자열입니다.
 */
+function solution(s) {
+    var answer = '';
+    let upper = []
+    let lower = []
+    
+    for(let i=0;i<s.length;i++){
+        if(s[i] === s[i].toUpperCase()){
+            upper.push(s[i])
+        }else{
+            lower.push(s[i])
+        }
+    }
+    lower.sort().reverse()
+    upper.sort().reverse()
+    answer = lower.concat(upper).join('')
+    return answer;
+}
