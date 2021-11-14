@@ -6,3 +6,16 @@
 제한 사항
 s는 길이 1 이상, 길이 8 이하인 문자열입니다.
 */
+function solution(s) {
+    var answer = true;
+    if (s.length === 4 || s.length === 6){
+       for(let i=0;i<s.length;i++){
+           if(isNaN(s[i])){
+               answer = false
+           }
+       }
+    }else{
+        answer = false
+    }
+    return answer;
+}
