@@ -10,3 +10,28 @@ s는 알파벳 소문자, 대문자, 공백으로만 이루어져 있습니다.
 s의 길이는 8000이하입니다.
 n은 1 이상, 25이하인 자연수입니다.
 */
+function solution(s, n) {
+    var answer = '';
+    let lower = 'abcdefghijklmnopqrstuvwxyz'
+    let upper = lower.toUpperCase();
+    for(let i=0;i<s.length;i++){
+        if(s[i] === ' '){
+            answer += s[i]
+        }       
+        else if(s[i] === s[i].toUpperCase()){
+             let idx = upper.indexOf(s[i])+n   
+            if(idx>25){
+                idx-=26
+            }
+             answer += upper[idx]
+        }else{
+            let idx = lower.indexOf(s[i])+n
+            if(idx>25){
+                idx-=26
+            }
+            answer += lower[idx]
+        }
+    }
+  
+    return answer;
+}
