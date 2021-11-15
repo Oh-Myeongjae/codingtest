@@ -9,3 +9,26 @@
 n은 2이상 1000000이하의 자연수입니다.
 
 */
+function solution(n) {
+    var answer = 0;
+    let prime = []
+    const check = (n)=>{
+        if(n <= 3){
+            prime.push(n)
+            return true
+        }else{
+            for(let el of prime){
+                if(Math.sqrt(n)<el)break;
+                if(n%el === 0)return false
+            }
+            prime.push(n)
+            return true
+        }
+    }
+    for(let i=2;i<=n;i++){        
+        if(check(i)){
+            answer++
+        }
+    }
+    return answer;
+}
