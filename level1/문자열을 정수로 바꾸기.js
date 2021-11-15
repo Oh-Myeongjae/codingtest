@@ -8,3 +8,16 @@ s는 부호와 숫자로만 이루어져있습니다.
 s는 "0"으로 시작하지 않습니다.
 
 */
+function solution(s) {
+    var answer = 0;
+    if(s[0] === '-'){
+        answer -= Number(s.slice(1))
+    }else{
+        if(s[0] === '+'){
+            answer += Number(s.slice(1))
+        }else{
+             answer += Number(s)
+        } 
+    }
+    return answer;
+}
