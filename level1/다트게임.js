@@ -22,5 +22,55 @@
 점수는 0에서 10 사이의 정수이다.
 보너스는 S, D, T 중 하나이다.
 옵선은 *이나 # 중 하나이며, 없을 수도 있다.
-
 */
+function solution(dartResult) {
+    var answer = 0;
+    let idx = 0
+    let arr = []
+    for(let i=0;i<3;i++){
+        let str = dartResult.slice(idx,idx+2)
+        if(str === '10'){
+            str += dartResult[idx+2]   
+            idx += 1
+        }
+        if(dartResult[idx+2] === '*' || dartResult[idx+2] === '#'){
+            str += dartResult[idx+2]
+            idx += 1
+        }
+        arr.push(str)
+        idx += 2
+    }
+    for(let i=0;i<arr.length;i++){
+        let num = 0
+        let bonus = ''
+        let option = ''
+        if(arr[i].includes('10')){
+            num = Number(arr[i].slice(0,2))
+            bonus = arr[i][2] 
+            if(arr[i][3]){option = arr[i][3]}
+        }else{
+            num = Number(arr[i][0])
+            bonus = arr[i][1] 
+            if(arr[i][2]){option = arr[i][2]}
+        }
+        if(bonus === 'S'){bonus = 1}
+        else if(bonus === 'D'){bonus = 2}
+        else {bonus = 3}
+        num = Math.pow(num,bonus)
+        arr[i] = num
+        if(option === '*'){
+            if(i==0){
+                arr[i]*=2
+            }else{
+                arr[i-1]*=2
+                arr[i]*=2
+            }
+        }else if(option === '#'){
+            arr[i] *=-1
+        }
+    }
+    for(let el of arr){
+        answer += el
+    }
+    return answer;
+}
