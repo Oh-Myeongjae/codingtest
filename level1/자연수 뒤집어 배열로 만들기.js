@@ -5,5 +5,12 @@
 
 제한 조건
 n은 10,000,000,000이하인 자연수입니다.
-
 */
+function solution(n) {
+    var answer = []; 
+     while(n !== 0){
+        answer.push(n%10)
+        n=parseInt(n/10)
+    }
+    return answer;
+}
