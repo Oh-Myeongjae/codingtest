@@ -7,3 +7,28 @@
 제한 사항
 두 수는 1이상 1000000이하의 자연수입니다.
 */
+function solution(n, m) {
+    var answer = [];
+    let max = m>n?m:n
+    let min = m<n?m:n
+    let minArr = []
+  
+    for(let i=1;i<Math.sqrt(min);i++){
+        if(min%i === 0){
+            minArr.push(i)
+           if(!(i===Math.sqrt(min))){
+               minArr.push(min/i)
+           }
+        }
+    }
+    minArr.sort((a,b)=>a-b)
+    console.log('minArr',minArr)
+    for(let i=minArr.length-1;i>=0;i--){
+        if(max%minArr[i] === 0){
+            answer.push(minArr[i])
+            break;
+        }
+    }
+    answer.push(n*m/answer[0])
+    return answer;
+}
