@@ -7,3 +7,14 @@ n이 양의 정수 x의 제곱이 아니라면 -1을 리턴하는 함수를 완�
 제한 사항
 n은 1이상, 50000000000000 이하인 양의 정수입니다.
 */
+function solution(n) {
+    var answer = 0;
+    let num = 0
+    if(Math.sqrt(n)%1 === 0){
+        num = Math.sqrt(n)+1
+        answer = num*num
+    }else{
+        answer -= 1
+    }
+    return answer;
+}
