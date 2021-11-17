@@ -13,3 +13,21 @@
 제한 사항
 입력된 수, num은 1 이상 8000000 미만인 정수입니다.
 */
+function solution(num) {
+    var answer = 0;
+    let count = 1;
+    if(num ===1)return answer
+    while(num !== 1){
+        if(num%2 === 0){
+            num /= 2
+        }else{
+            num = num*3+1
+        }
+        if(num !== 1){
+            if(count === 500){return -1}
+            else{ count++}
+        }
+    }
+    answer = count
+    return answer;
+}
