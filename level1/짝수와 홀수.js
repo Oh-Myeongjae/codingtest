@@ -6,3 +6,8 @@
 num은 int 범위의 정수입니다.
 0은 짝수입니다.
 */
+function solution(num) {
+    var answer = 'Odd';
+    if(num%2 === 0) return 'Even'
+    else return answer;
+}
