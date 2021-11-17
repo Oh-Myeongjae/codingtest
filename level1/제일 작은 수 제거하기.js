@@ -8,3 +8,15 @@
 arr은 길이 1 이상인 배열입니다.
 인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j] 입니다.
 */
+function solution(arr) {
+    var answer = [];
+    if(arr.length === 1){
+        return [-1]
+    }else{
+        let min = Math.min(...arr)
+        let idx = arr.indexOf(min)
+        arr.splice(idx,1)
+        answer = arr
+    }
+    return answer;
+}
