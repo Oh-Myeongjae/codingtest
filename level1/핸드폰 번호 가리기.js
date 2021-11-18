@@ -7,3 +7,11 @@
 제한 조건
 s는 길이 4 이상, 20이하인 문자열입니다.
 */
+function solution(phone_number) {
+    var answer = '';
+    for(let i=0;i<phone_number.length;i++){
+        if(i<=phone_number.length-5)answer+='*'
+        else answer+=phone_number[i]
+    }
+    return answer;
+}
