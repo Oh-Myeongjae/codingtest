@@ -6,3 +6,16 @@
 제한 조건
 행렬 arr1, arr2의 행과 열의 길이는 500을 넘지 않습니다.
 */
+function solution(arr1, arr2) {
+    var answer = [];
+    let x = arr1.length
+    let y = arr1[0].length
+    for(let i=0;i<x;i++){
+        let arr = []
+        for(let z=0;z<y;z++){
+            arr.push(arr1[i][z]+arr2[i][z])
+        }
+        answer.push(arr)
+    }
+    return answer;
+}
