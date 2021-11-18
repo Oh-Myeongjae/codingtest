@@ -7,3 +7,14 @@
 제한 조건
 x는 1 이상, 10000 이하인 정수입니다.
 */
+function solution(x) {
+    var answer = true;
+    let num = x
+    let sum = 0;
+    while(num !== 0){
+        sum += num%10
+        num = parseInt(num/10)
+    }
+    if(x%sum!==0)answer = false
+    return answer;
+}
