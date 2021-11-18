@@ -6,3 +6,19 @@
 제한 조건
 n과 m은 각각 1000 이하인 자연수입니다.
 */
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', data => {
+    const n = data.split(" ");
+    const a = Number(n[0]), b = Number(n[1]);
+    // console.log(a);
+    // console.log(b);
+    let str = ''
+    for(let i=0;i<b;i++){
+        if(i === b-1){
+            str += '*'.repeat(a)
+        }else{
+            str += '*'.repeat(a)+'\n'
+        }
+    }
+    console.log(str)
+});
