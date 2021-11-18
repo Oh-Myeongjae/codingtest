@@ -7,3 +7,10 @@
 x는 -10000000 이상, 10000000 이하인 정수입니다.
 n은 1000 이하인 자연수입니다.
 */
+function solution(x, n) {
+    var answer = [x];
+    for(let i=1;i<n;i++){
+        answer.push(answer[i-1]+x)
+    }
+    return answer;
+}
