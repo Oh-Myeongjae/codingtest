@@ -12,3 +12,30 @@
 제한사항
 W, H : 1억 이하의 자연수
 */
+function solution(w, h) {
+    var answer = 1;
+    let min = Math.min(w,h)
+    let max = Math.max(w,h)
+    let num = 0
+    let arr = []
+    for(let i=1;i<=Math.sqrt(min);i++){
+        if(min%i === 0){
+            if(i === Math.sqrt(min)){
+                arr.push(i)
+            }else{
+                arr.push(i)
+                arr.push(min/i)
+            }
+        }
+    }
+    arr.sort((a,b)=>a-b).reverse()
+   
+    for(let el of arr){
+        if(max%el === 0){
+            num = el
+            break;
+        }
+    }
+    answer = (w*h)-(w+h-num)
+    return answer;
+}
