@@ -62,3 +62,26 @@ record는 다음과 같은 문자열이 담긴 배열이며, 길이는 1 이상 
 유저 아이디와 닉네임의 길이는 1 이상 10 이하이다.
 채팅방에서 나간 유저가 닉네임을 변경하는 등 잘못 된 입력은 주어지지 않는다.
 */
+function solution(record) {
+    var answer = [];
+    let letter = {
+        'Enter' : '님이 들어왔습니다.',
+        'Leave' : '님이 나갔습니다.'
+    }
+    let user = {}
+    
+    for(let el of record){
+       let arr = el.split(' ')
+       if(arr[0] !== 'Leave'){
+        user[arr[1]] = arr[2]    
+       }
+    }
+    
+    for(let el of record){
+        let arr = el.split(' ')
+        if(letter[arr[0]]){
+            answer.push(user[arr[1]]+letter[arr[0]])
+        }
+    }
+    return answer;
+}
