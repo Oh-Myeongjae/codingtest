@@ -24,3 +24,46 @@
 s의 길이는 1 이상 1,000 이하입니다.
 s는 알파벳 소문자로만 이루어져 있습니다.
 */
+function solution(s) {
+    var answer = s.length;
+    if(s.length<=2)return answer
+    let num = 0;
+    const func = (s,n) =>{
+        let arr = []
+        let str = ''
+        let camp = []
+        let size = s.length%n===0 ? s.length/n : parseInt(s.length/n)+1 
+        // console.log('size',size)
+        for(let x=0;x<size;x++){
+            arr.push(s.slice(x*n,(x*n)+n))
+        }
+        // console.log('arr',arr)
+        for(let el of arr){
+            let last = camp.length-1
+            if(camp.length === 0 || el.length<n){
+                camp.push(1)
+                camp.push(el)
+            }else{
+                if(camp[last] === el){
+                    camp[last-1]++
+                }else{
+                    camp.push(1)
+                    camp.push(el)
+                }
+            }
+        }
+        
+        for(let el of camp){
+            if(el !== 1){
+                str+=el
+            }
+        }
+        return str
+    }
+ 
+     for(let i=1;i<=s.length/2;i++){
+        let size = func(s,i)
+        if(size.length<answer){answer = size.length}
+     }
+    return answer;
+}
