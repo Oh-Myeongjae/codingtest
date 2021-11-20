@@ -15,5 +15,22 @@ n개의 음이 아닌 정수가 있습니다. 이 수를 적절히 더하거나 
 주어지는 숫자의 개수는 2개 이상 20개 이하입니다.
 각 숫자는 1 이상 50 이하인 자연수입니다.
 타겟 넘버는 1 이상 1000 이하인 자연수입니다.
-
 */
+function solution(numbers, target) {
+    var answer = 0;
+    let lastIdx = numbers.length
+    const func = (sum,idx,last)=>{
+        if(idx === last){     
+            if(sum === target) answer++
+            return
+        }else{
+            let num1 =sum+numbers[idx]
+            let num2 =sum-numbers[idx]
+            idx +=1
+            func(num1,idx,last)
+            func(num2,idx,last)      
+        }
+    }
+    func(0,0,lastIdx)
+    return answer;
+}
