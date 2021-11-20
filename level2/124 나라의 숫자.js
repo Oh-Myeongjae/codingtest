@@ -17,3 +17,25 @@
 제한사항
 n은 500,000,000이하의 자연수 입니다.
 */
+function solution(n) {
+    var answer = '';
+    let share = n;
+    let remainder = 0;
+    while (share!==0) {
+		remainder = share % 3;
+		share = parseInt(share / 3);
+        
+		if (remainder === 0) { //나누어 떨어질 경우 몫을 1빼준다.
+			answer = "4" + answer;
+			share--;
+		}
+		else if (remainder == 1) {
+			answer = "1" + answer;
+		}
+		else if (remainder == 2) {
+			answer = "2" + answer;
+		}
+	}
+
+    return answer;
+}
