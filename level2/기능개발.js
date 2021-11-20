@@ -16,3 +16,32 @@
 배포는 하루에 한 번만 할 수 있으며, 하루의 끝에 이루어진다고 가정합니다. 
 예를 들어 진도율이 95%인 작업의 개발 속도가 하루에 4%라면 배포는 2일 뒤에 이루어집니다.
 */
+function solution(progresses, speeds) {
+    var answer = [];
+    let arr = []
+    for(let i=0;i<progresses.length;i++){
+        let num = 100-progresses[i];
+        let done = num%speeds[i] === 0 ? num/speeds[i]:parseInt(num/speeds[i])+1
+        arr.push(done)
+    }
+    
+    console.log('arr',arr)
+    
+    let count = 1
+    let max = arr[0]
+    
+    for(let i=1;i<arr.length;i++){
+        if(max<arr[i]){
+            answer.push(count)
+            max = arr[i]
+            count = 1
+        }else{
+            count++
+        }
+        if(i === arr.length-1){
+            answer.push(count)
+        }
+    }
+   
+    return answer;
+}
