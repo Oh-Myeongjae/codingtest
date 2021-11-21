@@ -17,3 +17,18 @@ b aa baa → bb aa → aa →
 문자열의 길이 : 1,000,000이하의 자연수
 문자열은 모두 소문자로 이루어져 있습니다.
 */
+function solution(s)
+{
+    var answer = -1;
+    if(s.length === 0) return 1
+    let arr = [s[0]]
+    for(let i=1;i<s.length;i++){
+        if(s[i] === arr[arr.length-1]){
+            arr.pop()
+        }else{
+            arr.push(s[i])
+        }
+    }
+    answer = arr.join('') === '' ? 1 : 0
+    return answer;
+}
