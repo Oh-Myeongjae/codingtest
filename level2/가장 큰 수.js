@@ -26,3 +26,16 @@ function solution(numbers) {
     if(parseInt(answer) === 0)return '0'
     return answer;
 }
+/*
+function solution(numbers) {
+    var answer = numbers.map(v=>v+'')
+                        .sort((a,b) => (b+a)*1 - (a+b)*1)
+                        .join('');
+
+    return answer[0]==='0'?'0':answer;
+}
+
+주석의 방식은 다른분이 해결하는 방식이다. 큰흐름에서 문자열로 변경후에 정렬 조인하는 방식은 비슷하나 로직적인
+차이가 있었다. 기존읜 나의 방식은 4번반복후에 자릿수 비교인데 이방식도 수학적으로 증명이 가능하지만 접근이 쉽지 않았다.
+하지만 주석의 방법은 조금더 직관적으로 접근이 가능해서 좋은 방법인거 같아서 기록하게 되었다.
+*/
