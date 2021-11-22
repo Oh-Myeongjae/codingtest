@@ -22,3 +22,41 @@ ex) 완성해야 하는 이름이 세 글자면 AAA, 네 글자면 AAAA
 name은 알파벳 대문자로만 이루어져 있습니다.
 name의 길이는 1 이상 20 이하입니다.
 */
+function solution(name) {
+    var answer = 0;
+    let str = 'A'.repeat(name.length)
+    let arr = []
+    let char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for(let i=0;i<name.length;i++){
+        let idx = char.indexOf(name[i]);
+        if(idx<=12){
+            answer += idx
+        }else{
+            answer += (26-idx)
+        }
+    }
+   
+    const func = (s,idx,count,last)=>{
+        if(count === last-1){
+            arr.push(count)
+            return
+        }
+        let temp = s.split('')
+        temp[idx] = name[idx]
+        s = temp.join('')
+        if(s === name){
+            arr.push(count)
+            return
+        }else{
+            count++
+            let num1 = idx+1>name.length-1 ? 0 : idx+1
+            let num2 = idx-1<0 ? name.length-1 : idx-1
+            func(s,num1,count,last)
+            func(s,num2,count,last)
+        }
+    }
+   func(str,0,0,name.length)
+    arr.sort((a,b)=>a-b)
+    answer+=arr[0]
+    return answer;
+}
