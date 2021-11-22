@@ -13,3 +13,16 @@ numbers의 길이는 1 이상 100,000 이하입니다.
 numbers의 원소는 0 이상 1,000 이하입니다.
 정답이 너무 클 수 있으니 문자열로 바꾸어 return 합니다.
 */
+function solution(numbers) {
+    var answer = '';
+    let arr = numbers.map((num)=>{
+        return num += ''
+    })
+    answer = arr.sort((a,b)=>{
+        let str1 = a.repeat(4).slice(0,4)
+        let str2 = b.repeat(4).slice(0,4)
+        return str1-str2
+    }).reverse().join('')
+    if(parseInt(answer) === 0)return '0'
+    return answer;
+}
