@@ -32,3 +32,27 @@ n과 m은 서로 같을 수도, 다를 수도 있지만, n과 m이 모두 1인 �
 maps는 0과 1로만 이루어져 있으며, 0은 벽이 있는 자리, 1은 벽이 없는 자리를 나타냅니다.
 처음에 캐릭터는 게임 맵의 좌측 상단인 (1, 1) 위치에 있으며, 상대방 진영은 게임 맵의 우측 하단인 (n, m) 위치에 있습니다.
 */
+function solution(maps) {
+    var answer = -1;
+    let row = maps.length, col = maps[0].length;
+    let dy = [0, 1, 0, -1], dx = [-1, 0, 1, 0];
+    let queue = [[0, 0, 1]];
+
+    while (queue.length){
+        var answer = -1;
+        let [y,x,count] = queue.shift();
+        if (y === row-1 && x === col-1) return count;
+        //maps[y][x] = 0;
+
+        for (let i = 0; i < 4; i++){
+            let ny = y + dy[i];
+            let nx = x + dx[i];
+
+            if (ny < 0 || ny >= row || nx < 0 || nx >= col) continue;
+            if (maps[ny][nx] === 0) continue;
+            maps[ny][nx] = 0; // 큐에 넣을 때 방문표시를 해야한다.
+            queue.push([ny, nx, count+1])
+        }
+    }
+    return answer;
+}
