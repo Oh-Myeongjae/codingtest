@@ -47,6 +47,7 @@ function solution(maps) {
         for (let i = 0; i < 4; i++){
             let ny = y + dy[i];
             let nx = x + dx[i];
+            
             if (ny < 0 || ny >= row || nx < 0 || nx >= col) continue;
             if (maps[ny][nx] === 0) continue;
             maps[ny][nx] = 0; // 큐에 넣을 때 방문표시를 해야한다.
