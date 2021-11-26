@@ -53,4 +53,4 @@ for(let el of arr){
     if(func(el))answer++
 }
 return answer;
-} 
+}
