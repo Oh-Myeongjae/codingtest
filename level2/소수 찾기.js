@@ -49,7 +49,7 @@ for(let el of list){
         arr.push(num)
     }
 }
-for(let el of arr){
+for(let el of arr){ 
     if(func(el))answer++
 }
 return answer;
