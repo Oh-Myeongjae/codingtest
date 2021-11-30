@@ -50,7 +50,7 @@ for(let el of list){
     }
 }
 for(let el of arr){
-    if(func(el))answer++
+    if(func(el))answer++ 
 }
 return answer;
 }
