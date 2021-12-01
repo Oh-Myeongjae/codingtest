@@ -26,7 +26,7 @@ function solution(progresses, speeds) {
     }
     
     console.log('arr',arr)
-      
+     
     let count = 1
     let max = arr[0]
     
