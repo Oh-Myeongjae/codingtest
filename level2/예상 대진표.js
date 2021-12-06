@@ -18,3 +18,30 @@ N명의 참가자는 각각 1부터 N번을 차례대로 배정받습니다.
 N : 21 이상 220 이하인 자연수 (2의 지수 승으로 주어지므로 부전승은 발생하지 않습니다.)
 A, B : N 이하인 자연수 (단, A ≠ B 입니다.)
 */
+function solution(n,a,b)
+{
+    var answer = 0;
+    const func = (a,b,count)=>{
+        if(b-1 === a && b%2===0)return count
+        else{
+            let num1 = 0;
+            let num2 = 0;
+            count++
+            if(a%2 === 0){
+                num1 = a/2
+            }else{
+                num1 = (a+1)/2
+            }
+            if(b%2 === 0){
+                num2 = b/2
+            }else{
+                num2 = (b+1)/2
+            }
+            return func(num1,num2,count)
+        }
+    }
+    let max = Math.max(a,b)
+    let min = Math.min(a,b)
+    answer = func(min,max,1)
+    return answer;
+}
