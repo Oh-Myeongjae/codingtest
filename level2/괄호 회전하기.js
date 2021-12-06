@@ -13,3 +13,24 @@
 제한사항
 s의 길이는 1 이상 1,000 이하입니다.
 */
+function solution(s) {
+    var answer = 0;
+    let size = s.length
+    for(let i=0;i<size;i++){
+        let str = s.slice(i)+s.slice(0,i)
+        let count = str.length
+        let check = true
+        while(str.length>0){
+           str = str.split('()').join('')
+           str = str.split('{}').join('')
+           str = str.split('[]').join('')
+           if(str.length === count){
+               check = false
+               break;
+           }
+           count = str.length
+        }
+        if(check)answer++
+    }
+    return answer;
+}
