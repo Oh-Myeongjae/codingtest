@@ -13,5 +13,22 @@ H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다.
 제한사항
 과학자가 발표한 논문의 수는 1편 이상 1,000편 이하입니다.
 논문별 인용 횟수는 0회 이상 10,000회 이하입니다.
-
 */
+function solution(citations) {
+    var answer = [0];
+    citations.sort((a,b)=>b-a)
+    let arr = []
+    for(let i=1;i<=citations.length;i++){
+        let count = 0
+        for(let j=0;j<citations.length;j++){
+            if(i<=citations[j]){
+                count++
+            }
+        }
+        if(i<=count){
+            answer.push(i)
+        }
+    }
+    let idx = answer.length-1
+    return answer[idx];
+}
