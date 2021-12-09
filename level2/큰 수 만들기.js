@@ -12,3 +12,29 @@
 number는 1자리 이상, 1,000,000자리 이하인 숫자입니다.
 k는 1 이상 number의 자릿수 미만인 자연수입니다.
 */
+function solution(number, k) {
+    var answer = '';
+    let stack = []
+    for(let i=0;i<number.length;i++){
+        if(k>0){
+            if(stack.length === 0)stack.push(number[i])
+            else{
+                if(stack[stack.length-1]<number[i]){
+                    stack.pop()
+                    k--
+                    i--
+                    continue
+                }
+               stack.push(number[i])
+            }
+        }else{
+            stack.push(number[i])
+        }
+    }
+    answer = stack.join('')
+    if(k !== 0){
+        k*=-1
+        answer =  answer.slice(0,k)
+    }
+    return answer;
+}
