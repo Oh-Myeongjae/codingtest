@@ -60,7 +60,6 @@ function solution(s) {
         }
         return str
     }
- 
      for(let i=1;i<=s.length/2;i++){
         let size = func(s,i)
         if(size.length<answer){answer = size.length}
