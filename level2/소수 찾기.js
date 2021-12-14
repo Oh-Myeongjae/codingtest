@@ -25,7 +25,7 @@ function solution(numbers) {
 var answer = 0;
 let arr = []
 let list = []
-
+ 
 const listFunc = (now,char)=>{
     if(now.length === 0){
        if(!list.includes(char)){
