@@ -23,3 +23,30 @@ dungeons의 각 행은 각 던전의 ["최소 필요 피로도", "소모 피로�
 "최소 필요 피로도"와 "소모 피로도"는 1 이상 1,000 이하인 자연수입니다.
 서로 다른 던전의 ["최소 필요 피로도", "소모 피로도"]가 서로 같을 수 있습니다.
 */
+function solution(k, dungeons) {
+    var answer = -1;
+    let sucess = []
+    const func = (life,stage,clear,limit)=>{
+        if(clear===limit) {
+            if(!sucess.includes(clear))sucess.push(clear)
+            return
+        }
+        for(let i=0;i<stage.length;i++){
+            let arr = stage.filter((el,idx)=>{
+                    if(i === idx)return false
+                    else return true
+                })           
+            if(life>=stage[i][0]){
+                func(life-stage[i][1],arr,clear+1,limit)
+            }else{
+                if(!sucess.includes(clear))sucess.push(clear)
+            }
+            
+        }
+    }
+    let size = dungeons.length
+    func(k,dungeons,0,size)
+    sucess.sort((a,b)=>b-a)
+    answer = sucess[0]
+    return answer;
+}
