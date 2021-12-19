@@ -7,3 +7,48 @@
 제한사항
 n은 1 이상 1,000 이하입니다.
 */
+function solution(n) {
+    var answer = [];
+    let make = []
+    if(n<=2){
+        if(n === 1)answer.push(1)
+        else {
+            for(let i=1;i<4;i++){
+                answer.push(i)
+            }
+        }
+     return answer
+    }
+    for(let i=1;i<=n;i++){
+        let temp = new Array(i).fill(0)
+        make.push(temp)
+    }
+    let count = 1
+    let limit = n%2===0 ? n/2 : (n+1)/2
+    for(let i=0;i<=limit;i++){
+        for(let el of make){
+            if(el[i] !== undefined && el[i] === 0){
+                el[i] = count
+                count++
+            }
+        }
+        for(let j=0;j<make[make.length-1-i].length;j++){
+            if(make[make.length-1-i][j] === 0){
+                make[make.length-1-i][j] = count
+                count++
+            }
+        }
+        for(let z=make.length-1;z>i;z--){
+            let last = make[z]
+            if(last[last.length-1-i] === 0){
+                last[last.length-1-i] = count
+                count++
+            }
+        }
+    }
+    console.log('make',make)
+    for(let element of make){
+        answer = answer.concat(element)
+    }
+    return answer;
+}
