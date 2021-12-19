@@ -56,7 +56,5 @@ function solution(n, words) {
             break;
         }
     }
-    
-
     return answer;
 }
