@@ -32,3 +32,31 @@ words는 끝말잇기에 사용한 단어들이 순서대로 들어있는 배열
 정답은 [ 번호, 차례 ] 형태로 return 해주세요.
 만약 주어진 단어들로 탈락자가 생기지 않는다면, [0, 0]을 return 해주세요.
 */
+function solution(n, words) {
+    var answer = [0,0];
+    let num = 1 //바퀴수 몇바퀴쨰인지
+    let count = 1; // 끝말잇기에 참여할 사람의 횟수
+    let use = []
+    for(let el of words){
+        if(use.length === 0) {
+            use.push(el)
+            count++
+            continue;
+        }
+        let last = use[use.length-1]
+        if(!use.includes(el) && last[last.length-1] === el[0]){
+            use.push(el)
+            if(count%n === 0){
+                num++
+            }
+            count++
+        }else{            
+            answer[0] = count%n === 0 ? n : count%n
+            answer[1] = num
+            break;
+        }
+    }
+    
+
+    return answer;
+}
