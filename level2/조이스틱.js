@@ -35,7 +35,7 @@ function solution(name) {
             answer += (26-idx)
         }
     }
-   
+    
     const func = (s,idx,count,last)=>{
         if(count === last-1){
             arr.push(count)
