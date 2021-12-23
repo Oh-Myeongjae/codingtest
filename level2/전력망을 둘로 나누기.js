@@ -15,3 +15,40 @@ wires의 각 원소는 [v1, v2] 2개의 자연수로 이루어져 있으며, 이
 1 ≤ v1 < v2 ≤ n 입니다.
 전력망 네트워크가 하나의 트리 형태가 아닌 경우는 입력으로 주어지지 않습니다.
 */
+function solution(n, wires) {
+    var answer = n;
+    for(let el of wires){
+        el.sort((a,b)=>a-b)
+    }
+    for(let i=0;i<wires.length;i++){
+        let num = wires[i][0]
+        let arr = wires.slice()
+        arr.splice(i,1)
+        let queue = [num]
+        let count = 0;
+        let use = []
+        for(let i=0;i<=n;i++){
+            use.push(i)
+        }
+        use[num] = 0
+        while(queue.length>0){
+            for(let el of arr){
+                if(el.includes(queue[0])){
+                    let num1 = el[0]===queue[0]?el[1]:el[0]               
+                    if(use[num1] !== 0){
+                        queue.push(num1)
+                        use[num1] = 0
+                    }
+                }
+            }
+            count++
+            queue.shift()
+        }
+        let temp = n-count
+        let max = Math.max(count,temp)
+        let min = Math.min(count,temp)
+        let result = max-min
+        if(answer>result) answer= result        
+    }
+    return answer;
+}
