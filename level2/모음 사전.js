@@ -9,3 +9,23 @@
 word의 길이는 1 이상 5 이하입니다.
 word는 알파벳 대문자 'A', 'E', 'I', 'O', 'U'로만 이루어져 있습니다.
 */
+function solution(word) {
+    var answer = 0;
+    let check = true;
+    let ch = ['A','E','I','O','U']
+    const func = (now)=>{
+        for(let i=0;i<ch.length;i++){
+            answer++
+            if(now+ch[i] === word){
+                check = false
+                return
+            }
+            if(now.length < 4){
+              func(now+ch[i])
+              if(!check) return
+            }
+        }
+}
+    func('')
+    return answer;
+}
