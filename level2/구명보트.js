@@ -29,4 +29,4 @@ function solution(people, limit) {
             answer++
     }
     return answer;
-}
+} 
