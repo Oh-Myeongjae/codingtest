@@ -13,3 +13,24 @@ x의 길이를 c라고 하면, x를 "c를 2진법으로 표현한 문자열"로 
 s의 길이는 1 이상 150,000 이하입니다.
 s에는 '1'이 최소 하나 이상 포함되어 있습니다.
 */
+function solution(s) {
+    var answer = [];
+    let count = 0;
+    let num = 0;
+    const func = (temp)=>{
+        count++
+        let str = ''
+        for(let i=0;i<temp.length;i++){
+            if(temp[i] !=='0')str+=temp[i]
+            else num++
+        }
+        let size = str.length
+        if(size === 1)return
+        else{
+          func(size.toString('2'))
+        }
+    }
+    func(s)
+    answer = [count,num]
+    return answer;
+}
