@@ -22,3 +22,16 @@ OO 연구소는 한 번에 K 칸을 앞으로 점프하거나, (현재까지 온
 숫자 N: 1 이상 10억 이하의 자연수
 숫자 K: 1 이상의 자연수
 */
+function solution(n)
+{
+    var result = 0;
+    while(n>0){
+        if(n%2 !== 0){
+            n-=1
+            result++
+        }
+        n/=2    
+    }
+
+    return result;
+}
