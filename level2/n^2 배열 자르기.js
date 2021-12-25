@@ -15,3 +15,27 @@ i = 1, 2, 3, ..., n에 대해서, 다음 과정을 반복합니다.
 0 ≤ left ≤ right < n2
 right - left < 105
 */
+function solution(n, left, right) {
+    var answer = [];
+    let start = parseInt(left/n)
+    let end =  parseInt(right/n)
+    let size = end - start +1
+    let first = []
+    for(let i=0;i<size;i++){
+        first.push(new Array(n).fill(0))
+    }
+    for(let i=0;i<first.length;i++){
+        let num = start+i+1
+        for(let j=0;j<first[i].length;j++){
+            if(j<num)first[i][j] = num
+            else{first[i][j] = first[i][j-1]+1}
+        }
+    }
+    for(let el of first){
+        answer = answer.concat(el)
+    }
+    let point = left%n
+    let limit = right-left+1
+    answer = answer.splice(point,limit)
+    return answer;
+}
