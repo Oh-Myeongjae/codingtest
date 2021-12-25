@@ -30,7 +30,7 @@ function solution(n, left, right) {
             if(j<num)first[i][j] = num
             else{first[i][j] = first[i][j-1]+1}
         }
-    } 
+    }
     for(let el of first){
         answer = answer.concat(el)
     }
