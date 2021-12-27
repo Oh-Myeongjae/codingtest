@@ -15,3 +15,34 @@ arr의 행의 개수는 1 이상 1024 이하이며, 2의 거듭 제곱수 형태
 arr의 각 행의 길이는 arr의 행의 개수와 같습니다. 즉, arr은 정사각형 배열입니다.
 arr의 각 행에 있는 모든 값은 0 또는 1 입니다.
 */
+function solution(arr) {
+    var answer = [0,0];
+    const func = (test,start,count)=>{
+        if(count === 1){
+            answer[test[start[0]][start[1]]]++ 
+            return
+        }
+        let num =test[start[0]][start[1]]
+        let check = true
+        for(let i=start[0];i<start[0]+count;i++){
+            for(let j=start[1];j<start[1]+count;j++){
+                if(test[i][j] !== num){
+                    check = false
+                    break;
+                }
+            }
+            if(!check){break;}
+        }
+        if(check)
+            answer[num]++
+        else{
+            let half = count/2
+            func(test,[start[0],start[1]],half)
+            func(test,[start[0],start[1]+half],half)
+            func(test,[start[0]+half,start[1]],half)
+            func(test,[start[0]+half,start[1]+half],half)
+        }
+    }
+    func(arr,[0,0],arr.length)
+    return answer;
+}
