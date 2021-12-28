@@ -38,3 +38,48 @@ L: 왼쪽으로 한 칸 가기
 dirs는 string형으로 주어지며, 'U', 'D', 'R', 'L' 이외에 문자는 주어지지 않습니다.
 dirs의 길이는 500 이하의 자연수입니다.
 */
+function solution(dirs) {
+    var answer = 0;
+    let now  = [0,0]
+    let arr = []
+    let way = dirs.split('')
+    for(let el of way){
+        let str = ''
+        let rstr = ''
+        switch(el){
+            case 'U':
+                if(now[1]+1<6){
+                    str = ''+now[0]+now[1]+now[0]+(now[1]+1)+'U'
+                    rstr = ''+now[0]+(now[1]+1)+now[0]+now[1]+'D'
+                    now[1]+=1
+                }
+                break;
+            case 'D':
+                if(now[1]-1>-6){
+                    str = ''+now[0]+now[1]+now[0]+(now[1]-1)+'D'
+                    rstr = ''+now[0]+(now[1]-1)+now[0]+now[1]+'U'
+                    now[1]-=1
+                }
+                break;
+            case 'R':
+                if(now[0]+1<6){
+                    str = ''+now[0]+now[1]+(now[0]+1)+now[1]+'R'
+                    rstr = ''+(now[0]+1)+now[1]+now[0]+now[1]+'L'
+                    now[0]+=1
+                }
+                break;
+            case 'L':
+                if(now[0]-1>-6){
+                    str = ''+now[0]+now[1]+(now[0]-1)+now[1]+'L'
+                    rstr = ''+(now[0]-1)+now[1]+now[0]+now[1]+'R'
+                    now[0]-=1
+                }
+                break;
+        }
+        if(!arr.includes(str) && !arr.includes(rstr) && str !== ''){
+            arr.push(str)
+            answer++
+        }
+    }
+    return answer;
+}
