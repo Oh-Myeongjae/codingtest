@@ -20,3 +20,31 @@ skill_trees는 길이 1 이상 20 이하인 배열입니다.
 skill_trees의 원소는 스킬을 나타내는 문자열입니다.
 skill_trees의 원소는 길이가 2 이상 26 이하인 문자열이며, 스킬이 중복해 주어지지 않습니다.
 */
+function solution(skill, skill_trees) {
+    var answer = 0;
+    let ch = skill.split('')
+    for(let el of skill_trees){
+        let arr = []
+        let sum = 0
+        let check = true
+        for(let idx of ch){
+            arr.push(el.indexOf(idx))
+            sum += el.indexOf(idx)
+        }
+        if(sum === -1*arr.length){
+            answer++
+            continue;
+        }
+        arr.reverse()
+        for(let i=0;i<=arr.length-2;i++){
+            if(arr[i] !== -1){
+                if(arr[i]<arr[i+1] || arr[i+1] === -1){
+                    check = false
+                    break;
+                }
+            }
+        }
+        if(check) answer++   
+    }
+    return answer;
+}
