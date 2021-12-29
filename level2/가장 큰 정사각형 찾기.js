@@ -25,3 +25,28 @@
 표(board)의 열(column)의 크기 : 1,000 이하의 자연수
 표(board)의 값은 1또는 0으로만 이루어져 있습니다.
 */
+function solution(board)
+{
+    var answer = 1234;
+    let max = 0
+    if(board.length === 0) answer = 0
+    if(board.length === 1){
+        for(let el of board[0]){
+            if(max<el) max = el
+        }
+      answer = max*max
+    }else{
+        for(let i=1;i<board.length;i++){
+            for(let j=1;j<board[i].length;j++){
+                if(board[i][j] !== 0){
+                    let min = Math.min(board[i][j-1],board[i-1][j],board[i-1][j-1])
+                    board[i][j] = min+1
+                    if(max<board[i][j])max=board[i][j]
+                } 
+            }
+        }
+    }
+    console.log('board',board)
+    answer = max*max
+    return answer;
+}
