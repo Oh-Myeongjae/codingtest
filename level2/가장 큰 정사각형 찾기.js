@@ -46,7 +46,10 @@ function solution(board)
             }
         }
     }
-    console.log('board',board)
     answer = max*max
     return answer;
 }
+/*
+dp(동적계획법을 이용한 풀이)
+https://www.youtube.com/watch?v=9AOMXwNrNpk
+*/
