@@ -29,7 +29,7 @@ function solution(board)
 {
     var answer = 1234;
     let max = 0
-    if(board.length === 0) answer = 0
+    if(board.length === 0) answer = 0 
     if(board.length === 1){
         for(let el of board[0]){
             if(max<el) max = el
