@@ -11,3 +11,24 @@
 문자열 s의 길이 : 100,000 이하의 자연수
 문자열 s는 '(' 또는 ')' 로만 이루어져 있습니다.
 */
+function solution(s){
+    var answer = true;
+    let left = 0
+    let right = 0
+    
+    for(let i=0;i<s.length;i++){
+        if(s[i]==='(')left++
+        else{
+            if(left === 0 || left === right){
+                answer = false
+                break;
+            }else{
+                right++
+            }
+        }
+    }
+    if(left !== right){
+        answer = false
+    }
+    return answer;
+}
