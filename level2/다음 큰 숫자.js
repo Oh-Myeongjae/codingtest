@@ -12,3 +12,32 @@
 제한 사항
 n은 1,000,000 이하의 자연수 입니다.
 */
+function solution(n) {
+    var answer = '';
+    let count = [0,0]
+    let arr = n.toString('2').split('').map((n)=>{
+        count[n]++
+        return parseInt(n)
+    })
+    while(true){
+        for(let i=arr.length-1;i>=0;i--){
+            arr[i]+=1
+            if(arr[i] === 2){
+                arr[i] = 0
+               if(i===0) arr.unshift(1)
+            }else{
+                break;
+            }  
+        }
+        let make = [0,0]
+        for(let el of arr){
+            make[el]++
+        }
+        if(make[1] === count[1]) break;
+    }
+    for(let el of arr){
+        answer+=el
+    }
+    answer = parseInt(answer,'2')
+    return answer;
+}
