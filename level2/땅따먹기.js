@@ -22,3 +22,18 @@
 열의 개수는 4개이고, 땅(land)은 2차원 배열로 주어집니다.
 점수 : 100 이하의 자연수
 */
+function solution(land) {
+    var answer = 0;
+    let idxArr = new Array(land.length).fill(0)
+    for(let i=0;i<land.length;i++){
+       if(i === 0)continue
+        for(let j=0;j<land[i].length;j++){
+            let arr = land[i-1].slice()
+            arr.splice(j,1)
+            let max = Math.max(...arr)
+            land[i][j]+=max
+        }
+    }
+    answer = Math.max(...land[land.length-1])
+    return answer;
+}
