@@ -15,3 +15,4 @@ function solution(s) {
     answer = `${min} ${max}`
     return answer;
 }
+ 
