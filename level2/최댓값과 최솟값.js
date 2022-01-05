@@ -7,3 +7,11 @@
 제한 조건
 s에는 둘 이상의 정수가 공백으로 구분되어 있습니다.
 */
+function solution(s) {
+    var answer = '';
+    let arr = s.split(' ')
+    let max = Math.max(...arr)
+    let min = Math.min(...arr)
+    answer = `${min} ${max}`
+    return answer;
+}
