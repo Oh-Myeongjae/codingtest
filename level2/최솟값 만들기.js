@@ -17,3 +17,25 @@ A에서 세번째 숫자인 2, B에서 두번째 숫자인 4를 뽑아 곱하여
 배열 A, B의 크기 : 1,000 이하의 자연수
 배열 A, B의 원소의 크기 : 1,000 이하의 자연수
 */
+function solution(A,B){
+    var answer = 0;
+   
+    A.sort((a,b)=>a-b)
+    B.sort((a,b)=>b-a)
+  
+    for(let i=0;i<A.length;i++){
+        answer += A[i]*B[i]
+    }
+
+    return answer;
+}
+/*
+  for(let i=0;i<A.length;i++){
+        let Max = Math.max(...A)
+        let Min = Math.min(...B)
+        let num = Max*Min
+        answer += num
+        A[A.indexOf(Max)] = -1
+        B[B.indexOf(Min)] = Math.max(...B)+1
+    }
+*/
