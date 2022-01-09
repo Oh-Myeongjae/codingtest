@@ -15,3 +15,16 @@ F(5) = F(3) + F(4) = 2 + 3 = 5
 제한 사항
 n은 2 이상 100,000 이하인 자연수입니다.
 */
+function solution(n) {
+    var answer = 0;
+    let memo = [0,1]
+    let result = 0
+    for(let i=2;i<=n;i++){
+        result = (memo[i-2]+memo[i-1])%1234567
+        if(memo[i] === undefined){
+            memo.push(result)
+        }
+    } 
+    answer = result
+    return answer;
+}
