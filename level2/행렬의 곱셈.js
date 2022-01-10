@@ -7,3 +7,18 @@
 행렬 arr1, arr2의 원소는 -10 이상 20 이하인 자연수입니다.
 곱할 수 있는 배열만 주어집니다.
 */
+function solution(arr1, arr2) {
+    var answer = [];
+    for(let el of arr1){
+        let make = []
+        for(let i=0;i<arr2[0].length;i++){
+            let num = 0;
+            for(let j=0;j<arr2.length;j++){
+                num += el[j]*arr2[j][i]
+            }
+            make.push(num)
+        }
+        answer.push(make)
+    }
+    return answer;
+}
