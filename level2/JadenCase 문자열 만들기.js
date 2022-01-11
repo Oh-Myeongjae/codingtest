@@ -9,3 +9,16 @@ s는 길이 1 이상인 문자열입니다.
 s는 알파벳과 공백문자(" ")로 이루어져 있습니다.
 첫 문자가 영문이 아닐때에는 이어지는 영문은 소문자로 씁니다. ( 첫번째 입출력 예 참고 )
 */
+function solution(s) {
+    var answer = '';
+    let arr =s.split(' ')
+    for(let i=0;i<arr.length;i++){
+       let str = ''
+       if(arr[i] !== ''){
+          str += `${arr[i][0].toUpperCase()}${arr[i].slice(1).toLowerCase()}`
+      }
+        arr[i] = str
+    }
+    answer = arr.join(' ')
+    return answer;
+}
