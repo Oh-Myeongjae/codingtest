@@ -9,3 +9,26 @@ arr은 길이 1이상, 15이하인 배열입니다.
 arr의 원소는 100 이하인 자연수입니다.
 입출력 예
 */
+function solution(arr) {
+    var answer = 1; 
+    if(arr.length === 1)return 
+    const func = (A,B)=>{
+        if(A%B === 0)return B
+        else{
+            return func(B,parseInt(A%B))
+        }
+    }
+    for(let i=0;i<arr.length;i++){
+        let num = func(answer,arr[i])
+        answer = answer*arr[i]/num
+    }
+    
+    return answer;
+}
+/*
+위에 함수는 최대공약수를 구하는 유클리드 호제법을 구현한 함수이고
+
+그함수를 이용해서 최대공배수를 구하는 공식인 A,B 두수를 서로 곱한후 두수의 최대 공약수로 나누는 방식을 구현하였다
+
+A,B의 최소공배수 = A * B / A,B의 최대 공약수
+*/
