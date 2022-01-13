@@ -29,3 +29,54 @@ x1 행 y1 열부터 x2 행 y2 열까지 영역의 테두리를 시계방향으�
 모든 회전은 순서대로 이루어집니다.
 예를 들어, 두 번째 회전에 대한 답은 첫 번째 회전을 실행한 다음, 그 상태에서 두 번째 회전을 실행했을 때 이동한 숫자 중 최솟값을 구하면 됩니다.
 */
+function solution(rows, columns, queries) {
+    var answer = [];
+    let metrix = []
+    for(let i=0;i<rows;i++){
+        let temp = []
+        for(let x=1;x<=columns;x++){
+            temp.push(i*columns+x)
+        }
+        metrix.push(temp)
+    }
+    const func = (arr)=>{
+        let min = 0;
+        let queue = []
+        let start = []
+        for(let i=arr[1]-1;i<arr[3];i++){
+          queue.push(metrix[arr[0]-1][i]) 
+        }
+        for(let i=arr[0];i<arr[2];i++){
+          queue.push(metrix[i][arr[3]-1]) 
+        }
+         for(let i=arr[3]-2;i>=arr[1]-1;i--){
+          queue.push(metrix[arr[2]-1][i]) 
+        }
+        for(let i=arr[2]-2;i>arr[0]-1;i--){
+          queue.push(metrix[i][arr[1]-1]) 
+        }
+        min = Math.min(...queue)
+        for(let i=arr[1];i<arr[3];i++){
+            metrix[arr[0]-1][i] = queue[0]
+            queue.shift() 
+        }
+        for(let i=arr[0];i<arr[2];i++){
+            metrix[i][arr[3]-1] = queue[0]
+            queue.shift()
+        }
+         for(let i=arr[3]-2;i>=arr[1]-1;i--){
+            metrix[arr[2]-1][i] = queue[0]
+            queue.shift()
+        }
+         for(let i=arr[2]-2;i>=arr[0]-1;i--){
+            metrix[i][arr[1]-1] = queue[0]
+            queue.shift()
+        }
+        return min
+    }
+    for(let el of queries){
+        let num = func(el)
+        answer.push(num)
+    }    
+    return answer;
+}
