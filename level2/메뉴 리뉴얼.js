@@ -38,5 +38,28 @@ course 배열에는 같은 값이 중복해서 들어있지 않습니다.
 배열의 각 원소에 저장된 문자열 또한 알파벳 오름차순으로 정렬되어야 합니다.
 만약 가장 많이 함께 주문된 메뉴 구성이 여러 개라면, 모두 배열에 담아 return 하면 됩니다.
 orders와 course 매개변수는 return 하는 배열의 길이가 1 이상이 되도록 주어집니다.
-
 */
+function solution(orders, course) {
+    var answer = [];
+    for(let num of course){
+        let obj = {}
+        const func = (arr,str,size)=>{
+            if(str.length === size){
+                obj[str] ? obj[str]++ : obj[str] = 1
+                return
+            }
+            if(str.length + arr.length < size) return
+          for(let i=0;i<arr.length;i++){
+              func(arr.slice(i+1),`${str}${arr[i]}`,size)
+          }
+        }
+        for(let el of orders){
+            func(el.split('').sort(),'',num)
+        }
+        let max = Math.max(...Object.values(obj))
+        Object.keys(obj).map((x)=>{
+            if(obj[x] === max && max >1) answer.push(x)
+        })
+    }
+    return answer.sort();
+}
