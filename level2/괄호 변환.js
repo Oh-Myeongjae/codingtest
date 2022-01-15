@@ -28,5 +28,46 @@
 p는 '(' 와 ')' 로만 이루어진 문자열이며 길이는 2 이상 1,000 이하인 짝수입니다.
 문자열 p를 이루는 '(' 와 ')' 의 개수는 항상 같습니다.
 만약 p가 이미 "올바른 괄호 문자열"이라면 그대로 return 하면 됩니다.
-
 */
+const check = (str)=>{
+    let obj = { '(':0, ')':0}   
+    for(let i=0; i<str.length; i++){
+        if(str[i] === ')' && obj['('] === obj[')'])return false
+        obj[str[i]]++
+    }
+    return true
+}
+
+function solution(p) {
+    var answer = '';
+    if(check(p)) return p
+    const func = (s)=>{
+        if(s === '') return ''
+        let u = ''
+        let v = ''
+        let num = 0;
+        for(let i=0;i<s.length;i++){
+            u+= s[i]
+            s[i] === '(' ? num++ : num--
+            if(num === 0){
+                v = s.slice(i+1)
+                break;
+            }
+        }
+        if(check(u)){
+            return u+func(v)
+        }else{
+            let make = '('
+            make += func(v)
+            make += ')'
+            let temp = u.slice(1,-1).split('')
+            for(let j=0;j<temp.length;j++){
+                temp[j] === '(' ? temp[j] = ')' : temp[j] = '(' 
+            }
+            make += temp.join('')
+            return make
+        }
+    }
+    answer = func(p)
+    return answer;
+}
