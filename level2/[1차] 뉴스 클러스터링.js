@@ -37,3 +37,74 @@ handshake	shake hands	65536
 aa1+aa2	AAAA12	43690
 E=M*C^2	e=m*c^2	65536
 */
+function solution(str1, str2) {
+    var answer = 0;
+    let arr1 = [];
+    let arr2 = [];
+    let char = 'abcdefghijklmnopqrstuvwxyz'
+    for(let i=0;i<str1.length-1;i++){
+        let s1 = str1[i]+str1[i+1]
+        s1 = s1.toLowerCase()
+        if(char.includes(s1[0]) && char.includes(s1[1])) arr1.push(s1)
+    }
+    for(let i=0;i<str2.length-1;i++){
+        let s2 = str2[i]+str2[i+1]
+        s2 = s2.toLowerCase()
+        if(char.includes(s2[0]) && char.includes(s2[1])) arr2.push(s2)
+    }
+    if(arr1.length === 0 && arr2.length === 0) return 65536
+   
+    let inter = []
+    let union = []
+    
+    for(let el of arr2){
+        if(!inter.includes(el)){
+           let num1 = 0
+           let num2 = 0
+           for(let s of arr1){
+                if(el === s) num1++
+           }
+            for(let s of arr2){
+                if(el === s) num2++
+            }
+            for(let i=0;i<Math.min(num1,num2);i++){
+                inter.push(el)
+            }
+        }
+    }
+    
+    for(let el of arr1){
+        if(!union.includes(el)){
+           let num1 = 0
+           let num2 = 0
+           for(let s of arr1){
+                if(el === s) num1++
+           }
+            for(let s of arr2){
+                if(el === s) num2++
+            }
+            for(let i=0;i<Math.max(num1,num2);i++){
+                union.push(el)
+            }
+        }
+    }
+    
+     for(let el of arr2){
+        if(!union.includes(el)){
+           let num1 = 0
+           let num2 = 0
+           for(let s of arr1){
+                if(el === s) num1++
+           }
+            for(let s of arr2){
+                if(el === s) num2++
+            }
+            for(let i=0;i<Math.max(num1,num2);i++){
+                union.push(el)
+            }
+        }
+    }
+ 
+    answer = parseInt(inter.length/union.length*65536)
+    return answer;
+}
