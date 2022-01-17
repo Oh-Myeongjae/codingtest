@@ -28,3 +28,77 @@ expression은 적어도 1개 이상의 연산자를 포함하고 있습니다.
 연산자 우선순위를 어떻게 적용하더라도, expression의 중간 계산값과 최종 결괏값은 절댓값이 263 - 1 이하가 되도록 입력이 주어집니다.
 같은 연산자끼리는 앞에 있는 것의 우선순위가 더 높습니다.
 */
+function solution(expression) {
+    var answer = 0;
+    let number = '0123456789'
+    let nArr = []
+    let op = []
+    let kind = []
+    let money = []
+    
+    const make = (opArr,s)=>{
+        if(opArr.length === 0){
+            kind.push(s)
+            return
+        } 
+        for(let i=0;i<opArr.length;i++){
+            let temp = opArr.slice()
+            temp.splice(i,1)
+            make(temp,s+opArr[i])
+        }
+    }
+    
+    let str = ''
+    for(let i=0;i<expression.length;i++){
+        if(number.includes(expression[i])){
+            str+=expression[i]
+        }else{
+            nArr.push(parseInt(str))
+            op.push(expression[i])
+            str = ''
+        }
+        if(i === expression.length-1){
+             nArr.push(parseInt(str))
+        }
+    }
+  //  console.log('nArr',nArr)
+  //  console.log('op',op)
+    let set = new Set(op);
+    set = [...set]
+  //  console.log('set',set)
+    make(set,'')
+   // console.log('kind',kind)
+    
+    for(let i=0;i<kind.length;i++){
+        let tempArr = nArr.slice()
+        let tempOp = op.slice()
+        
+        while(kind[i].length>0){
+           if(tempOp.indexOf(kind[i][0]) !== -1){
+               let idx = tempOp.indexOf(kind[i][0])
+                switch(tempOp[idx]){
+                    case '*': tempArr[idx] = tempArr[idx]*tempArr[idx+1]
+                            tempArr.splice(idx+1,1)
+                            tempOp.splice(idx,1)
+                            break;
+                    case '+':tempArr[idx] = tempArr[idx]+tempArr[idx+1]
+                            tempArr.splice(idx+1,1)
+                            tempOp.splice(idx,1)
+                            break;
+                    case '-':tempArr[idx] = tempArr[idx]-tempArr[idx+1]
+                            tempArr.splice(idx+1,1)
+                            tempOp.splice(idx,1)
+                            break;
+                }
+            }
+             if(tempOp.indexOf(kind[i][0]) === -1){
+                 kind[i] = kind[i].slice(1)
+             }
+        }
+         if(tempArr[0]<0) tempArr[0]*= -1
+        money.push(tempArr[0])
+    }
+   // console.log('money',money)
+    answer = Math.max(...money)
+    return answer;
+}
