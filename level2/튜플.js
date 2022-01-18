@@ -32,5 +32,25 @@ s는 숫자와 '{', '}', ',' 로만 이루어져 있습니다.
 s는 항상 중복되는 원소가 없는 튜플을 올바르게 표현하고 있습니다.
 s가 표현하는 튜플의 원소는 1 이상 100,000 이하인 자연수입니다.
 return 하는 배열의 길이가 1 이상 500 이하인 경우만 입력으로 주어집니다.
-
 */
+function solution(s) {
+    var answer = [];
+    s = s.slice(1,-1)
+    // console.log('s',s)
+    let number = '0123456789'
+    let sArr = [] 
+    let idx = 0
+    for(let i=0;i<s.length;i++){
+        if(s[i] === ',' && s[i-1] === '}' && s[i+1] === '{'){
+            sArr.push(s.slice(idx,i))
+            idx = i+1
+        }
+        if(i === s.length-1) sArr.push(s.slice(idx))
+    }
+    sArr = sArr.map((el)=>el.split('').slice(1,-1).join(''))
+    sArr.sort((a,b)=>a.length-b.length) 
+    sArr.map((el)=>el.split(',').map((num)=>{
+        if(!answer.includes(num))answer.push(num)
+    }))
+    return answer.map((x)=>parseInt(x));
+}
