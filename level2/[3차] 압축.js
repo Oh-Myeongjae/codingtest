@@ -57,3 +57,23 @@ OT		34
 출력 형식
 주어진 문자열을 압축한 후의 사전 색인 번호를 배열로 출력하라.
 */
+function solution(msg) {
+    var answer = [];
+    let dict = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+    let idx = 0;
+    let arr = msg.split('')
+    for(let i=0;i<arr.length;i++){
+      if(i<idx)continue
+      let str = arr[i]
+      for(let j=1;j<=arr.length-1-i;j++){
+          if(!dict.includes(str+arr[i+j])){
+              dict.push(str+arr[i+j])
+              break;
+          }
+          str+=arr[i+j]
+      }
+     answer.push(dict.indexOf(str))
+    idx += str.length
+    }
+    return answer;
+}
