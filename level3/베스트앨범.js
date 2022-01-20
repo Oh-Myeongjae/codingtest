@@ -17,3 +17,35 @@ genres와 plays의 길이는 같으며, 이는 1 이상 10,000 이하입니다.
 장르에 속한 곡이 하나라면, 하나의 곡만 선택합니다.
 모든 장르는 재생된 횟수가 다릅니다.
 */
+function solution(genres, plays) {
+    var answer = [];
+    let obj = {}
+    genres.map((x,idx)=>obj[x] === undefined ? obj[x] = plays[idx] : obj[x] += plays[idx])
+    let kind = []
+    let size = Object.keys(obj).length
+    for(let i=0;i<size;i++){
+        let max = Math.max(... Object.values(obj))
+        Object.keys(obj).map((x)=>{
+            if(obj[x] === max){
+                kind.push(x)
+                obj[x] = -1
+            }
+        })
+    }
+    for(let el of kind){
+        let temp = {}
+         genres.map( (x,idx) => {if(x === el) temp[idx] = plays[idx] })
+        let size = Object.keys(temp).length >= 2 ? 2 : Object.keys(temp).length
+        for(let i=0;i<size;i++){
+            let max = Math.max(...Object.values(temp))
+            for(let el of Object.keys(temp)){
+                if(temp[el] === max){
+                    answer.push(parseInt(el))
+                    temp[el] = -1
+                    break;
+                }
+            }
+        }
+    }
+    return answer;
+}
