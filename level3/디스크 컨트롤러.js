@@ -32,3 +32,53 @@ jobs의 각 행은 하나의 작업에 대한 [작업이 요청되는 시점, �
 각 작업에 대해 작업의 소요시간은 1 이상 1,000 이하입니다.
 하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.
 */
+function solution(jobs) {
+    var answer = 0;
+    jobs.sort((a,b)=>{
+        if(a[0] !== b[0]){
+            return a[0]-b[0]
+        }else{
+            return a[1]-b[1]
+        }
+    })
+    let startTime = 0
+    let job = []
+    let size = jobs.length
+    let finishTime = 0
+    for(let i=0;i<size;i++){
+       if(i === 0){
+          if(startTime<jobs[0][0])startTime = jobs[0][0]
+           finishTime = startTime + jobs[0][1]
+           job.push(finishTime-startTime)
+           jobs.shift()
+       }else{
+            let temp = jobs.filter((x)=>{
+                if(x[0]<=finishTime) return true
+            })
+            if(temp.length === 0){
+              startTime = finishTime
+              finishTime = startTime + jobs[0][1]
+              job.push(finishTime-startTime)
+              jobs.shift()
+            }else{
+                temp.sort((a,b)=>a[1]-b[1])
+                let min = temp[0][1]
+                let idx = 0
+                for(let i=0;i<jobs.length;i++){
+                    if(jobs[i][1] === min){
+                        idx = i
+                        break;
+                    }
+                }
+                finishTime += jobs[idx][1]
+                job.push(finishTime - jobs[idx][0])
+                jobs.splice(idx,1)
+            }
+       }
+    }
+    let sum = job.reduce((pre,cur)=>pre+cur)
+    answer = sum/job.length
+    return parseInt(answer); 
+}
+
+*/
