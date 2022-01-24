@@ -15,3 +15,24 @@ operations의 원소는 큐가 수행할 연산을 나타냅니다.
 원소는 “명령어 데이터” 형식으로 주어집니다.- 최댓값/최솟값을 삭제하는 연산에서 최댓값/최솟값이 둘 이상인 경우, 하나만 삭제합니다.
 빈 큐에 데이터를 삭제하라는 연산이 주어질 경우, 해당 연산은 무시합니다.
 */
+function solution(operations) {
+    var answer = [];
+    let arr = operations.map((x)=>{
+       return x.split(' ') 
+    });
+    for(let el of arr){
+        if(el[0] === 'D' && answer.length === 0)continue;
+        else if(el[0] === 'I')answer.push(parseInt(el[1]))
+        else{
+            if(el[1] === '1'){
+                let max = Math.max(...answer)
+                answer.splice(answer.indexOf(max),1)
+            }else{
+                let min = Math.min(...answer)
+                answer.splice(answer.indexOf(min),1)
+            }
+        }
+    }
+    if(answer.length === 0)return [0,0]
+    return [Math.max(...answer),Math.min(...answer)];
+}
