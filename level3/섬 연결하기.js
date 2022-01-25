@@ -13,3 +13,31 @@ costs의 길이는 ((n-1) * n) / 2이하입니다.
 모든 섬 사이의 다리 건설 비용이 주어지지 않습니다. 이 경우, 두 섬 사이의 건설이 불가능한 것으로 봅니다.
 연결할 수 없는 섬은 주어지지 않습니다.
 */
+function solution(n, costs){
+  let answer = 0;
+  let union = [];
+
+  for(let i=0; i<n; i++){
+    union[i] = i;
+  }
+
+  const find = n => {
+    if(union[n]== n){
+      return n;
+    }else{
+      return find(union[n]);
+    }
+  }
+
+  costs.sort((a,b) => a[2]-b[2]);
+  for(let i=0; i<costs.length; i++){
+    // 이 둘의 루트 노드가 같은 지 판단 
+    let start = find(costs[i][0]);
+    let end = find(costs[i][1]);
+    if(start !== end){
+      union[end] = start;
+      answer += costs[i][2];
+    }
+  }
+   return answer;
+}
