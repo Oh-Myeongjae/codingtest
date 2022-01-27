@@ -12,3 +12,19 @@ routes에는 차량의 이동 경로가 포함되어 있으며 routes[i][0]에�
 차량의 진입/진출 지점에 카메라가 설치되어 있어도 카메라를 만난것으로 간주합니다.
 차량의 진입 지점, 진출 지점은 -30,000 이상 30,000 이하입니다.
 */
+function solution(routes) {
+    var answer = 0;
+    routes.sort((a,b)=>a[1]-b[1])
+    let arr = []
+    arr.push(routes[0][1])
+    for(let el of routes){
+        let check = false
+        arr.map((x)=>{
+             check = el[0]<=x && x<=el[1] ? false : true
+        })
+        if(check)arr.push(el[1])
+    }
+    console.log('arr',arr)
+    answer = arr.length
+    return answer;
+}
