@@ -15,3 +15,41 @@ number는 1 이상 32,000 이하입니다.
 수식에는 괄호와 사칙연산만 가능하며 나누기 연산에서 나머지는 무시합니다.
 최솟값이 8보다 크면 -1을 return 합니다.
 */
+function solution(N, number) {
+    var answer = 0;
+    let arr =[[N]]
+    if(number === arr[0][0])return 1
+    for(let i=2;i<=8;i++){
+       //console.log('arr',arr)
+        let temp = []
+        let middle = i/2-1
+        let str = ''+N
+        str = parseInt(str.repeat(i))
+        if(str === number)return i
+        for(let k=0;k<=middle;k++){
+            if(k===middle){
+                arr[k].map((x)=>{arr[k].map((y)=>{
+                    if(!temp.includes(x+y) && x+y>=1)temp.push(x+y)
+                    if(!temp.includes(x-y) && x-y>=1)temp.push(x-y)
+                    if(!temp.includes(x*y) && x*y>=1)temp.push(x*y)
+                    if(!temp.includes(x/y) && x/y>=1)temp.push(parseInt(x/y))
+                })})
+            }else{
+                arr[k].map((x)=>{arr[arr.length-1-k].map((y)=>{
+                   if(!temp.includes(x+y) && x+y>=1)temp.push(x+y)
+                   if(!temp.includes(x-y) && x-y>=1)temp.push(x-y)
+                   if(!temp.includes(x*y) && x*y>=1)temp.push(x*y)
+                   if(!temp.includes(x/y) && x/y>=1)temp.push(parseInt(x/y))
+                   if(!temp.includes(y-x) && y-x>=1)temp.push(y-x)
+                   if(!temp.includes(y/x) && y/x>=1)temp.push(parseInt(y/x))
+                })})
+            }
+        }
+        temp.push(str)
+        if(temp.includes(number)) answer = i
+        if(answer !== 0) break;
+        arr.push(temp)
+    }
+    if(answer === 0) answer = -1;
+    return answer;
+}
