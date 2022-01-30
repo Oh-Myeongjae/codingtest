@@ -29,7 +29,6 @@ function solution(n, times) {
         let sum = times.reduce((pre,cur)=>{
             return pre+parseInt(mid/cur)
         },0)
-        //console.log('sum',sum)
         if(sum == n){
             answer = mid
             max = mid
@@ -41,44 +40,5 @@ function solution(n, times) {
             check = false
         }
     }
-    
-    // min = answer-Math.min(...times)
-    // max = answer
-    // while(true){
-    //     let mid = Math.floor((min+max)/2)
-    //     let sum = times.reduce((pre,cur)=>{
-    //         return pre+(max/cur)
-    //     },0)
-    //     if(sum === n){
-    //         answer = max
-    //         break;
-    //     }
-    //     max--
-    // }
     return answer;
 }
-
-/*
-function solution(n, times) {
-    var answer = 0;
-    times.sort((a,b)=>a-b)
-    let work = new Array(times.length).fill(0)
-    //console.log('work1',work)
-    while(n>0){
-        //console.log('work1',work)
-        let temp  = work.slice().map((x,idx)=>{
-            return x+times[idx]
-        })
-        //console.log('temp',temp)
-        let min = Math.min(...temp)
-        let mIdx = temp.indexOf(min)
-        work[mIdx] += times[mIdx] 
-        n--
-        //console.log('work2',work)
-      //  console.log('n',n)
-        if(n === 0) answer = min
-    }
-    //console.log('work',work)
-    return answer;
-}
-*/
