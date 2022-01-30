@@ -16,3 +16,69 @@ n명이 입국심사를 위해 줄을 서서 기다리고 있습니다. 각 입�
 각 심사관이 한 명을 심사하는데 걸리는 시간은 1분 이상 1,000,000,000분 이하입니다.
 심사관은 1명 이상 100,000명 이하입니다.
 */
+function solution(n, times) {
+    var answer = 0;
+    let check = true
+    let min = Math.min(...times)
+    let max = Math.max(...times)*n
+    while(check){
+        let left = min
+        let right = max
+        let mid = Math.floor((min+max)/2)
+        if(answer === mid)check = false
+        let sum = times.reduce((pre,cur)=>{
+            return pre+parseInt(mid/cur)
+        },0)
+        //console.log('sum',sum)
+        if(sum == n){
+            answer = mid
+            max = mid
+        }else{
+            n > sum ? min = mid : max = mid 
+        }
+        if(min === left && max === right && check === true){
+            answer  = max
+            check = false
+        }
+    }
+    
+    // min = answer-Math.min(...times)
+    // max = answer
+    // while(true){
+    //     let mid = Math.floor((min+max)/2)
+    //     let sum = times.reduce((pre,cur)=>{
+    //         return pre+(max/cur)
+    //     },0)
+    //     if(sum === n){
+    //         answer = max
+    //         break;
+    //     }
+    //     max--
+    // }
+    return answer;
+}
+
+/*
+function solution(n, times) {
+    var answer = 0;
+    times.sort((a,b)=>a-b)
+    let work = new Array(times.length).fill(0)
+    //console.log('work1',work)
+    while(n>0){
+        //console.log('work1',work)
+        let temp  = work.slice().map((x,idx)=>{
+            return x+times[idx]
+        })
+        //console.log('temp',temp)
+        let min = Math.min(...temp)
+        let mIdx = temp.indexOf(min)
+        work[mIdx] += times[mIdx] 
+        n--
+        //console.log('work2',work)
+      //  console.log('n',n)
+        if(n === 0) answer = min
+    }
+    //console.log('work',work)
+    return answer;
+}
+*/
