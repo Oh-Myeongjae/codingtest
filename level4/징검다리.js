@@ -19,3 +19,37 @@
 바위는 1개 이상 50,000개 이하가 있습니다.
 n 은 1 이상 바위의 개수 이하입니다.
 */
+function solution(distance, rocks, n) {
+    var answer = 0;
+    rocks.sort((a,b)=>a-b)
+    rocks.push(distance)
+    
+    let start = 0;
+    let end = distance;
+    let mid = Math.floor((start + end)/2);
+
+    while(start < end) {
+        let count = 0;
+        let pre = 0;        
+        let min_d = distance;
+        let same = 0
+        
+        for(let i=0;i<rocks.length;i++) {
+            let d = rocks[i] - pre;
+            if(d < mid && i !==rocks.length-1)count++;
+            else {
+                if(d===mid)same++
+                pre = rocks[i];
+                min_d = Math.min(min_d, d);
+            }
+        }
+      
+        if(start === mid)return start
+        if(count <= n)start = mid;
+        else {end = mid}
+ 
+        mid = Math.floor((start + end)/2);
+    }
+    answer = mid
+    return answer;
+}
