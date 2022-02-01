@@ -12,3 +12,25 @@
 i번 컴퓨터와 j번 컴퓨터가 연결되어 있으면 computers[i][j]를 1로 표현합니다.
 computer[i][i]는 항상 1입니다.
 */
+function solution(n, computers) {
+    var answer = 0;
+    let visited = new Array(n).fill(false)
+    const func = (i)=>{
+        if(visited[i])  return
+        
+        visited[i] = true
+        for(let j=0;j<computers[i].length;j++){
+            if(computers[i][j] === 1){
+                func(j)
+            }
+        }
+        
+        return 1
+    }
+    for(let x=0;x<n;x++){
+        if(!visited[x]){
+            answer += func(x)
+        }
+    }
+    return answer;
+}
