@@ -15,3 +15,26 @@ words에는 3개 이상 50개 이하의 단어가 있으며 중복되는 단어�
 begin과 target은 같지 않습니다.
 변환할 수 없는 경우에는 0를 return 합니다.
 */
+function solution(begin, target, words) {
+    var answer = 0;
+    const func = (str,arr,count) =>{
+        if(str === target){
+            answer = answer === 0 ? count : Math.min(answer,count)
+            return
+        }
+        for(let i=0;i<arr.length;i++){
+            let temp = 0
+            arr[i].split('').map((x,idx)=>{
+                if(arr[i][idx] !== str[idx])temp++
+            })
+            if(temp === 1){
+                let copy = arr.slice()
+                copy.splice(i,1)
+                func(arr[i],copy,count+1)
+            }
+        }
+        return
+    }
+    func(begin,words,0)
+    return answer;
+}
