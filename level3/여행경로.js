@@ -12,3 +12,24 @@ tickets의 각 행 [a, b]는 a 공항에서 b 공항으로 가는 항공권이 �
 만일 가능한 경로가 2개 이상일 경우 알파벳 순서가 앞서는 경로를 return 합니다.
 모든 도시를 방문할 수 없는 경우는 주어지지 않습니다.
 */
+function solution(tickets) {
+    var answer = [];
+    const func = (now,arr)=>{
+        if(arr.length === 0){
+            answer.push(now)
+            return
+        }
+        for(let i=0;i<arr.length;i++){
+            if(arr[i][0] === now[now.length-1]){
+                let Ntemp = now.slice()
+                Ntemp.push(arr[i][1])
+                let Atemp = arr.slice()
+                Atemp.splice(i,1)
+                func(Ntemp,Atemp)
+            }
+        }
+    }
+    func(['ICN'],tickets)
+    answer.sort()
+    return answer[0];
+}
