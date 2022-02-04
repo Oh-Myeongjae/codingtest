@@ -11,3 +11,42 @@ n개의 노드가 있는 그래프가 있습니다. 각 노드는 1부터 n까�
 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
 vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
 */
+function solution(n, edge) {
+    var answer = 0;
+    let check = new Array(n+1).fill(true)
+    check[1] = false
+    const func = (arr) => {
+        let temp = []
+        for(let el of arr){
+            for(let i=0;i<edge.length;i++){
+                if(edge[i][0] === el){
+                    if(check[edge[i][1]]){
+                        check[edge[i][1]] = false
+                        temp.push(edge[i][1])
+                        edge.splice(i,1)
+                        i--
+                    }else{
+                        edge.splice(i,1)
+                        i--
+                    }
+                }else if(edge[i][1] === el){
+                    if(check[edge[i][0]]){
+                        check[edge[i][0]] = false
+                        temp.push(edge[i][0])
+                        edge.splice(i,1)
+                        i--
+                    }else{
+                        edge.splice(i,1)
+                        i--
+                    }   
+                }
+            }
+        }
+         if(temp.length !== 0){
+                answer = temp.length
+                func(temp)
+         }
+    }
+    func([1])
+    return answer;
+}
