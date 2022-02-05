@@ -11,3 +11,38 @@ n명의 권투선수가 권투 대회에 참여했고 각각 1번부터 n번까�
 경기 결과는 1개 이상 4,500개 이하입니다.
 results 배열 각 행 [A, B]는 A 선수가 B 선수를 이겼다는 의미입니다.
 */
+function solution(n, results) {
+    var answer = 0;
+    let arr = new Array(n+1)
+    for(let i = 0;i<arr.length;i++){
+        arr[i] = new Array(n+1).fill(0) 
+    }
+    
+    for(let el of results){
+        arr[el[0]][el[1]] = 2
+        arr[el[1]][el[0]] = 1       
+    }
+    
+    for(let el of arr){
+        let win = []
+        let lose = []
+        el.map((x,idx)=>{
+            if(x === 2){
+                win.push(idx)
+            }else if(x === 1){
+                lose.push(idx)
+            }
+        })
+        win.map((a)=>lose.map((b)=>arr[a][b] = 1))
+        lose.map((a)=>win.map((b)=>arr[a][b] = 2))
+    }
+  
+    for(let el of arr){
+        let count = 0
+        el.map((n)=>{
+            if(n===0)count++
+        })
+        if(count === 2)answer++
+    }
+    return answer;
+}
