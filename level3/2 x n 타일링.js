@@ -14,3 +14,14 @@
 가로의 길이 n은 60,000이하의 자연수 입니다.
 경우의 수가 많아 질 수 있으므로, 경우의 수를 1,000,000,007으로 나눈 나머지를 return해주세요.
 */
+function solution(n) {
+    var answer = 0;
+    const arr = [];
+    arr.push(0, 1, 2);
+    for (let i = 3; i <= n; i++) {
+        arr[i] = arr[i-2]+arr[i-1] ;
+        arr[i] = arr[i]%1000000007
+    }
+    answer = arr[n];   
+    return answer;
+}
