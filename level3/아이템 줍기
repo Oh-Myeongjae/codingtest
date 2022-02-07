@@ -29,3 +29,78 @@ itemX, itemY는 1 이상 50 이하인 자연수입니다.
 지형을 나타내는 다각형 테두리 위의 한 점이 주어집니다.
 캐릭터와 아이템의 처음 위치가 같은 경우는 없습니다.
 */
+function solution(rectangle, characterX, characterY, itemX, itemY) {
+    var answer = 0;
+    let max = 0;
+    rectangle = rectangle.map((x)=>{
+        x = x.map((n)=>{
+            n*=2
+            max = max === 0 ? n : Math.max(max,n)
+            return n
+        })
+        return x
+    })
+    max += 2
+    let arr = new Array(max)
+    for(let i=0;i<arr.length;i++){
+        arr[i] = new Array(max).fill(0)
+    }    
+    for(let el of rectangle){
+             for(let i=max-el[3]-1;i<max-el[1];i++){
+            for(let j=el[0];j<=el[2];j++){
+                arr[i][j] = 1
+            }
+        }
+       
+    }
+     for(let el of rectangle){
+        for(let i=max-el[3];i<max-el[1]-1;i++){
+            for(let j=el[0]+1;j<el[2];j++){
+                arr[i][j] = 0
+            }
+        }
+    }
+    
+    characterX *= 2
+    characterY *= 2
+    itemX *= 2
+    itemY *= 2
+    characterY = max-1-characterY
+    itemY = max-1-itemY
+    
+    const func = (now,count) => {
+        let temp = []
+        while(now.length>0){
+            let check = now[0]
+            if(check[0] === itemY && check[1] === itemX){
+              answer = count
+              return
+            } 
+            if(arr[check[0]][check[1]+1] === 1){
+                temp.push([check[0],check[1]+1])
+                arr[check[0]][check[1]+1] = 0
+            }
+              if(arr[check[0]][check[1]-1] === 1){
+                temp.push([check[0],check[1]-1])
+                arr[check[0]][check[1]-1] = 0
+            }
+              if(arr[check[0]+1][check[1]] === 1){
+                temp.push([check[0]+1,check[1]])
+                arr[check[0]+1][check[1]] = 0
+            }
+              if(arr[check[0]-1][check[1]] === 1){
+                temp.push([check[0]-1,check[1]])
+                arr[check[0]-1][check[1]] = 0
+            }
+            now.shift()
+        }
+      
+         if(temp.length !== 0){
+             func(temp,count+1)
+         }
+    }
+    arr[characterY][characterX] = 0
+    func([[characterY,characterX]],0)
+    answer /= 2
+    return answer;
+}
