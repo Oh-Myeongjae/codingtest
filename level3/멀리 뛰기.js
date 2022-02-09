@@ -12,3 +12,18 @@
 제한 사항
 n은 1 이상, 2000 이하인 정수입니다.
 */
+function solution(n) {
+    var answer = 0; 
+    let arr = [0,1,2,3]
+    if(n<=3) return arr[n]
+    const func = (num)=>{
+        if(arr[num] !== undefined) return arr[num]
+        for(let i=4;i<=num;i++){
+            arr[i] = func(i-1)+func(i-2)
+            arr[i] %= 1234567
+        }
+    }
+    func(n)
+    answer = arr[n]
+    return answer;
+}
