@@ -18,3 +18,36 @@ edges의 행의 개수는 (a의 길이 - 1)입니다.
 edges의 각 행은 [u, v] 2개의 정수로 이루어져 있으며, 이는 u번 정점과 v번 정점이 간선으로 연결되어 있음을 의미합니다.
 edges가 나타내는 그래프는 항상 트리로 주어집니다.
 */
+function solution(a, edges) {
+    const tree = new Array(a.length).fill().map(_ => []);
+    for(const [u, v] of edges) {
+        tree[u].push(v);
+        tree[v].push(u);
+    }
+
+    const stack = [ [0, -1] ];
+    const visit = new Array(a.length).fill(false);
+
+    let answer = 0n;
+    while(stack.length) {
+        console.log('stack',stack)
+        const [start, parent] = stack.pop();
+
+        if(visit[start]) {              
+            a[parent] += a[start];
+            answer += BigInt(Math.abs(a[start]));
+            continue;
+        }
+
+        stack.push([start, parent]);
+        visit[start] = true;
+
+        for(const next of tree[start]) {
+            if(!visit[next]) {  
+                stack.push([next, start]);
+            }
+        }
+    }
+
+    return a[0] ? -1 : answer;
+}
