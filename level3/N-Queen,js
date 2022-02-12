@@ -10,3 +10,36 @@
 퀸(Queen)은 가로, 세로, 대각선으로 이동할 수 있습니다.
 n은 12이하의 자연수 입니다.
 */
+function solution(n) {
+    var answer = 0;
+    let arr = new Array(n)
+    for(let i=0;i<arr.length;i++){
+        arr[i] = new Array(n).fill(true)
+    }
+    const func = (num,matrix)=>{
+        if(num>=n){
+            answer++
+            return
+        }
+       
+        for(let i=0;i<n;i++){
+            if(matrix[num][i]){   
+                let copy = matrix.slice().map((x)=>[...x])
+                for(let j=0;j<n;j++){
+                    copy[j][i] = false
+                    copy[num][j] = false
+                }
+              for(let j=1;j<=i;j++){
+                  if(num+j<n)copy[num+j][i-j] = false
+              }
+              for(let j=1;j<=n-1-i;j++){
+                  if(num+j<n)copy[num+j][i+j] = false
+              }  
+              func(num+1,copy)  
+            }
+            
+        }
+    }
+    func(0,arr)
+    return answer;
+}
