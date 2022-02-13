@@ -20,3 +20,23 @@ a[i]는 i+1 번째 풍선에 써진 숫자를 의미합니다.
 a의 모든 수는 -1,000,000,000 이상 1,000,000,000 이하인 정수입니다.
 a의 모든 수는 서로 다릅니다.
 */
+function solution(a) {
+    var answer = 0;
+    let arr = new Set();
+    let left = a[0]
+    let right = a[a.length-1]
+    
+    for(let i=1;i<a.length-1;i++){
+        if(left>a[i]){
+            left = a[i]
+            arr.add(a[i])
+        }
+        if(right>a[a.length-1-i]){
+            right = a[a.length-1-i]
+            arr.add(a[a.length-1-i])
+        }
+    }
+   //console.log('arr',arr)
+    answer = arr.size+2
+    return answer;
+}
