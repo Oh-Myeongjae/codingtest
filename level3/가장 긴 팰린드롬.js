@@ -9,3 +9,30 @@
 문자열 s의 길이 : 2,500 이하의 자연수
 문자열 s는 알파벳 소문자로만 구성
 */
+function solution(s){
+    var answer = 0;
+    const check = (ch)=>{
+        if(ch.length <= 1) return true
+        if(ch[0] === ch[ch.length-1]){
+            return check(ch.slice(1,ch.length-1))
+        }
+    }
+
+    for(let i=0;i<s.length;i++){
+        let num = s.length-i
+        for(let j=0;j<=i;j++){
+            let str = s.slice(j,j+num)
+            //console.log('str',str)
+            if(check(str)){
+                // console.log('wow')
+                answer = str.length
+                break;
+            }
+        }
+        if(answer !== 0){
+            break;
+        }
+    }
+  
+    return answer;
+}
