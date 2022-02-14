@@ -22,9 +22,7 @@ function solution(s){
         let num = s.length-i
         for(let j=0;j<=i;j++){
             let str = s.slice(j,j+num)
-            //console.log('str',str)
             if(check(str)){
-                // console.log('wow')
                 answer = str.length
                 break;
             }
