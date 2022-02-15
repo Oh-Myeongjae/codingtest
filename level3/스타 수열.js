@@ -18,3 +18,25 @@ a의 모든 부분 수열 중에서 가장 길이가 긴 스타 수열의 길이
 a의 길이는 1 이상 500,000 이하입니다.
 a의 모든 수는 0 이상 (a의 길이) 미만입니다.
 */
+function solution( a)
+{
+    let answer = -1;
+    let Cnt = Array(a.length+1).fill(0);
+    for (let i = 0; i < a.length; i++) Cnt[a[i]]++;
+    
+    for (let i = 0; i < Cnt.length; i++){
+        if (Cnt[i] === 0) continue;
+        if (Cnt[i] <= answer) continue;
+        let Result = 0;
+        for (let j = 0; j < a.length - 1; j++)
+        {
+            if (a[j] != i && a[j + 1] != i) continue;
+            if (a[j] == a[j + 1]) continue;          
+            Result++;
+            j++;
+            
+        }
+        answer = Math.max(answer, Result);
+    }
+    return answer * 2;
+}
