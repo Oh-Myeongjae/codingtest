@@ -16,3 +16,17 @@ n은 100,000 이하의 자연수입니다.
 모든 화폐는 무한하게 있다고 가정합니다.
 정답이 커질 수 있으니, 1,000,000,007로 나눈 나머지를 return 해주세요.
 */
+function solution(n, money) {
+    var answer = 0;
+    let dp = new Array(n+1).fill(0)
+    dp[0] = 1
+    money.sort((a,b)=>a-b)
+    for(let i=0;i<=money.length;i++){
+        for(let j=1;j<dp.length;j++){
+            if(j<money[i])continue;
+           if(j-money[i]>=0) dp[j] += dp[j-money[i]] 
+        }
+    }
+    answer = dp[n]
+    return answer;
+}
