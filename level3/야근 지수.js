@@ -8,5 +8,33 @@ Demi는 N시간 동안 야근 피로도를 최소화하도록 일할 겁니다.D
 works는 길이 1 이상, 20,000 이하인 배열입니다.
 works의 원소는 50000 이하인 자연수입니다.
 n은 1,000,000 이하인 자연수입니다.
-
 */
+function solution(n, works) {
+    var answer = 0;
+    let count = 0
+    let max = Math.max(...works)
+    let arr = new Array(max+1).fill(0)
+    
+    for(let el of works){
+        count += el
+        arr[el]++
+    }
+
+    if(count<=n)return 0
+    
+    while(n>0){
+        arr[max] -= 1
+        arr[max-1] +=1
+        if(arr[max] === 0)max -= 1
+        n--
+    }      
+ 
+    for(let i=1;i<arr.length;i++){
+        if(arr[i] !== 0){
+            for(let j=1;j<=arr[i];j++){
+                answer += i*i
+            }
+        }
+    }
+    return answer;
+}
