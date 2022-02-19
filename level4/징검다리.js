@@ -23,7 +23,7 @@ function solution(distance, rocks, n) {
     var answer = 0;
     rocks.sort((a,b)=>a-b)
     rocks.push(distance)
-    
+     
     let start = 0;
     let end = distance;
     let mid = Math.floor((start + end)/2);
