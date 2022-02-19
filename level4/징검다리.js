@@ -43,7 +43,7 @@ function solution(distance, rocks, n) {
                 min_d = Math.min(min_d, d);
             }
         }
-      
+     
         if(start === mid)return start
         if(count <= n)start = mid;
         else {end = mid}
