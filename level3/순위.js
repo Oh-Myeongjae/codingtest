@@ -16,7 +16,7 @@ function solution(n, results) {
     let arr = new Array(n+1)
     for(let i = 0;i<arr.length;i++){
         arr[i] = new Array(n+1).fill(0) 
-    }
+    } 
     
     for(let el of results){
         arr[el[0]][el[1]] = 2
