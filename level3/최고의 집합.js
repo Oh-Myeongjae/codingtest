@@ -16,3 +16,20 @@
 자연수의 개수 n은 1 이상 10,000 이하의 자연수입니다.
 모든 원소들의 합 s는 1 이상, 100,000,000 이하의 자연수입니다.
 */
+function solution(n, s) {
+    var answer = [];
+    if(n>s)return [-1]
+    let num = Math.floor(s/n)
+   
+    for(let i=0;i<n;i++){
+        answer.push(num)
+        s-=num
+    }
+    
+    for(let j=answer.length-1;j>=0;j--){
+        if(s === 0) break;
+        answer[j]+=1
+        s-=1      
+    }
+    return answer;
+}
