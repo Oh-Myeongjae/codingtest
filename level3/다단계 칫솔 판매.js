@@ -58,10 +58,7 @@ function solution(enroll, referral, seller, amount) {
         info[enroll[i]] = [referral[i],0]
     }
     
-   // console.log('info1',info)
-    
     const func = (name,money)=>{
-        // console.log('money',money)
         let fee = Math.floor(money*0.1)
         info[name][1] += money-fee
         if(fee !== 0 && info[name][0] !== '-'){
@@ -70,7 +67,6 @@ function solution(enroll, referral, seller, amount) {
     }
     
     for(let i=0;i<seller.length;i++){
-        //console.log('info1',info)
         let price = amount[i]*100
         let remain = Math.floor(price*0.1)
         info[seller[i]][1]+=price-remain
@@ -78,8 +74,6 @@ function solution(enroll, referral, seller, amount) {
             func(info[seller[i]][0],remain)
         }
     }
-    
-   //console.log('info1',info)
    answer = Object.values(info).map((x)=>x[1])
     return answer;
 }
