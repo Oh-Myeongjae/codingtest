@@ -51,3 +51,35 @@ amount 내의 i 번째에 있는 수는 i 번째 판매 집계 데이터의 판�
 칫솔 한 개를 판매하여 얻어지는 이익은 100 원으로 정해져 있습니다.
 모든 조직 구성원들의 이름은 10 글자 이내의 영문 알파벳 소문자들로만 이루어져 있습니다.
 */
+function solution(enroll, referral, seller, amount) {
+    var answer = [];
+    let info = {}
+    for(let i=0;i<enroll.length;i++){
+        info[enroll[i]] = [referral[i],0]
+    }
+    
+   // console.log('info1',info)
+    
+    const func = (name,money)=>{
+        // console.log('money',money)
+        let fee = Math.floor(money*0.1)
+        info[name][1] += money-fee
+        if(fee !== 0 && info[name][0] !== '-'){
+            func(info[name][0],fee)
+        }
+    }
+    
+    for(let i=0;i<seller.length;i++){
+        //console.log('info1',info)
+        let price = amount[i]*100
+        let remain = Math.floor(price*0.1)
+        info[seller[i]][1]+=price-remain
+        if(remain !== 0 && info[seller[i]][0] !== '-'){
+            func(info[seller[i]][0],remain)
+        }
+    }
+    
+   //console.log('info1',info)
+   answer = Object.values(info).map((x)=>x[1])
+    return answer;
+}
