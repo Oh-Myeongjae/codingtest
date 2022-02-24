@@ -15,3 +15,16 @@ A와 B의 길이는 1 이상 100,000 이하입니다.
 A와 B의 각 원소는 1 이상 1,000,000,000 이하의 자연수입니다.
 
 */
+function solution(A, B) {
+    var answer = 0;
+    let idx = 0
+    A.sort((a,b)=>a-b)
+    B.sort((a,b)=>a-b)
+    for(let el of B){
+        if(el>A[idx]){
+            answer++
+            idx++
+        }
+    }
+    return answer;
+}
