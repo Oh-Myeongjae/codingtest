@@ -13,3 +13,21 @@ sticker는 원형으로 연결된 스티커의 각 칸에 적힌 숫자가 순�
 sticker의 각 원소는 스티커의 각 칸에 적힌 숫자이며, 각 칸에 적힌 숫자는 1 이상 100 이하의 자연수입니다.
 원형의 스티커 모양을 위해 sticker 배열의 첫 번째 원소와 마지막 원소가 서로 연결되어있다고 간주합니다.
 */
+function solution(sticker) {
+    var answer = 0;
+    if(sticker.length === 1) return sticker[0]
+    const func = (arr)=>{
+        for(let i=1;i<arr.length;i++){
+            if(i===1){
+                arr[i] = Math.max(arr[i],arr[i-1])
+            }else{
+                arr[i] = Math.max(arr[i-1],arr[i-2]+arr[i])
+            }
+        }
+        return arr[arr.length-1]
+    }
+    let A = func(sticker.slice(0,-1))
+    let B = func(sticker.slice(1))
+    answer = Math.max(A,B)
+    return answer;
+}
