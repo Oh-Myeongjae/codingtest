@@ -40,7 +40,7 @@ function solution(jobs) {
         }else{
             return a[1]-b[1]
         }
-    })
+    }) 
     let startTime = 0
     let job = []
     let size = jobs.length
