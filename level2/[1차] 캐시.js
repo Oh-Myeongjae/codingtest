@@ -21,3 +21,25 @@ cities는 도시 이름으로 이뤄진 문자열 배열로, 최대 도시 수�
 cache hit일 경우 실행시간은 1이다.
 cache miss일 경우 실행시간은 5이다.
 */
+function solution(cacheSize, cities) {
+    var answer = 0;
+    cities = cities.map((x)=>x.toUpperCase())
+    
+    let arr = []
+    for(let el of cities){
+        if(arr.indexOf(el) === -1){
+            if(arr.length < cacheSize)arr.push(el)
+            else if(arr.length === cacheSize){
+                arr.shift()
+                arr.push(el)
+            }
+            answer += 5
+        }else{
+            let idx = arr.indexOf(el)
+            arr.splice(idx,1)
+            arr.push(el)
+            answer += 1
+        }
+    }
+    return answer;
+}
