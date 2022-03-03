@@ -20,6 +20,9 @@ cities는 도시 이름으로 이뤄진 문자열 배열로, 최대 도시 수�
 캐시 교체 알고리즘은 LRU(Least Recently Used)를 사용한다.
 cache hit일 경우 실행시간은 1이다.
 cache miss일 경우 실행시간은 5이다.
+
+[알고리즘] LRU(Least-Recently-Used) 알고리즘(https://wlswoo.tistory.com/16?category=897391)
+가장 오래된 값을 제거하고 새로운 값을 넣습니다. 가장 기본적인 개념입니다.
 */
 function solution(cacheSize, cities) {
     var answer = 0;
