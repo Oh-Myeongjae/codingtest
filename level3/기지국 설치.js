@@ -20,3 +20,24 @@ stations의 크기: 10,000 이하의 자연수
 stations는 오름차순으로 정렬되어 있고, 배열에 담긴 수는 N보다 같거나 작은 자연수입니다.
 W: 10,000 이하의 자연수
 */
+function solution(n, stations, w) {
+    var answer = 0;
+    let arr = []
+    let num = 2*w+1
+    if(1<stations[0]-w) arr.push(stations[0]-w-1)
+    
+    for(let i=0;i<stations.length;i++){
+        let start = stations[i]+w+1
+        let end = stations[i+1]-w
+        if(end-start>0)arr.push(end-start)
+    }
+    if(stations[stations.length-1]+w+1<=n)arr.push(n+1-(stations[stations.length-1]+w+1))
+ 
+    for(let el of arr){
+        if(el<=num) answer++
+        else{
+            answer += el%num === 0 ? el/num : parseInt(el/num)+1
+        }
+    }
+    return answer;
+}
