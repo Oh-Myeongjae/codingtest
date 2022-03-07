@@ -24,3 +24,43 @@ musicinfos는 100개 이하의 곡 정보를 담고 있는 배열로, 각각의 
 출력 형식
 조건과 일치하는 음악 제목을 출력한다.
 */
+function solution(m, musicinfos) {
+    var answer = '';
+    let arr = []
+    for(let i=0;i<musicinfos.length;i++){
+        let info = musicinfos[i].split(',')
+        let start = info[0].split(':')
+        let end = info[1].split(':')
+        let time = (end[0]-start[0])*60 + (end[1]-start[1])
+        
+        let music = []
+       // console.log('time',time)
+        for(let j=0;j<info[3].length;j++){
+            if(info[3][j] !== '#')music.push(info[3][j])
+            else{music[music.length-1]+='#'}
+        }
+        //console.log('music',music)
+        let len = music.length
+        let temp = ''
+        temp += music.join('').repeat(Math.floor(time/len))
+        for(let j=0;j<time%len;j++){
+            temp += music[j]
+        }
+        console.log('temp',temp)
+        arr.push([time,temp,info[2]])
+    }
+    //console.log('arr',arr)
+    let max = 0
+    for(let i=0;i<arr.length;i++){
+        //console.log('arr[i][1]',arr[i][1])
+        for(let j=0;j<=arr[i][1].length;j++){
+            if(arr[i][1].slice(j,j+m.length) === m && arr[i][1][j+m.length] !=='#' && max<arr[i][0]){
+                answer = arr[i][2]
+                max = arr[i][0]
+                break;
+            }
+        }        
+    }
+    if(answer === '') answer = '(None)'
+    return answer;
+}
