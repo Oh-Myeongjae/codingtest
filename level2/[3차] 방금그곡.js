@@ -34,6 +34,7 @@ function solution(m, musicinfos) {
         let end = info[1].split(':')
         let time = (end[0]-start[0])*60 + (end[1]-start[1])
         
+        //음을 분리해주는 작업이다. 초반에 이부분때문에 많이 틀렸는데 #은 음이 아니기떄문에 ABC#을 A,B,C,#과같이 4개의 음으로 계산하는 실수를 막기위해 A,B,C#으로 분리해주는것이다
         let music = []
         for(let j=0;j<info[3].length;j++){
             if(info[3][j] !== '#')music.push(info[3][j])
