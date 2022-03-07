@@ -28,18 +28,18 @@ function solution(m, musicinfos) {
     var answer = '';
     let arr = []
     for(let i=0;i<musicinfos.length;i++){
+        //음악이 총 재생된 시간을 분단위로 변환해주는 과정이다. 1음에 1분단위이기 총재생된 길이는 음의 개수와 일치한다.
         let info = musicinfos[i].split(',')
         let start = info[0].split(':')
         let end = info[1].split(':')
         let time = (end[0]-start[0])*60 + (end[1]-start[1])
         
         let music = []
-       // console.log('time',time)
         for(let j=0;j<info[3].length;j++){
             if(info[3][j] !== '#')music.push(info[3][j])
             else{music[music.length-1]+='#'}
         }
-        //console.log('music',music)
+        
         let len = music.length
         let temp = ''
         temp += music.join('').repeat(Math.floor(time/len))
@@ -49,7 +49,7 @@ function solution(m, musicinfos) {
         console.log('temp',temp)
         arr.push([time,temp,info[2]])
     }
-    //console.log('arr',arr)
+    
     let max = 0
     for(let i=0;i<arr.length;i++){
         //console.log('arr[i][1]',arr[i][1])
