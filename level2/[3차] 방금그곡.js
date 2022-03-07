@@ -54,7 +54,9 @@ function solution(m, musicinfos) {
     
     let max = 0
     for(let i=0;i<arr.length;i++){
-        //console.log('arr[i][1]',arr[i][1])
+         //이과정은 들었던음이 사용된 음에 포함이 되어있는지 확인하는데(1번조건문) ABC가 있더라도ABC#일수 있으므로 들은음뒤에 #이있는지 확인(2번조건문) 
+         //이후에 답으로 우선 사용가능한게 1.총재생시간이 가장 길어야하고 2. 같으면 먼저나온노래를 사용하므로 정답의 후보로 재생시간을 갱신후에 기존 재생시간보다 길은지 확인한다.
+         //
         for(let j=0;j<=arr[i][1].length;j++){
             if(arr[i][1].slice(j,j+m.length) === m && arr[i][1][j+m.length] !=='#' && max<arr[i][0]){
                 answer = arr[i][2]
