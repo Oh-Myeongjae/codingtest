@@ -65,6 +65,7 @@ function solution(m, musicinfos) {
             }
         }        
     }
+    //이단계에 와서도 해당하는 곡이 없다는 것이므로 빈자열처리를 반드시 해준다
     if(answer === '') answer = '(None)'
     return answer;
 }
