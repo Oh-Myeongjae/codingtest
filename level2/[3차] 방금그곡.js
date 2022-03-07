@@ -41,13 +41,14 @@ function solution(m, musicinfos) {
             else{music[music.length-1]+='#'}
         }
         
+        //음을하나씩 불리후에 총재생된 시간만큼 하나씩붙여서 총재생된시간동안 사용된 음의 총개수를 하나의 문자열로 구해서 arr 배열에 [총재생시간, 사용음, 노래제목]순으로 담는다.
+        //이는 재생시간이 다르면 재생시간이 가장 긴 음악이 먼저 사용되고 총재생시간이 같으면 앞의 음악이 사용되야하기때문에 우선은 사용된 순서대로 arr배열에 담아주었다.
         let len = music.length
         let temp = ''
         temp += music.join('').repeat(Math.floor(time/len))
         for(let j=0;j<time%len;j++){
             temp += music[j]
         }
-        console.log('temp',temp)
         arr.push([time,temp,info[2]])
     }
     
