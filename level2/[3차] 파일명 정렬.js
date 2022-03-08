@@ -37,3 +37,46 @@ files는 1000 개 이하의 파일명을 포함하는 문자열 배열이다.
 출력 형식
 위 기준에 따라 정렬된 배열을 출력한다.
 */
+function solution(files) {
+    var answer = [];
+    let numbers = '0123456789'
+    files.sort((a,b)=>{
+        let aHead = ''
+        let aNumber = ''
+        let aIdx =0
+        
+        let bHead = ''
+        let bNumber = ''
+        let bIdx = 0
+        a = a.toUpperCase()
+        b = b.toUpperCase()
+        for(let i=0;i<a.length;i++){
+            if(numbers.includes(a[i])){
+                break;
+            }else{
+                aHead += a[i]
+                aIdx++
+            }
+        }
+        for(let i=0;i<b.length;i++){
+            if(numbers.includes(b[i])){
+                break;
+            }else{
+                bHead += b[i]
+                bIdx++
+            }
+        }
+        if(aHead.localeCompare(bHead) !== 0)return aHead.localeCompare(bHead)
+        for(let i=aIdx;i<a.length;i++){
+            if(!numbers.includes(a[i]) || aNumber.length >= 5)break
+            aNumber += a[i]
+        }
+        for(let i=bIdx;i<b.length;i++){
+            if(!numbers.includes(b[i]) || bNumber.length >= 5)break
+            bNumber += b[i]
+        }
+        return aNumber-bNumber
+    })
+    answer = files
+    return answer;
+}
