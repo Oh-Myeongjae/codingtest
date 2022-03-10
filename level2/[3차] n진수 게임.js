@@ -25,3 +25,31 @@ N진수 게임
 출력 형식
 튜브가 말해야 하는 숫자 t개를 공백 없이 차례대로 나타낸 문자열. 단, 10~15는 각각 대문자 A~F로 출력한다.
 */
+function solution(n, t, m, p) {
+    var answer = '';
+    let make = '0'
+    let str = [0]
+    let len = t*m
+    let arr = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F']
+    
+    while(make.length<len){
+        for(let i=str.length-1;i>=0;i--){
+            str[i]+=1
+            if(str[i] === n){
+                str[i] = 0
+                if(i === 0)str.unshift(1)
+                else{continue}
+            }
+            break;
+        }
+        let trans = str.map((x)=>arr[x])
+        make+=trans.join('')
+    }
+    
+    for(let i=p-1;i<make.length;i=i+m){
+        answer+=make[i]
+        if(answer.length === t)break
+    }
+    
+    return answer;
+}
