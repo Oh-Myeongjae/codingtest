@@ -30,8 +30,11 @@ function solution(n, k) {
           }
           return true
       }
-  
+    
+    //숫자.toString(n)을 이용하면 숫자를 n진법으로 변환된수를 문자로 반환해준다. 
     let trans = n.toString(k) 
+    
+    
     let arr = trans.split('0').map((x)=>{
         if(x==='')return 0
         else{return parseInt(x)}
