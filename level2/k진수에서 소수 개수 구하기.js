@@ -17,5 +17,28 @@ P처럼 소수 양쪽에 아무것도 없는 경우
 제한사항
 1 ≤ n ≤ 1,000,000
 3 ≤ k ≤ 10
-
 */
+function solution(n, k) {
+    var answer = 0;
+    const func = (n)=>{
+          if(n<2)return false
+          let midlle = Math.sqrt(n)
+          for(let i=2;i<=midlle;i++){
+              if(n%i === 0)return false
+          }
+          return true
+      }
+  
+    let trans = n.toString(k) 
+    let arr = trans.split('0').map((x)=>{
+        if(x==='')return 0
+        else{return parseInt(x)}
+    })
+    
+    
+    
+    for(let el of arr){
+        if(func(el))answer++
+    }
+    return answer;
+}
