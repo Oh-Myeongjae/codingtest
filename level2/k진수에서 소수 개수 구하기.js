@@ -20,6 +20,8 @@ P처럼 소수 양쪽에 아무것도 없는 경우
 */
 function solution(n, k) {
     var answer = 0;
+    
+    //소수인지 판명하기 위한 함수생성
     const func = (n)=>{
           if(n<2)return false
           let midlle = Math.sqrt(n)
