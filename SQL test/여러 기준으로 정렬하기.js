@@ -16,3 +16,5 @@ SEX_UPON_INTAKE	  VARCHAR(N)	    FALSE
 단, 이름이 같은 동물 중에서는 보호를 나중에 시작한 동물을 먼저 보여줘야 합니다.
 */
 SELECT ANIMAL_ID,NAME,DATETIME from ANIMAL_INS order by NAME ASC, DATETIME DESC;
+//찾는 조건이 여러개일경우는 where절에 and,or 연산자로 가능하고 정렬의조건이 여러개일경우 order by뒤에 기준이 되는 컬럼을 차례로 적어주면
+//처음컬럼조건으로 정렬하고 이후에 같은것은 2번째 컬럼조건으로 정렬하게 된다
