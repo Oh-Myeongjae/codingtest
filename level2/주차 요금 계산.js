@@ -63,3 +63,44 @@ records는 하루 동안의 입/출차된 기록만 담고 있으며, 입차된 
 주차장에 없는 차량이 출차되는 경우
 주차장에 이미 있는 차량(차량번호가 같은 차량)이 다시 입차되는 경우
 */
+function solution(fees, records) {
+    var answer = [];
+    let info = {}
+    for(let el of records){
+        let arr = el.split(' ')
+        if(info[arr[1]] === undefined){
+            info[arr[1]] = [arr[0]]
+        }else{
+            info[arr[1]].push(arr[0])
+        }
+    }
+ 
+    for(let el of Object.keys(info)){
+        let time = 0
+        for(let i=0;i<info[el].length;i=i+2){
+            let IN = info[el][i].split(':')
+            let OUT = info[el][i+1] === undefined ? ['23','59'] : info[el][i+1].split(':')
+            // console.log('IN',IN)
+            // console.log('OUT',OUT)
+            time += (OUT[0]-IN[0])*60 + (OUT[1]-IN[1])
+        }
+        info[el] = time
+    }
+    
+    let sortInfo = Object.keys(info).sort((a,b)=>a-b)
+
+    for(let el of sortInfo){
+        let total = info[el]
+        let money = 0
+        total -= fees[0]
+        money+= fees[1]
+        if(total>0){
+            if(total%fees[2] === 0)money += total/fees[2]*fees[3] 
+            else{
+               money +=  (Math.floor(total/fees[2])+1)*fees[3]
+            }
+        }
+        answer.push(money)
+    }
+    return answer;
+}
