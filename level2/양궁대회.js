@@ -33,5 +33,41 @@ return할 정수 배열의 i번째 원소는 과녁의 10 - i 점을 맞힌 화�
 다른 예로, [0,0,2,3,4,1,0,0,0,0,0]과 [9,0,0,0,0,0,0,0,1,0,0]를 비교하면[9,0,0,0,0,0,0,0,1,0,0]를 return 해야 합니다.
 라이언이 우승할 방법이 없는 경우, return 할 정수 배열의 길이는 1입니다.
 라이언이 어떻게 화살을 쏘든 라이언의 점수가 어피치의 점수보다 낮거나 같으면 [-1]을 return 해야 합니다.
-
 */
+function solution(n, info) {
+    var answer = [];
+    let make = [];
+    const func = (count,now,idx) => {
+        if(idx === 10){
+            now += count
+            let n1 = 0
+            let n2 = 0
+            for(let i=0;i<11;i++){
+                if(now[i]<=info[i] && info[i] !== 0)n1+=10-i
+                else if(now[i] !== '0'){n2+=10-i}
+            }
+
+            if(n1<n2){
+              if(make.length === 0){
+                 make.unshift([now,n2-n1])
+              }else if(make[0][1] < n2-n1){
+                  make[0] = [now,n2-n1]
+              }else if(make[0][1] === n2-n1){
+                  if(now.split('').reverse().join('')>make[0][0].split('').reverse().join(''))make[0] = [now,n2-n1]
+              }  
+            }   
+        }else{
+            if(count>info[idx]){
+                let temp = count-(info[idx]+1)
+                func(temp,now+`${info[idx]+1}`,idx+1)
+                func(count,now+'0',idx+1)
+            }else{
+                func(count,now+'0',idx+1)
+            }
+        }            
+    }
+    func(n,'',0)
+    if(make.length === 0)return[-1]
+    answer = make[0][0].split('').map((x)=>parseInt(x))
+    return answer;
+}
