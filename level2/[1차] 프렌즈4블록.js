@@ -27,3 +27,61 @@ board는 길이 n인 문자열 m개의 배열로 주어진다. 블록을 나타�
 출력 형식
 입력으로 주어진 판 정보를 가지고 몇 개의 블록이 지워질지 출력하라.
 */
+function solution(m, n, board) {
+    var answer = 0;
+    let arr = new Array(n)
+    for(let i=0;i<arr.length;i++){
+        arr[i]= new Array(m).fill(0)
+    }
+   
+    for(let i=0;i<m;i++){
+        for(let j=0;j<board[i].length;j++){
+        arr[arr.length-1-j][i] = board[i][j]
+        }
+    }
+    
+    const func = (matrix,count) => {
+        let temp = []
+        let first = count
+        for(let i=0;i<matrix.length-1;i++){
+            for(let j=0;j<matrix[i].length-1;j++){
+                if(matrix[i][j] === matrix[i+1][j] && matrix[i][j] === matrix[i][j+1] && matrix[i][j] === matrix[i+1][j+1]){
+                    temp.push([i,j])
+                }
+            }
+        }
+        for(let el of temp){
+            if(matrix[el[0]][el[1]] !== 0){
+                matrix[el[0]][el[1]] = 0
+                count++
+            }
+            if(matrix[el[0]][el[1]+1] !== 0){
+                matrix[el[0]][el[1]+1] = 0
+                count++
+            }
+            if(matrix[el[0]+1][el[1]] !== 0){
+                matrix[el[0]+1][el[1]] = 0
+                count++
+            }
+            if(matrix[el[0]+1][el[1]+1] !== 0){
+                matrix[el[0]+1][el[1]+1] = 0
+                count++
+            }
+        }
+        if(first === count){
+            answer += count
+            return
+        } 
+        for(let i=0;i<matrix.length;i++){
+            for(let j=0;j<matrix[i].length;j++){
+                if(matrix[i][j] === 0){
+                    matrix[i].splice(j,1)
+                    matrix[i].unshift(0)
+                } 
+            }
+        }
+        func(matrix,count)
+    }
+    func(arr,0)
+    return answer;
+}
