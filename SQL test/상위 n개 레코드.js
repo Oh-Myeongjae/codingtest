@@ -15,3 +15,4 @@ SEX_UPON_INTAKE	  VARCHAR(N)	          FALSE
 동물 보호소에 가장 먼저 들어온 동물의 이름을 조회하는 SQL 문을 작성해주세요.
 */
 SELECT NAME from ANIMAL_INS order by DATETIME limit 1
+//조건에 맞는 결과중 원하는 개수만 조회하고 싶을때는 limit 문법을 사용한다.
