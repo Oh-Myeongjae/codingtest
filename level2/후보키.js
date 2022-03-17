@@ -26,3 +26,64 @@ relation의 로우(row)의 길이는 1 이상 20 이하이며, 각각의 로우�
 relation의 모든 문자열의 길이는 1 이상 8 이하이며, 알파벳 소문자와 숫자로만 이루어져 있다.
 relation의 모든 튜플은 유일하게 식별 가능하다.(즉, 중복되는 튜플은 없다.)
 */
+function solution(relation) {
+    var answer = 0;
+    let keys = []
+    
+    let obj = {}
+    let arr = new Array(relation[0].length).fill(true)
+   
+    for(let i=0;i<relation[0].length;i++){
+        obj[i+1] = []
+    }
+    
+    const first = (now,str) => {
+        if(str.length === 0){
+            obj[now.length].push(now)
+            return   
+        }
+        
+        if(now !== '')obj[now.length].push(now)
+        
+        for(let i=0;i<str.length;i++){
+            first(now+str[i],str.slice(i+1))
+        }
+    }
+    first('',Object.keys(arr).join(''))
+    
+    const uniq = (str) => {
+        let check = new Set()
+        let idx = str.split('').map((x)=>parseInt(x))
+        for(let i=0;i<relation.length;i++){
+            let str = ''
+            let temp = idx.slice()
+            while(temp.length>0){
+                str += relation[i][temp[0]]
+                temp.shift()
+            }
+            check.add(str)
+        }
+        if(check.size !== relation.length) return false
+        return true
+    }
+    
+    for(let el of Object.keys(obj)){
+        for(let i=0;i<obj[el].length;i++){
+            if(uniq(obj[el][i])){
+                let success = true
+                for(let keEl of keys){ 
+                    let size = keEl.length
+                    let temp = keEl.split('').filter((x)=>obj[el][i].includes(x))
+                    if(size === temp.length){
+                        success = false
+                        break;
+                    }
+                }
+                if(success)keys.push(obj[el][i])
+            }
+        }
+    }
+    
+    answer = keys.length
+    return answer;
+}
