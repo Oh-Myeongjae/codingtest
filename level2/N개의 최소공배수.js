@@ -24,7 +24,7 @@ function solution(arr) {
     }
     
     return answer;
-}
+} 
 /*
 위에 함수는 최대공약수를 구하는 유클리드 호제법을 구현한 함수이고
 
