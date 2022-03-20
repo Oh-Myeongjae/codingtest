@@ -13,3 +13,10 @@ NAME	              VARCHAR(N)	      TRUE
 SEX_UPON_INTAKE	    VARCHAR(N)	      FALSE
 가장 최근에 들어온 동물은 언제 들어왔는지 조회하는 SQL 문을 작성해주세요.
 */
+
+-- 코드를 입력하세요
+SELECT max(datetime) as '시간' from animal_ins;
+
+// max를 이용하여 원하는 컬런에서 최대값을 구할수 있다. 이를 다른 방법으로는
+// SELECT DATETIME as '시간' from ANIMAL_INS order by DATETIME desc limit 1
+//으로도 같은 결과를 구할수가 있으나 훨씬 간결하게 사용할수 있게되었다.
