@@ -47,3 +47,59 @@ X는 코딩테스트 점수를 의미하며 조건을 만족하는 사람 중 X�
 각 단어는 공백문자(스페이스 바) 하나로 구분되어 있습니다.
 예를 들면, "cpp and - and senior and pizza 500"은 "cpp로 코딩테스트를 봤으며, 경력은 senior 이면서 소울푸드로 pizza를 선택한 지원자 중 코딩테스트 점수를 500점 이상 받은 사람은 모두 몇 명인가?"를 의미합니다.
 */
+function solution(info, query) {
+    var answer = [];
+    let obj = {}
+    for(let el0 of ['cpp', 'java', 'python', '-']){
+        for(let el1 of ['backend', 'frontend', '-']){
+            for(let el2 of ['junior', 'senior', '-']){
+                for(let el3 of ['chicken', 'pizza', '-']){
+                    obj[el0+el1+el2+el3] = []
+                }
+            }
+        }
+    }
+    
+    for(let el of info){
+        let temp = []
+        let sp = el.split(' ')
+        for(let i=0;i<sp.length;i++){
+            if(i === sp.length-1){
+                temp.push(parseInt(sp[i]))
+                break;
+            }
+            temp.push([sp[i],'-'])
+        }
+        for(let el0 of temp[0]){
+            for(let el1 of temp[1]){
+                for(let el2 of temp[2]){
+                    for(let el3 of temp[3]){
+                        obj[el0+el1+el2+el3].push(temp[4])
+                    }
+                }
+            }
+         }
+    }
+   
+    for(let el of Object.keys(obj)){
+        obj[el].sort((a,b)=>a-b)
+    }
+
+    for(let el of query){
+        let str = el.split(' ').filter((s)=>s !=='and')
+        let arr = obj[str[0]+str[1]+str[2]+str[3]]
+        let low = 0
+        let high = arr.length-1
+        let idx = arr.length
+        while(low<=high){
+            let middle = Math.floor((low+high)/2)          
+            if(str[4] <= arr[middle]){
+                idx = middle
+                high = middle-1
+            }
+            else {low = middle+1}
+        }
+        answer.push(arr.length-idx)
+    }
+    return answer;
+}
