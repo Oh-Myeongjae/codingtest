@@ -20,3 +20,43 @@
 grid의 모든 문자열의 길이는 서로 같습니다.
 grid의 모든 문자열은 'L', 'R', 'S'로 이루어져 있습니다.
 */
+function solution(grid) {
+    const R = grid.length; // 행의 길이
+    const C = grid[0].length; // 열의 길이
+    const visit = [...Array(R)].map(() => [...Array(C)].map(() => [...Array(4)].map(() => 0))); // 3차원 visit 배열
+    const dirMap = { S: 0, R: 1, L: 2 };
+    const map = grid.map(r => [...r].map(c => dirMap[c])); // S => 0, R => 1, L => 2 로 미리 바꿔서 맵 만들기
+    const my = [-1, 0, 1, 0]; 
+    const mx = [0, 1, 0, -1]; 
+    const transDir = [[0, 1, 3], [1, 2, 0], [2, 3, 1], [3, 0, 2]]; // 방향 전환
+    const ans = [];
+
+    for (let i = 0; i < R; i++) {
+        for (let j = 0; j < C; j++) {
+            for (let dir = 0; dir < 4; dir++) {
+                if (visit[i][j][dir]) continue;
+
+                let curDir = dir; // 현재 방향
+                let r = i; // 현재 r좌표
+                let c = j; // 현재 c좌표
+                let count = 0;
+
+                // 방문하지 않은 격자를 만날 동안
+                while (!visit[r][c][curDir]) {  
+                    count++;
+
+                    visit[r][c][curDir] = 1;
+                    curDir = transDir[curDir][map[r][c]]; // 방향 전환
+                    r += my[curDir]; // 좌표 갱신
+                    c += mx[curDir];
+                    r = r >= R ? 0 : r < 0 ? R - 1 : r;
+                    c = c >= C ? 0 : c < 0 ? C - 1 : c;
+                }
+
+                ans.push(count);
+            }
+        }
+    }
+
+    return ans.sort((a, b) => a - b);
+}
