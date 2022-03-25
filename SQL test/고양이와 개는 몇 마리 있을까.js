@@ -17,3 +17,24 @@ SEX_UPON_INTAKE     VARCHAR(N)	  FALSE
 */
 -- 코드를 입력하세요
 SELECT ANIMAL_TYPE, count(ANIMAL_TYPE) as 'count' from ANIMAL_INS GROUP BY ANIMAL_TYPE order by ANIMAL_TYPE ASC
+/*
+이렇게 유형별로 갯수를 알고 싶을 때는 컬럼에 데이터를 그룹화 할 수 있는 GROUP BY를 사용가능하다.
+
+컬럼 그룹화
+SELECT 컬럼 FROM 테이블 GROUP BY 그룹화할 컬럼;
+
+조건 처리 후에 컬럼 그룹화
+SELECT 컬럼 FROM 테이블 WHERE 조건식 GROUP BY 그룹화할 컬럼;
+
+컬럼 그룹화 후에 조건 처리
+SELECT 컬럼 FROM 테이블 GROUP BY 그룹화할 컬럼 HAVING 조건식;
+
+
+조건 처리 후에 컬럼 그룹화 후에 조건 처리
+SELECT 컬럼 FROM 테이블 WHERE 조건식 GROUP BY 그룹화할 컬럼 HAVING 조건식;
+
+
+ORDER BY가 존재하는 경우
+SELECT 컬럼 FROM 테이블 [WHERE 조건식]
+GROUP BY 그룹화할 컬럼 [HAVING 조건식] ORDER BY 컬럼1 [, 컬럼2, 컬럼3 ...];
+*/
