@@ -17,3 +17,6 @@ SEX_UPON_INTAKE	    VARCHAR(N)	    FALSE
 */
 -- 코드를 입력하세요
 select count(distinct(name)) as count from animal_ins where name is not null
+/*
+null이 아닌것을 sql에서 사용할경우 is not null을 사용하고 중복을 제거하기 위해서는 distinct을 사용한다.
+*/
