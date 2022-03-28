@@ -17,3 +17,9 @@ SEX_UPON_INTAKE	      VARCHAR(N)	  FALSE
 */
 -- 코드를 입력하세요
 SELECT NAME,count(NAME) as 'COUNT' from ANIMAL_INS group by NAME having COUNT>=2 order by NAME
+/*
+조건을 처리할때는 where와 having이 있다. 이둘의 차이는 
+where는 그룹화나  조회하기전에 조건에 부합하는지 체크를 하는거고
+having은 그룹화로 조회한이후에 조건에 부합하는지 체크를 하는것이다.
+이둘의 가장큰차이는 조건에 부합하는지 언제 체크를 하느냐라고 할수있다.
+*/
