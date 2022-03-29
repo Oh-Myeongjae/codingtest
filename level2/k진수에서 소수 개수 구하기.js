@@ -28,7 +28,7 @@ function solution(n, k) {
           let midlle = Math.sqrt(n)
           for(let i=2;i<=midlle;i++){
               if(n%i === 0)return false
-          }
+          } 
           return true
       }
     
