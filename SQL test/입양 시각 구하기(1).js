@@ -17,3 +17,6 @@ SEX_UPON_OUTCOME	    VARCHAR(N)	    FALSE
 */
 -- 코드를 입력하세요
 SELECT HOUR(DATETIME) as 'HOUR', count(HOUR(DATETIME)) as 'COUNT' from ANIMAL_OUTS where HOUR(DATETIME) >= 9 and HOUR(DATETIME) <=20 group by HOUR(DATETIME) order by HOUR(DATETIME)
+/*
+DATETIME을 HOUR를 이용해서 시간만 추출해서 사용하는게 중요한 포인트였다
+*/
