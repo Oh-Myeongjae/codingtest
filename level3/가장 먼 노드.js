@@ -24,7 +24,7 @@ function solution(n, edge) {
                         check[edge[i][1]] = false
                         temp.push(edge[i][1])
                         edge.splice(i,1)
-                        i--
+                        i-- 
                     }else{
                         edge.splice(i,1)
                         i--
