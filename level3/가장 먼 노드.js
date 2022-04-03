@@ -14,7 +14,7 @@ vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 �
 function solution(n, edge) {
     var answer = 0;
     let check = new Array(n+1).fill(true)
-    check[1] = false
+    check[1] = false 
     const func = (arr) => {
         let temp = []
         for(let el of arr){
