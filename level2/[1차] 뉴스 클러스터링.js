@@ -33,7 +33,7 @@
 예제 입출력
 str1	str2	answer
 FRANCE	french	16384
-handshake	shake hands	65536
+handshake	shake hands	65536 
 aa1+aa2	AAAA12	43690
 E=M*C^2	e=m*c^2	65536
 */
