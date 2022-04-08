@@ -4,3 +4,5 @@ ACM-ICPC 인터넷 예선, Regional, 그리고 World Finals까지 이미 2회씩
 
 대회를 뜰 줄 모르는 지박령 kriii를 위해서 격려의 문구를 출력해주자.
 */
+console.log('강한친구 대한육군');
+console.log('강한친구 대한육군');
