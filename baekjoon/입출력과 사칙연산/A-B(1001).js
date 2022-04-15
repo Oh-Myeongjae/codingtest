@@ -3,3 +3,10 @@
 첫째 줄에 A와 B가 주어진다. (0 < A, B < 10)
 첫째 줄에 A-B를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split(' ');
+
+const A = Number(inputData[0])
+const B = Number(inputData[1])
+
+console.log(A-B)
