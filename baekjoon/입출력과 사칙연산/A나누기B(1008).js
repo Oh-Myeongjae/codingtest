@@ -8,3 +8,10 @@
 출력
 첫째 줄에 A/B를 출력한다. 실제 정답과 출력값의 절대오차 또는 상대오차가 10-9 이하이면 정답이다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split(' ');
+
+const A = Number(inputData[0])
+const B = Number(inputData[1])
+
+console.log(A/B)
