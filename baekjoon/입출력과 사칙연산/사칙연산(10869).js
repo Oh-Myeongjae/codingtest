@@ -8,3 +8,14 @@
 출력
 첫째 줄에 A+B, 둘째 줄에 A-B, 셋째 줄에 A*B, 넷째 줄에 A/B, 다섯째 줄에 A%B를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split(' ');
+
+const A = Number(inputData[0])
+const B = Number(inputData[1])
+
+console.log(A+B)
+console.log(A-B)
+console.log(A*B)
+console.log(Math.floor(A/B))
+console.log(A%B)
