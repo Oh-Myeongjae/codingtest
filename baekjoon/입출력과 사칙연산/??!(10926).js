@@ -12,3 +12,15 @@ const fs = require('fs');
 let inputData = fs.readFileSync(0, 'utf8').toString().trim();
 
 console.log(`${inputData}??!`)
+/*
+앞에 풀어온 것과 다른점은 input 값에 trim()메써드가 추가 된다는 것이다.
+
+MDN : String.prototype.trim()
+trim() 메서드는 문자열 양 끝의 공백을 제거합니다. 공백이란 모든 공백문자(space, tab, NBSP 등)와 모든 개행문자(LF, CR 등)를 의미합니다.
+반환 값
+str 문자열의 양끝의 공백을 제거한 문자열을 반환합니다.
+
+str 문자열에 공백이 없어도 예외가 발생하지 않고 새 문자열이 반환됩니다. (본질적으로 str의 복사본).
+
+한쪽 끝의 공백만 제거한 문자열을 반환하시려면 trimStart() 또는 trimEnd() 메서드를 사용하세요.
+*/
