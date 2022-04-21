@@ -10,3 +10,9 @@ ICPC Bangkok Regional에 참가하기 위해 수완나품 국제공항에 막 �
 출력
 불기 연도를 서기 연도로 변환한 결과를 출력한다.
 */
+const fs = require('fs');
+let inputData = fs.readFileSync(0, 'utf8').toString().split(' ');
+
+const day = Number(inputData[0])
+console.log(day-543)
+
