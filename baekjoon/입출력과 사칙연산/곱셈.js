@@ -19,3 +19,18 @@
 출력
 첫째 줄부터 넷째 줄까지 차례대로 (3), (4), (5), (6)에 들어갈 값을 출력한다.
 */
+const fs = require('fs');
+const sc = fs.readFileSync('/dev/stdin').toString().split('\n')
+
+const num1 = sc[0]
+const num2 = sc[1].split('')
+
+const fir = parseInt(num1)*parseInt(num2[2])
+const mid = parseInt(num1)*parseInt(num2[1])
+const end = parseInt(num1)*parseInt(num2[0])
+const result = fir + (mid*10) + (end*100)
+
+console.log(fir)
+console.log(mid)
+console.log(end)
+console.log(result)
