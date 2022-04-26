@@ -12,3 +12,13 @@
 출력
 첫째 줄에 윤년이면 1, 아니면 0을 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+
+let score = Number(inputData);
+
+if(score%4 === 0 && (score%100 !== 0 || score%400 === 0)){
+    console.log(1)
+}else{
+    console.log(0)
+}
