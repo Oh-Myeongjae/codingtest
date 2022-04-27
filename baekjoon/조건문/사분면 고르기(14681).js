@@ -12,3 +12,16 @@
 출력
 점 (x, y)의 사분면 번호(1, 2, 3, 4 중 하나)를 출력한다.
 */
+
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split('\n');
+let result = [[2,3],[1,4]]
+
+const A = Number(inputData[0])
+result = A<0 ? result[0] : result[1]
+
+const B = Number(inputData[1])
+result = B<0 ? result[1] : result[0]
+
+console.log(result)
+
