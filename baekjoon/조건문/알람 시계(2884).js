@@ -20,3 +20,18 @@
 출력
 첫째 줄에 상근이가 창영이의 방법을 사용할 때, 설정해야 하는 알람 시간을 출력한다. (입력과 같은 형태로 출력하면 된다.)
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split(' ');
+
+let A = Number(inputData[0])
+let B = Number(inputData[1])
+
+B -= 45
+
+if(B<0){
+    A -= 1
+    if(A<0) A=23
+    B +=60 
+}
+
+console.log(`${A} ${B}`)
