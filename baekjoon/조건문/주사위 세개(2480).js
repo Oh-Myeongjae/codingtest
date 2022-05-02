@@ -15,3 +15,39 @@
 출력
 첫째 줄에 게임의 상금을 출력 한다.
 */
+
+const fs = require('fs');
+const inputData = fs.readFileSync("/dev/stdin").toString().trim().split(' ').map(Number);
+
+inputData.sort((a,b)=>b-a);
+
+let result;
+let count = 1;
+let max = inputData[0];
+let same = 0;
+
+let A = inputData[0];
+let B = inputData[1];
+let C = inputData[2];
+
+if(A === B && count != 3){
+    same = A;
+    count++;
+}
+if(A === C && count != 3){
+    same = A;
+    count++;
+}
+if(B === C && count != 3){
+    same = B;
+    count++;
+}
+
+if(count === 1)result = max*100;
+else if(count === 2)result = 1000 + (same*100);
+else{result = 10000+ (same*1000);}
+
+console.log(result)
+
+
+
