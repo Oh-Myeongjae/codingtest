@@ -8,3 +8,11 @@ N을 입력받은 뒤, 구구단 N단을 출력하는 프로그램을 작성하�
 출력
 출력형식과 같게 N*1부터 N*9까지 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+
+let Num = Number(inputData[0])
+
+for(let x=1;x<=9;x++){
+    console.log(`${Num} * ${x} = ${Num*x}`)
+}
