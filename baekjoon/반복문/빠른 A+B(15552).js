@@ -20,3 +20,18 @@ Python을 사용하고 있다면, input 대신 sys.stdin.readline을 사용할 �
 출력
 각 테스트케이스마다 A+B를 한 줄에 하나씩 순서대로 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split('\n');
+
+let Num = Number(inputData[0]);
+let result = '';
+
+for(let i=1;i<=Num;i++){
+    let number = inputData[i].split(' ');
+    let fir = Number(number[0]);
+    let sec = Number(number[1]);
+    let sum = fir+sec
+    result += sum+'\n';  
+}
+
+console.log(result);
