@@ -8,3 +8,14 @@
 출력
 첫째 줄부터 N번째 줄 까지 차례대로 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+
+let num = Number(inputData);
+let result = ''
+
+for(let x=1;x<=num;x++){
+    result += (x+'\n')
+}
+
+console.log(result)
