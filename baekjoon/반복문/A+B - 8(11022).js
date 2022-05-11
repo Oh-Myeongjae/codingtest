@@ -10,3 +10,17 @@
 출력
 각 테스트 케이스마다 "Case #x: A + B = C" 형식으로 출력한다. x는 테스트 케이스 번호이고 1부터 시작하며, C는 A+B이다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split('\n');
+
+let Num = Number(inputData[0])
+let result = ''
+
+for(let i=1;i<=Num;i++){
+    let number = inputData[i].split(' ')
+    let A = Number(number[0])
+    let B = Number(number[1])
+    result += `Case #${i}: ${A} + ${B} = ${A+B}\n`
+}
+
+console.log(result)
