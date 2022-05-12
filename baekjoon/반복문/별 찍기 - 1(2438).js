@@ -8,3 +8,15 @@
 출력
 첫째 줄부터 N번째 줄까지 차례대로 별을 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+
+let Num = Number(inputData)
+let result = ''
+
+for(let i=1;i<=Num;i++){
+    let str = '*'.repeat(i)
+    result += `${str}\n`
+}
+
+console.log(result)
