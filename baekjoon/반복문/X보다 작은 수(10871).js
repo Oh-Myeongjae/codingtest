@@ -10,3 +10,13 @@
 출력
 X보다 작은 수를 입력받은 순서대로 공백으로 구분해 출력한다. X보다 작은 수는 적어도 하나 존재한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split('\n');
+
+let num = inputData[0].split(' ')[1];
+let sec = inputData[1].split(' ');
+let result = '';
+
+sec.map((n)=>{if(Number(n)<num)result += `${Number(n)} `});
+
+console.log(result);
