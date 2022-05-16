@@ -18,13 +18,11 @@ const inputData = fs.readFileSync(0, 'utf8').trim().toString().split('\n');
 let num = 0;
 let result = '';
 
-while(true){
-    let number = inputData[num].split(' ');
+for(let i=0;i<inputData.length-1;i++){
+    let number = inputData[i].split(' ');
     let A = Number(number[0]);
     let B = Number(number[1]);
-    result += `Case #${i}: ${A} + ${B} = ${A+B}\n`;
-    num++
-    if(num === inputData.length-1)break; 
+    result += `${A+B}\n`;
 }
 
 console.log(result)
