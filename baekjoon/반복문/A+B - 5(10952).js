@@ -12,3 +12,19 @@
 출력
 각 테스트 케이스마다 A+B를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').trim().toString().split('\n');
+
+let num = 0;
+let result = '';
+
+while(true){
+    let number = inputData[num].split(' ');
+    let A = Number(number[0]);
+    let B = Number(number[1]);
+    result += `Case #${i}: ${A} + ${B} = ${A+B}\n`;
+    num++
+    if(num === inputData.length-1)break; 
+}
+
+console.log(result)
