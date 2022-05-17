@@ -10,3 +10,17 @@
 출력
 각 테스트 케이스마다 A+B를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').trim().toString().split('\n');
+
+let num = 0;
+let result = '';
+
+for(let i=0;i<inputData.length;i++){
+    let number = inputData[i].split(' ');
+    let A = Number(number[0]);
+    let B = Number(number[1]);
+    result += `${A+B}\n`;
+}
+
+console.log(result)
