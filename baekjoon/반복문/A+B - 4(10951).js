@@ -12,7 +12,7 @@
 */
 const fs = require('fs');
 const inputData = fs.readFileSync(0, 'utf8').trim().toString().split('\n');
-
+ 
 let num = 0;
 let result = '';
 
