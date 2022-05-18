@@ -22,5 +22,5 @@ for(let i=0;i<inputData.length;i++){
     let B = Number(number[1]);
     result += `${A+B}\n`;
 }
-
+ 
 console.log(result)
