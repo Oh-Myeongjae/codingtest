@@ -14,3 +14,20 @@ N이 주어졌을 때, N의 사이클의 길이를 구하는 프로그램을 작
 출력
 첫째 줄에 N의 사이클 길이를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+
+let first = Number(inputData);
+let num = first;
+let result = 0;
+while(true){
+    let A = num%10;
+    let x = num%10;
+    let y = num<10 ? 0 : parseInt(num/10);
+    let B = (x+y)%10;
+    num = Number(`${A}${B}`);
+    result++;
+    if(num === first)break;
+}
+
+console.log(result)
