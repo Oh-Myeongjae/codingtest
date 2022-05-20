@@ -20,3 +20,4 @@ for(let i=1;i<=Num;i++){
     let B = Number(number[1])
     console.log(A+B)
 }
+ 
