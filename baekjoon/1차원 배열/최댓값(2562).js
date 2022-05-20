@@ -14,3 +14,18 @@
 출력
 첫째 줄에 최댓값을 출력하고, 둘째 줄에 최댓값이 몇 번째 수인지를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+
+let size = inputData.length;
+let max = inputData[0];
+let idx = 1;
+
+for(let i=1;i<size;i++){
+    if(max<inputData[i]){
+        max = inputData[i];
+        idx = (i+1);
+    }
+}
+
+console.log(`${max}\n${idx}`)
