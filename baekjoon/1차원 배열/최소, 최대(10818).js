@@ -8,3 +8,18 @@ N개의 정수가 주어진다. 이때, 최솟값과 최댓값을 구하는 프�
 출력
 첫째 줄에 주어진 정수 N개의 최솟값과 최댓값을 공백으로 구분해 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().split('\n');
+
+let size = Number(inputData[0])
+let arr = inputData[1].split(' ')
+let min = Number(arr[0]);
+let max = min;
+
+for(let i=1;i<size;i++){
+    let num = Number(arr[i])
+    if(min>num)min = num
+    if(max<num)max = num
+}
+
+console.log(`${min} ${max}`)
