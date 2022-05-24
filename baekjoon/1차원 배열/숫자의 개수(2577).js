@@ -10,3 +10,23 @@
 출력
 첫째 줄에는 A × B × C의 결과에 0 이 몇 번 쓰였는지 출력한다. 마찬가지로 둘째 줄부터 열 번째 줄까지 A × B × C의 결과에 1부터 9까지의 숫자가 각각 몇 번 쓰였는지 차례로 한 줄에 하나씩 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+let result = ''
+let num = inputData.reduce( (prev, curr) => prev * curr );
+let str = num+'';
+
+let iArr = str.split('');
+let rArr = new Array(10).fill(0);
+let size = iArr.length;
+
+for(let i=0;i<size;i++){
+    rArr[Number(iArr[i])]+=1
+}
+
+for(let n=0;n<rArr.length;n++){
+    result += `${rArr[n]}\n`
+}
+
+
+console.log(result);
