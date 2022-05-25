@@ -10,3 +10,14 @@
 출력
 첫째 줄에, 42로 나누었을 때, 서로 다른 나머지가 몇 개 있는지 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+
+let size = inputData.length;
+let set =new Set()
+
+for(let i=0;i<size;i++){
+    set.add(inputData[i]%42)
+}
+
+console.log(set.size);
