@@ -12,3 +12,15 @@
 출력
 첫째 줄에 새로운 평균을 출력한다. 실제 정답과 출력값의 절대오차 또는 상대오차가 10-2 이하이면 정답이다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+
+let size = Number(inputData[0]);
+let score = inputData[1].split(' ').map(Number)
+let max = Math.max(...score)
+
+score = score.map((n)=>n/max*100)
+
+let sum = score.reduce((prev, curr) => prev + curr)
+
+console.log(sum/size);
