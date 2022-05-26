@@ -12,3 +12,23 @@ OX퀴즈의 결과가 주어졌을 때, 점수를 구하는 프로그램을 작�
 출력
 각 테스트 케이스마다 점수를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+
+let size = Number(inputData[0]);
+let result = ''
+
+for(let i=1;i<=size;i++){
+    let arr = inputData[i].split('')
+    let score = new Array(arr.length).fill(0)
+    arr.map((x,idx)=>{
+        if(x === 'O'){
+            if(idx === 0)score[idx] = 1
+            else{score[idx] = score[idx-1]+1}
+        }        
+    });
+    let sum = score.reduce((acc,cur)=>acc+cur);
+    result += sum+'\n'
+}
+
+console.log(result);
