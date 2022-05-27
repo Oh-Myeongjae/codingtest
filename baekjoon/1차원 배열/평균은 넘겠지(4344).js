@@ -10,3 +10,20 @@
 출력
 각 케이스마다 한 줄씩 평균을 넘는 학생들의 비율을 반올림하여 소수점 셋째 자리까지 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+
+let size = Number(inputData[0]);
+let result = '';
+
+for(let i=1;i<=size;i++){
+    let arr = inputData[i].split(' ').map(Number);
+    let sum = arr.reduce((acc,cur)=>acc+cur);
+    let mid = Number((sum-arr[0])/arr[0]);
+    let count = arr.filter((n,idx)=>idx!=0 && n>mid).length;
+    let num = Math.round(count/arr[0]*100000)/1000;
+    num = parseFloat(num).toFixed(3)
+    result += `${num}%\n`
+}
+
+console.log(result);
