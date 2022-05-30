@@ -20,3 +20,22 @@ n을 d(n)의 생성자라고 한다. 위의 수열에서 33은 39의 생성자�
 출력
 10,000보다 작거나 같은 셀프 넘버를 한 줄에 하나씩 증가하는 순서로 출력한다.
 */
+let result = '';
+let nArr = new Array(10001).fill(0);
+
+const func = (n)=>{
+    let num = n;
+    while(n>0){
+        num += n%10;
+        n = parseInt(n/10);
+    }
+    return num;
+}
+
+for(let x=1;x<=10000;x++){
+    nArr[func(x)] = 1 
+}
+
+for(let x=1;x<=10000;x++){
+   if(nArr[x] === 0)console.log(x);
+}
