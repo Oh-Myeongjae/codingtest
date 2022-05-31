@@ -8,3 +8,23 @@
 출력
 첫째 줄에 1보다 크거나 같고, N보다 작거나 같은 한수의 개수를 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString();
+const num = Number(inputData);
+
+const func = (n)=>{
+    let str = n+'';
+    let arr = str.split('').map(Number);
+    return arr[0]-arr[1] === arr[1]-arr[2] ? true : false
+}
+
+if(num<=99){
+    console.log(num);
+}else{
+    let numArr = new Array(num+1).fill(0)
+    numArr[99] = 99;
+    for(let i=100;i<num+1;i++){
+        numArr[i] = func(i) ? numArr[i-1]+1 : numArr[i-1];
+    }
+    console.log(numArr[num]);
+}
