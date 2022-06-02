@@ -8,3 +8,9 @@ N개의 숫자가 공백 없이 쓰여있다. 이 숫자를 모두 합해서 출
 출력
 입력으로 주어진 숫자 N개의 합을 출력한다.
 */
+const fs = require('fs');
+const inputData = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+
+let sum = inputData[1].split('').map(Number).reduce((acc,cur)=>acc+cur);
+
+console.log(sum);
