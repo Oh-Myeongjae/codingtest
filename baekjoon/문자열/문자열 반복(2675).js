@@ -10,3 +10,17 @@ QR Code "alphanumeric" 문자는 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\$%*+-./: �
 출력
 각 테스트 케이스에 대해 P를 출력한다.
 */
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+
+let count = Number(input[0]);
+let result = '';
+
+for(let i=1;i<=count;i++){
+    let make = '';
+    let arr = input[i].split(' ');
+    arr[1].split('').map((s)=>{make+=s.repeat(arr[0])});
+    result += (make + '\n');
+    }
+
+console.log(result);
