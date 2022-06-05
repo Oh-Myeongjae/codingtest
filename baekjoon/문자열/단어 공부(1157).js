@@ -8,3 +8,19 @@
 출력
 첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단, 가장 많이 사용된 알파벳이 여러 개 존재하는 경우에는 ?를 출력한다.
 */
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').toString().toUpperCase().trim().split('');
+let result = [];
+
+let obj = {};
+input.map((s)=>{
+    if(obj[s])obj[s] += 1
+    else{obj[s] = 1}
+});
+
+let max = Math.max(...Object.values(obj));
+Object.values(obj).map((x,i)=>{if(x === max)result.push(Object.keys(obj)[i])});
+
+result = result.length === 1 ? result[0] : '?'
+
+console.log(result);
