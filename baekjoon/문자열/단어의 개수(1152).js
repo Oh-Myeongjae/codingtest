@@ -8,3 +8,7 @@
 출력
 첫째 줄에 단어의 개수를 출력한다.
 */
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').toString().trim().split(' ');
+
+console.log(input[0]===''?input.length-1:input.length);
