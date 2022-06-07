@@ -12,3 +12,14 @@
 출력
 첫째 줄에 상수의 대답을 출력한다.
 */
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').toString().trim().split(' ');
+
+const func = (s)=>{
+    return Number(s.split('').reverse().join(''))
+}
+
+let a = func(input[0])
+let b = func(input[1])
+
+console.log(a>b?a:b);
