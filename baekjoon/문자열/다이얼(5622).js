@@ -13,3 +13,24 @@
 출력
 첫째 줄에 다이얼을 걸기 위해서 필요한 최소 시간을 출력한다.
 */
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').toString().trim().split('');
+let alpha = {
+    'ABC' : 3,
+    'DEF' : 4,
+    'GHI' : 5,
+    'JKL' : 6,
+    'MNO' : 7,
+    'PQRS' : 8,
+    'TUV' : 9,
+    'WXYZ' : 10
+};
+
+const func = (s)=>{
+    for(let k in alpha){
+        if(k.includes(s))return alpha[k]
+    }
+}
+
+let sum = input.reduce((acc,cur)=>acc+func(cur),0)
+console.log(sum);
