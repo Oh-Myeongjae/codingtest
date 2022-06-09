@@ -10,3 +10,28 @@
 출력
 첫째 줄에 그룹 단어의 개수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+let num = Number(input[0]);
+let result = 0;
+
+const func = (s)=>{
+    let make = '';
+    let arr = s.split('');
+    for(let el of arr){
+        let size = make.length;
+        if(size === 0){
+            make += el;
+        }else if(make[size-1] === el || !make.includes(el)){
+                make += el;
+        }else{
+            return false
+        }
+    }
+    return true
+}
+
+for(let i=1;i<=num;i++){
+    if(func(input[i]) === true)result++
+}
+console.log(result);
