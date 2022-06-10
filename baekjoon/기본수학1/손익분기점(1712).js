@@ -14,3 +14,17 @@ A, B, C가 주어졌을 때, 손익분기점을 구하는 프로그램을 작성
 출력
 첫 번째 줄에 손익분기점 즉 최초로 이익이 발생하는 판매량을 출력한다. 손익분기점이 존재하지 않으면 -1을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split(' ').map(Number);
+let result = 0;
+
+if(input[2]<=input[1]){
+    result = -1
+}else{
+    let plus = input[2]-input[1];
+    let num = Math.floor(input[0]/plus);
+    result = num+1 
+}
+console.log(result);
+
+
