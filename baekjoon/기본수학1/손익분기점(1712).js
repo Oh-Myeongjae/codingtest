@@ -26,6 +26,3 @@ if(input[2]<=input[1]){
     result = num+1 
 }
 console.log(result);
-
-
- 
