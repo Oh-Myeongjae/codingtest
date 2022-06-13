@@ -11,3 +11,22 @@
 출력
 입력으로 주어진 방까지 최소 개수의 방을 지나서 갈 때 몇 개의 방을 지나는지 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString();
+let num = Number(input);
+let now = 1;
+let next = 6;
+let result = 2;
+
+if(num === 1){
+    result = 1;
+}else{
+    while(now+next<num){
+        now += next;
+        next += 6;
+        result++;
+    } 
+}
+console.log(result);
+
+
