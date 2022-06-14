@@ -17,3 +17,25 @@ X가 주어졌을 때, X번째 분수를 구하는 프로그램을 작성하시�
 출력
 첫째 줄에 분수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString();
+let num = Number(input)
+let sum  = 0;
+let next = 1;
+
+while(sum+next<num){
+    sum += next;
+    next++;
+}
+
+let check = next%2 === 0 ? true : false; 
+let idx = num-sum;
+next -= idx-1;
+
+let left = check ? idx : next;
+let right = check ? next : idx;
+
+let result = left+'/'+right;
+console.log(result);
+
+
