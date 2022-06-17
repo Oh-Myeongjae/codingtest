@@ -24,3 +24,21 @@ ACM 호텔 매니저 지우는 손님이 도착하는 대로 빈 방을 배정�
 출력
 프로그램은 표준 출력에 출력한다. 각 테스트 데이터마다 정확히 한 행을 출력하는데, 내용은 N 번째 손님에게 배정되어야 하는 방 번호를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+let result = '';
+let num = Number(input[0]);
+
+for(let i=1;i<=num;i++){
+    let arr = input[i].split(' ').map(Number);
+    let right = '';
+    let left = '';
+    right += arr[2]%arr[0] === 0 ? parseInt(arr[2]/arr[0]) : parseInt(arr[2]/arr[0])+1;
+    left += arr[2]%arr[0] === 0 ? arr[0] : arr[2]%arr[0];
+    if(right.length === 1){
+        right = '0'+right;
+    }
+    result += left+right+'\n'
+}
+
+console.log(result);
