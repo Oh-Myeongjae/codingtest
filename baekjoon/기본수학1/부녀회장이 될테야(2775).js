@@ -12,3 +12,33 @@
 출력
 각각의 Test case에 대해서 해당 집에 거주민 수를 출력하라.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+let num = input[0];
+let result = '';
+
+let h = [];
+let w = [];
+for(let i=1;i<input.length;i=i+2){
+    h.push(input[i]);
+    w.push(input[i+1]);
+}
+let maxH = Math.max(...h)+1;
+let maxW = Math.max(...w);
+let arr = new Array(maxH).fill([]).map(()=>new Array(maxW).fill(0));
+for(let i=0;i<maxW;i++){
+    arr[0][i] = i+1;
+}
+
+for(let x=1;x<maxH;x++){
+    arr[x][0] = 1;
+    for(let y=1;y<maxW;y++){
+        arr[x][y] = arr[x][y-1]+arr[x-1][y];
+    }
+}
+
+for(let i=0;i<h.length;i++){
+    result += arr[h[i]][w[i]-1]+'\n';
+}
+          
+console.log(result);   
