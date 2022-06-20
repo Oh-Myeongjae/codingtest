@@ -12,3 +12,24 @@
 출력
 상근이가 배달하는 봉지의 최소 개수를 출력한다. 만약, 정확하게 N킬로그램을 만들 수 없다면 -1을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+let num = Number(input);
+let arr = [0,0];
+let result = 0;
+
+for(let i=1;i<=1000;i++){
+    if(i*5>num){
+        break;
+    }
+    let n = num-(i*5);
+    
+    if(n%3 === 0){
+        arr[0]=i;
+        arr[1]=n/3;
+    } 
+}
+
+result = arr[0] != 0 ? arr[0]+arr[1] : (num%3===0 ? num/3 : -1);
+
+console.log(result)
