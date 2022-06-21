@@ -8,3 +8,10 @@
 출력
 첫째 줄에 A+B를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split(' ');
+let a = BigInt(input[0]);
+let b = BigInt(input[1]);
+let num = a+b;
+
+console.log(num.toString());
