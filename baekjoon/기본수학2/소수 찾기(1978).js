@@ -8,3 +8,28 @@
 출력
 주어진 수들 중 소수의 개수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+const func = (num)=>{
+    let check = true;
+    let half = Math.sqrt(num)
+    for(let i=2;i<=half;i++){
+        if(num%i === 0){
+            check = false;
+            break;
+        }
+    }
+    if(num === 1){
+      check = false;  
+    }
+    return check;
+}
+
+let count = 0;
+
+for(let el of input[1].split(' ').map(Number)){
+    if(func(el)){
+     count++;   
+    }
+}
+console.log(count);
