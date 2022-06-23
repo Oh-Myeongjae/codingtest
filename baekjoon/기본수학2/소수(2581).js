@@ -14,3 +14,27 @@ M이상 N이하의 자연수 중 소수인 것을 모두 찾아 첫째 줄에 �
 
 단, M이상 N이하의 자연수 중 소수가 없을 경우는 첫째 줄에 -1을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+const func = (num)=>{
+    if(num === 1)return false;
+    let half = Math.sqrt(num);
+    
+    for(let i=2;i<=half;i++){
+        if(num%i === 0)return false;
+    }
+    
+    return true;
+}
+let sum = 0;
+let min = 0;
+let result = '';
+
+for(let n=input[0];n<=input[1];n++){
+    if(func(n)){
+        sum+=n;
+        if(min === 0)min = n
+    }
+}
+result += sum === 0 ? -1 : `${sum}\n${min}` 
+console.log(result);
