@@ -16,3 +16,42 @@
 출력
 각 테스트 케이스에 대해서, n보다 크고, 2n보다 작거나 같은 소수의 개수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number);
+
+const func = (num)=>{
+    if(num === 1)return false;
+    let half = Math.sqrt(num);
+    
+    for(let i=2;i<=half;i++){
+        if(num%i === 0)return false;
+    }
+    
+    return true;
+}
+
+let max = Math.max(...input)*2;
+let arr = new Array(max+1).fill(true);
+arr[1] = false;
+
+for(let i=2;i<arr.length;i++){
+    if(arr[i] && func(i)){
+        let num = i+i;
+        while(num<=max){
+            arr[num] = false;
+            num += i;
+        }
+    }
+}
+let cArr = []
+
+for(let x=0;x<input.length-1;x++){
+    let count = 0;
+    for(let y=input[x]+1;y<=2*input[x];y++){
+        if(arr[y])count++
+    }
+    cArr.push(count);
+}
+
+console.log(cArr.join('\n'));
+
