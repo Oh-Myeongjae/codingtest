@@ -12,3 +12,47 @@
 출력
 각 테스트 케이스에 대해서 주어진 n의 골드바흐 파티션을 출력한다. 출력하는 소수는 작은 것부터 먼저 출력하며, 공백으로 구분한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n').map(Number).slice(1);
+
+const func = (num)=>{
+    if(num === 1)return false;
+    let half = Math.sqrt(num);
+    
+    for(let i=2;i<=half;i++){
+        if(num%i === 0)return false;
+    }
+    
+    return true;
+}
+
+let max = Math.max(...input);
+let arr = new Array(max+1).fill(true);
+arr[1] = false;
+
+for(let i=2;i<arr.length;i++){
+    if(arr[i] && func(i)){
+        let num = i+i;
+        while(num<=max){
+            arr[num] = false;
+            num += i;
+        }
+    }
+}
+let result = '';
+
+for(let x=0;x<input.length;x++){
+    let A = input[x]/2
+    let B = input[x]/2
+    while(true){
+        if(arr[A] && arr[B])break;
+        else{
+            A -= 1
+            B += 1
+        }
+    }
+    result += `${A} ${B}\n`
+}
+
+console.log(result);
+
