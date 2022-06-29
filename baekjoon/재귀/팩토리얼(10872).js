@@ -8,3 +8,13 @@
 출력
 첫째 줄에 N!을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+input = Number(input);
+
+const func = (num)=>{
+    if(num <= 1) return 1
+    return num * func(num-1)
+}
+
+console.log(func(input))
