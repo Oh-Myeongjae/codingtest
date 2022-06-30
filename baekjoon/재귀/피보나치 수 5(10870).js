@@ -16,3 +16,20 @@ n이 주어졌을 때, n번째 피보나치 수를 구하는 프로그램을 작
 출력
 첫째 줄에 n번째 피보나치 수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+input = Number(input);
+let arr = new Array(21).fill(0)
+arr[0] = 0;
+arr[1] = 1;
+
+const func = (num)=>{
+    if(num<=1) return arr[num]
+    return func(num-1) + func(num-2)
+}
+
+for(let i=2;i<21;i++){
+    arr[i] = func(i)
+}
+
+console.log(arr[input])
