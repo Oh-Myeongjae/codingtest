@@ -15,3 +15,27 @@
 
 두 번째 줄부터 수행 과정을 출력한다. 두 번째 줄부터 K개의 줄에 걸쳐 두 정수 A B를 빈칸을 사이에 두고 출력하는데, 이는 A번째 탑의 가장 위에 있는 원판을 B번째 탑의 가장 위로 옮긴다는 뜻이다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+input = Number(input);
+let result = ''
+
+let count = 0;
+
+const hanoi = (n, src, dst, mid) => {
+    if (n === 1){
+        result += `${src} ${dst}\n`;
+        count++;
+    } 
+    else {
+        hanoi(n - 1, src, mid, dst);
+        result += `${src} ${dst}\n`;
+        count++;
+        hanoi(n - 1, mid, dst, src);
+    }
+}
+hanoi(input, 1, 3, 2);
+
+result = `${count}\n` + result
+
+console.log(result)
