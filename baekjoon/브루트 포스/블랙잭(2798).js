@@ -18,3 +18,23 @@ N장의 카드에 써져 있는 숫자가 주어졌을 때, M을 넘지 않으�
 출력
 첫째 줄에 M을 넘지 않으면서 M에 최대한 가까운 카드 3장의 합을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+let score = input[0].split(' ').map(Number)[1];
+let Numbers = input[1].split(' ').map(Number).sort((a,b)=>b-a)
+let result = 0;
+const func = (arr,temp,count) =>{
+    if(arr.length === 0 && temp.length <3) return
+    if(count >= 4){
+        let sum = temp.reduce((acc,cur)=>acc+cur);
+        if(sum<=score && result < sum)result = sum;
+        return
+    }
+    for(let i = 0; i<arr.length; ++i){
+        let copy = temp.slice();
+        copy.push(arr[i]);
+        func(arr.slice(i+1),copy,count+1);
+    }
+}
+func(Numbers,[],1)
+console.log(result)
