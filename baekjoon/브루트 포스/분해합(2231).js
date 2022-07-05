@@ -10,3 +10,27 @@
 출력
 첫째 줄에 답을 출력한다. 생성자가 없는 경우에는 0을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+input = Number(input);
+let result = 0;
+
+const func = (num) =>{
+    let sum = num;
+    let arr = [sum];
+    while(num != 0){
+        arr.push(num%10);
+        num = parseInt(num/10);
+    }
+    sum = arr.reduce((acc,cur)=>acc+cur)
+    return sum === input ? true : false;   
+}
+
+for(let i=1;i<input;i++){
+    if(func(i)){
+        result = i
+        break;
+    }
+}
+
+console.log(result)
