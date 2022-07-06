@@ -18,3 +18,25 @@ E	(46, 155)	5
 출력
 여러분은 입력에 나열된 사람의 덩치 등수를 구해서 그 순서대로 첫 줄에 출력해야 한다. 단, 각 덩치 등수는 공백문자로 분리되어야 한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+let arr = input.slice(1);
+let size = arr.length
+let result = '';
+
+const func = (str,idx) => {
+    let count = 1;
+    for(let i=0;i<size;i++){
+        if(idx === i)continue;
+        let a = str.split(' ').map(Number)
+        let b = arr[i].split(' ').map(Number)
+        if(a[0]<b[0] && a[1]<b[1])count++
+    }
+    return count
+}
+
+for(let i=0;i<size;i++){
+    result += `${func(arr[i],i)} `
+}
+
+console.log(result.trim())
