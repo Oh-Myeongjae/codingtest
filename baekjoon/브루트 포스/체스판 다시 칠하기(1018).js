@@ -12,3 +12,39 @@
 출력
 첫째 줄에 지민이가 다시 칠해야 하는 정사각형 개수의 최솟값을 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim().split('\n');
+let [H,W] = input[0].split(' ').map(Number);
+let arr = input.slice(1);
+let a = 'WBWBWBWBBWBWBWBWWBWBWBWBBWBWBWBWWBWBWBWBBWBWBWBWWBWBWBWBBWBWBWBW';
+let b = 'BWBWBWBWWBWBWBWBBWBWBWBWWBWBWBWBBWBWBWBWWBWBWBWBBWBWBWBWWBWBWBWB';
+
+let result = 65;
+
+const func = (x,y)=>{
+    let Acount = 0;
+    let Bcount = 0;    
+    let make = '';
+    
+    for(let i=x;i<=x+7;i++){
+        make += arr[i].slice(y,y+8)
+    }
+
+    for(let i=0;i<64;i++){
+        if(a[i] != make[i])Acount++;
+        if(b[i] != make[i])Bcount++;
+    }
+
+    let min = Math.min(Acount,Bcount);
+    return min
+}
+
+for(let i=0;i<arr.length;i++){
+    for(let j=0;j<arr[0].length;j++){
+        if(i+7<H && j+7<W){
+            result = Math.min(result,func(i,j));
+        }
+    }
+}
+
+console.log(result);
