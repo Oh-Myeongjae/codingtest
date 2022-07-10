@@ -16,3 +16,23 @@
 출력
 첫째 줄에 N번째 영화의 제목에 들어간 수를 출력한다.
 */
+const fs = require('fs');
+let input = fs.readFileSync(0, 'utf8').toString().trim();
+let num = Number(input);
+
+const func = ()=>{
+    let result = 0
+    let start = 665;
+    while(num != 0){
+        start++
+        let temp = start+''
+        if(temp.includes('666')){
+            result = start
+            num--   
+        }
+    }
+    return result
+}
+
+console.log(func())
+
