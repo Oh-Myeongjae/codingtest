@@ -8,3 +8,26 @@
 예를 들어, 주어진 수가 6이라면 6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1 이 되어 총 8번 만에 1이 됩니다. 위 작업을 몇 번이나 반복해야 하는지 반환하는 함수, solution을 완성해 주세요.
 단, 주어진 수가 1인 경우에는 0을, 작업을 500번 반복할 때까지 1이 되지 않는다면 –1을 반환해 주세요.
 */
+
+class Solution {
+    public int solution(int num) {
+        if(num ==1) return 0;
+        int answer = 0;
+        int count = 0;
+        long convert = (long)num;
+        while(count<500) {
+        	count++;
+        	if(convert%2==0) {
+        		convert /= 2;
+        	}else {
+        		convert = convert*3+1;
+        	}
+        	if(convert == 1) {
+        		answer = count;
+        		break;
+        	}
+        }
+        if(answer ==0)answer = -1;
+        return answer;
+    }
+}
