@@ -24,4 +24,7 @@ class Solution {
         answer = list.stream().mapToInt(Integer::new).toArray();
         return answer;
     }
-}
+/*
+중복과 오름차순을 해결하기 위해서 배열을 미리 만들어 놓고 인덱스로 접근하는 방식을 사용했는데
+Set을 이용하면 중복이 사라진다는걸 이용해서 set을 이용한후 정렬을 했어도 코드도 더 깔끔하고 정리가 잘될꺼 같다.
+*/
