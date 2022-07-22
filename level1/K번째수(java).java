@@ -16,3 +16,18 @@ array의 각 원소는 1 이상 100 이하입니다.
 commands의 길이는 1 이상 50 이하입니다.
 commands의 각 원소는 길이가 3입니다.
 */
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        
+        for(int i=0;i<commands.length;i++) {
+        	int[] copy = Arrays.copyOfRange(array, commands[i][0]-1, commands[i][1]);
+        	Arrays.sort(copy);     
+        	answer[i] = copy[commands[i][2]-1];
+        }
+
+        return answer;
+    }
+}
