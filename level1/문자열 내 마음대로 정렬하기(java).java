@@ -10,6 +10,23 @@ strings의 원소는 길이 1 이상, 100이하인 문자열입니다.
 모든 strings의 원소의 길이는 n보다 큽니다.
 인덱스 1의 문자가 같은 문자열이 여럿 일 경우, 사전순으로 앞선 문자열이 앞쪽에 위치합니다.
 */
+import java.util.*;
+
+class Solution {
+     public String[] solution(String[] strings, int n) { 
+        for(int i=0;i<strings.length;i++) {
+            strings[i] = strings[i].charAt(n)+strings[i];
+        }
+
+        Arrays.sort(strings);
+
+        for(int i=0;i<strings.length;i++) {
+            strings[i] = strings[i].substring(1);
+        }
+
+        return strings;
+    }
+}
 
 //    for(int i=0;i<strings.length;i++) {
 //         	strings[i] = strings[i].charAt(n)+strings[i];
@@ -69,3 +86,4 @@ strings의 원소는 길이 1 이상, 100이하인 문자열입니다.
 //     Arrays.sort(strings);
 //     Arrays.sort(strings, (s1,s2)->s1.charAt(n)-s2.charAt(n)); 
 // return strings;   
+//
