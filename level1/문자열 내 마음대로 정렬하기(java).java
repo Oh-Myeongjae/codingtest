@@ -10,3 +10,62 @@ strings의 원소는 길이 1 이상, 100이하인 문자열입니다.
 모든 strings의 원소의 길이는 n보다 큽니다.
 인덱스 1의 문자가 같은 문자열이 여럿 일 경우, 사전순으로 앞선 문자열이 앞쪽에 위치합니다.
 */
+
+//    for(int i=0;i<strings.length;i++) {
+//         	strings[i] = strings[i].charAt(n)+strings[i];
+//         }
+        
+//         Arrays.sort(strings);
+        
+//         for(int i=0;i<strings.length;i++) {
+//         	strings[i] = strings[i].substring(1);
+//         }
+        
+//         return strings;
+
+-------------------------------------------------------------------------------
+
+//    List<String> answer = new ArrayList<String>();
+// 		Set<Character> set = new HashSet<Character>();
+		
+// 		for(String s: strings) {
+// 			set.add(s.charAt(n));
+// 		}
+		
+// 		List<Character> cList = new ArrayList(set);
+// 		Collections.sort(cList);
+		
+// 		for(char c : cList) {
+// 			List<String> temp = new ArrayList<String>();
+			
+// 			for(String str: strings) {
+// 				if( str.charAt(n) == c )temp.add(str);
+// 			}
+            
+// 			Collections.sort(temp);
+
+// 			for(String s : temp){
+// 				answer.add(s);
+// 			}
+// 		}		
+		
+//         return answer.toArray(new String[0]);  
+
+-------------------------------------------------------------------------
+  
+ // Arrays.sort(strings, new Comparator<String>(){
+ //          @Override
+ //          public int compare(String s1, String s2){
+ //              if(s1.charAt(n) > s2.charAt(n)) return 1;
+ //              else if(s1.charAt(n) == s2.charAt(n)) return s1.compareTo(s2);
+ //              else if(s1.charAt(n) < s2.charAt(n)) return -1;
+ //              else return 0;
+ //          }
+ //      });
+ //      return strings;
+
+-----------------------------------------------------------------------
+
+//     Arrays.sort(strings);
+//     Arrays.sort(strings, (s1,s2)->s1.charAt(n)-s2.charAt(n)); 
+// return strings;   
