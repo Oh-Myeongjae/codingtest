@@ -7,13 +7,16 @@
 class Solution {
     public String solution(String s, int n) {
        String answer = "";
+	   	//한글자씩 아스키코드 값으로 확인하기 위해서 character타입의 배열로 변환
 	        char[] ch = s.toCharArray();
 	  
 	        for(char c : ch) {
+			//공백문자는 그대로 더해주기
 	        	if(c == ' ') {
 	        		answer += c;
 	        		continue;
 	        	}
+			//일단은 n의 값만큼 문자를 밀기
 	        	int num = c+n;        	
 	        	if((c>='a' && c<='z' && num>'z') || num>'Z') num-= 26;      	
 	        	answer += (char)num;
