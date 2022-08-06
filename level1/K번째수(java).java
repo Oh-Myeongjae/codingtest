@@ -31,3 +31,26 @@ class Solution {
         return answer;
     }
 }
+
+/*
+package test;
+
+import java.util.*;
+
+public class test {
+	  public int[] solution(int[] array, int[][] commands) {
+		 return Arrays.stream(commands).map(el ->{         
+			  int[] arr = Arrays.copyOfRange(array, el[0]-1, el[1]);
+			  Arrays.sort(arr);
+			  return arr[el[2]-1];
+		  }).mapToInt(i->i).toArray();  
+    }
+	
+	    public static void main(String[] args) {
+	    	test test1 = new test();
+	        System.out.println(test1.solution(new int[]{1, 5, 2, 6, 3, 7, 4}, new int[][]{{2, 5, 3},{4, 4, 1},{1, 7, 3}}));
+	    }
+	}
+    
+    스트림 객체를 사용해서 코드를 절약해볼려 했으나 실패...ㅠㅜㅠㅜ
+*/
