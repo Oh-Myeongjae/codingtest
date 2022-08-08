@@ -25,8 +25,7 @@ public class test {
 	 public int solution(int[] nums) {
 	        int answer = 0;
 	        int count = nums.length/2;
-	       
-	        
+	       	        
 	        List<Integer> list = new ArrayList<Integer>(); 
 	          
 	        for(int num : nums) {
@@ -54,7 +53,6 @@ import java.util.*;
 
 public class test {
 	 public int solution(String[] nums) {
-		    System.out.println("문제에서 주어진 포켓몬 : "+Arrays.toString(nums));
 	        int answer = 0;
 	        int count = nums.length/2;        
 	        HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
@@ -92,8 +90,7 @@ import java.util.*;
 public class test {
 		public int solution(int[] nums) {
 		    HashSet<Integer> hashSet = new HashSet<Integer>();  
-		    for(int num :nums) {hashSet.add(num);}
-		        
+		    for(int num :nums) {hashSet.add(num);}	        
 		    return Math.min(nums.length/2, hashSet.size());
 		}	
 	
