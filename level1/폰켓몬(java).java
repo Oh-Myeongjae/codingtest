@@ -22,23 +22,85 @@ package test;
 import java.util.*;
 
 public class test {
+	 public int solution(int[] nums) {
+	        int answer = 0;
+	        int count = nums.length/2;
+	       
+	        
+	        List<Integer> list = new ArrayList<Integer>(); 
+	          
+	        for(int num : nums) {
+	        	if(!list.contains(num))list.add(num);
+	        }
+	        
+	        if(count<=list.size()){
+	        	answer = count;
+	        }else {
+	        	answer = list.size();
+	        }	        
+	        return answer;
+	    }	
+	
+	    public static void main(String[] args) {
+	    	test test1 = new test();
+	        System.out.println(test1.solution(new int[]{3,3,3,2,2,4}));
+	    }
+	}
+//=============================================================================
+
+package test;
+
+import java.util.*;
+
+public class test {
+	 public int solution(String[] nums) {
+		    System.out.println("문제에서 주어진 포켓몬 : "+Arrays.toString(nums));
+	        int answer = 0;
+	        int count = nums.length/2;        
+	        HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
+	        
+	        for(String mon : nums) {
+	        	if(hashMap.get(mon) == null) {
+	        		hashMap.put(mon, 1);
+	        	}else {
+	        		int value = hashMap.get(mon);
+	        		hashMap.put(mon, value+1);
+	        	}
+	        }
+	        
+	        Set<String> set =  hashMap.keySet();
+	      	        
+	        if(count<=set.size()){
+	        	answer = count;
+	        }else {
+	        	answer = set.size();
+	        }	        
+	        
+	        return answer;
+	    }	
+	
+	    public static void main(String[] args) {
+	    	test test1 = new test();
+	        System.out.println(test1.solution(new String[]{"이상해씨","이상해씨","파이리","이상해씨","파이리","꼬부기"}));
+	    }
+	}
+//===================================================================================
+package test;
+
+import java.util.*;
+
+public class test {
 		public int solution(int[] nums) {
-		    int answer = 0;
-		    int max = nums.length/2;
-		
-		    HashSet<Integer> hashSet = new HashSet<Integer>();
-		    
-		    for(int num :nums) {
-		    	hashSet.add(num);
-		    }
-		    
-		
-		    answer = hashSet.size() > max ? max : hashSet.size();
-		    return answer;
+		    HashSet<Integer> hashSet = new HashSet<Integer>();  
+		    for(int num :nums) {hashSet.add(num);}
+		        
+		    return Math.min(nums.length/2, hashSet.size());
 		}	
 	
 	    public static void main(String[] args) {
 	    	test test1 = new test();
-	        System.out.println(test1.solution(new int[]{3,3,3,2,2,2}));
+	        System.out.println(test1.solution(new int[]{3,3,3,2,2,4}));
 	    }
 	}
+
+//==============================================================================
