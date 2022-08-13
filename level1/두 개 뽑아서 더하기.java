@@ -49,3 +49,5 @@ public class test {
 	        System.out.println(test1.solution(new int[]{5,0,2,7}));
 	    }
 	}
+	
+//이후에 TreeSet을 이용해서 다시 풀어 보았는데 역시나 코드의 단축을 많이 이루어 낼수 있었다.
