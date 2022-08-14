@@ -89,3 +89,4 @@ public class test {
 	        System.out.println(test1.solution(5,new int[]{2, 1, 2, 6, 2, 4, 3, 3}));
 	    }
 	}
+//조금 더 코드 리팩토링으로 최적화 시킬 방법이 있을것 같은데 어떻게 될지 한번 확인해 봐야하는 상황일꺼 같다.
