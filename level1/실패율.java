@@ -41,7 +41,6 @@ public class test {
 	        	if(!(x>N))fail[x]++;
 	        }
 	        System.out.println("스테이지별로 도전하고 있는 사람수 : "+ Arrays.toString(fail));
-	        System.out.println();
 	        
 	       /*
 	        * 실패율을 구하는 공식 : 스테이지에 도전하는 사람수 / 스테이지에 도달한 사람수
@@ -49,7 +48,6 @@ public class test {
 	        * 예시) {1,2,3,0,0} -> 4,5 스테이지는 아직 아무도 도달을 안했기때문에  
 	        * 도전하는 사람도 0명, 도달한 사람도 0명이라 0/0이되어서 오류가 발생한다.
 	        * 따라서 그런경우 실패율은 0.0으로 고정해줘야 한다.
-	        * 
 	        */
 	        TreeSet<Double> set = new TreeSet<Double>(); //실패율의 종류를 모아서 정렬하기 위한 set
 	        for(int i=1;i<=N;i++) {
@@ -63,7 +61,6 @@ public class test {
 	  
 	        System.out.println("스테이지별 실패율 : "+ Arrays.toString(fail));
 	        System.out.println("실패율이 높은것부터 정렬 : "+ set);
-	        System.out.println();
 	        
 	        int idx = 0; //answer에 실패율이 높은것부터 넣어주기 위한 인덱스로 사용
 	        
