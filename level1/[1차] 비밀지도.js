@@ -22,8 +22,6 @@ arr1, arr2는 길이 n인 정수 배열로 주어진다.
 
 출력 형식
 원래의 비밀지도를 해독하여 '#', 공백으로 구성된 문자열 배열로 출력하라.
-
-
 */
 function solution(n, arr1, arr2) {
     var answer = [];
