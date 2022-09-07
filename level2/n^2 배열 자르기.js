@@ -14,6 +14,7 @@ i = 1, 2, 3, ..., n에 대해서, 다음 과정을 반복합니다.
 1 ≤ n ≤ 107
 0 ≤ left ≤ right < n2
 right - left < 105
+
 */
 function solution(n, left, right) {
     var answer = [];
