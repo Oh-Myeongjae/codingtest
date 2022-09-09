@@ -4,7 +4,6 @@
 
 재한사항
 s는 길이가 1 이상, 100이하인 스트링입니다.
-
 */
 function solution(s) {
     var answer = '';
