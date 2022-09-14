@@ -27,6 +27,7 @@ function solution(numbers) {
     if(parseInt(answer) === 0)return '0'
     return answer;
 }
+
 /*
 function solution(numbers) {
     var answer = numbers.map(v=>v+'')
