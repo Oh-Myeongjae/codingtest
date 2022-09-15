@@ -19,12 +19,12 @@ s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해
 1	    one
 2	    two
 3	    three
-4	four
-5	five
-6	six
-7	seven
-8	eight
-9	nine
+4	    four
+5	    five
+6	    six
+7	    seven
+8	    eight
+9	    nine
 
 -제한사항-
 - 1 ≤ s의 길이 ≤ 50
