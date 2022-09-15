@@ -15,10 +15,10 @@ s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해
 참고로 각 숫자에 대응되는 영단어는 다음 표와 같습니다.
 
 숫자    영단어
-0	zero
-1	one
-2	two
-3	three
+0	    zero
+1	    one
+2	    two
+3	    three
 4	four
 5	five
 6	six
