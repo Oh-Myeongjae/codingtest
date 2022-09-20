@@ -24,8 +24,10 @@ function solution(N, number) {
         let temp = []
         let middle = i/2-1
         let str = ''+N
+        
         str = parseInt(str.repeat(i))
         if(str === number)return i
+     
         for(let k=0;k<=middle;k++){
             if(k===middle){
                 arr[k].map((x)=>{arr[k].map((y)=>{
@@ -45,6 +47,7 @@ function solution(N, number) {
                 })})
             }
         }
+     
         temp.push(str)
         if(temp.includes(number)) answer = i
         if(answer !== 0) break;
