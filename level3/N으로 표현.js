@@ -21,7 +21,6 @@ function solution(N, number) {
     let arr =[[N]]
     if(number === arr[0][0])return 1
     for(let i=2;i<=8;i++){
-       //console.log('arr',arr)
         let temp = []
         let middle = i/2-1
         let str = ''+N
