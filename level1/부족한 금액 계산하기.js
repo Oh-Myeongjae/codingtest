@@ -11,3 +11,15 @@
 처음 가지고 있던 금액 money : 1 ≤ money ≤ 1,000,000,000, money는 자연수
 놀이기구의 이용 횟수 count : 1 ≤ count ≤ 2,500, count는 자연수
 */
+function solution(price, money, count) {
+    var answer = 0;
+    let sum  = 0;
+    for(let i=1;i<=count;i++){
+        sum += i*price
+    }
+    if(sum - money <= 0)answer = 0
+    else{
+        answer = sum - money
+    }
+    return answer;
+}
