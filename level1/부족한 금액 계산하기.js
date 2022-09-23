@@ -10,5 +10,4 @@
 놀이기구의 이용료 price : 1 ≤ price ≤ 2,500, price는 자연수
 처음 가지고 있던 금액 money : 1 ≤ money ≤ 1,000,000,000, money는 자연수
 놀이기구의 이용 횟수 count : 1 ≤ count ≤ 2,500, count는 자연수
-
 */
