@@ -13,10 +13,9 @@
 제한사항
 s의 길이는 1 이상 1,000 이하입니다.
 */
-
 function solution(s) {
     var answer = 0;
-    let size = s.length
+    let size = s.length;
     for(let i=0;i<size;i++){
         let str = s.slice(i)+s.slice(0,i)
         let count = str.length
@@ -29,7 +28,7 @@ function solution(s) {
                check = false
                break;
            }
-           count = str.length
+           count = str.length;
         }
         if(check)answer++
     }
