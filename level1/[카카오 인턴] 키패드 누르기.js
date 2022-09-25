@@ -18,6 +18,7 @@ hand는 "left" 또는 "right" 입니다.
 왼손 엄지손가락을 사용한 경우는 L, 
 오른손 엄지손가락을 사용한 경우는 R을 순서대로 이어붙여 문자열 형태로 return 해주세요.
 */
+
 function solution(numbers, hand) {
     var answer = '';
     let right = [3,2]
@@ -49,6 +50,7 @@ function solution(numbers, hand) {
                 }
                  rsize[2] += rsize[i]
             }
+            
             // 총거리를 비교하여 어느손을 이용하여 누를지 결정
             if(rsize[2]>lsize[2]){
                 left = point[el]
