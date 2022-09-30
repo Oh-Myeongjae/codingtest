@@ -22,7 +22,6 @@
 점수는 0에서 10 사이의 정수이다.
 보너스는 S, D, T 중 하나이다.
 옵선은 *이나 # 중 하나이며, 없을 수도 있다.
-
 */
 function solution(dartResult) {
     var answer = 0;
