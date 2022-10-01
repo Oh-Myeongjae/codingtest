@@ -28,15 +28,9 @@ function solution(answers) {
         let count = 0
         let temp = 0 
         for(let i=0;i<size;i++){
-            if(answers[i] === arr[temp]){
-                count++
-            }
-            if(temp<num){
-                temp++
-            }
-            if(temp === num){
-                temp = 0
-            }
+            if(answers[i] === arr[temp])count++
+            if(temp<num)temp++
+            if(temp === num)temp = 0
         }
         if(count >= max){
             max = count
