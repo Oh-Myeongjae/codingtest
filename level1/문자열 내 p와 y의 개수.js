@@ -28,5 +28,5 @@ function solution(s){
     }else{
         answer = false
     }
-    returns answer;
+    return answer;
 }
