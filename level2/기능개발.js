@@ -24,7 +24,6 @@ function solution(progresses, speeds) {
         let done = num%speeds[i] === 0 ? num/speeds[i]:parseInt(num/speeds[i])+1
         arr.push(done)
     }
-    
     let count = 1
     let max = arr[0]
     
