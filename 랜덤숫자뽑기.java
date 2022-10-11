@@ -1,13 +1,9 @@
 package test;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 
 public class test {
-	   
 		public void solution() {
 			HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
 			map.put(0, new ArrayList<Integer>());
@@ -41,3 +37,9 @@ public class test {
 	        test1.solution();
 	    }
 	}
+/*
+===================================================================================================================
+50개의 숫자중 임의숫자를 중복없이 부여하는 코드입니다.
+내기를 하거나 할일 부여할때 사용가능할것 같아요.
+추후에 최적해 해야될것같습니다.
+*/
