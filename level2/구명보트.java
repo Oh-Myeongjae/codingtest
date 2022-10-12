@@ -16,3 +16,22 @@
 구명보트의 무게 제한은 40kg 이상 240kg 이하입니다.
 구명보트의 무게 제한은 항상 사람들의 몸무게 중 최댓값보다 크게 주어지므로 사람들을 구출할 수 없는 경우는 없습니다.
 */
+import java.util.*;
+
+class Solution {
+  public int solution(int[] people, int limit) {
+        int answer = 0;
+        int count = people.length;
+        Arrays.sort(people);
+        int min = 0;
+        for(int i = people.length-1; i>=min; i--) {
+        	int firstWeight = people[min];
+        	int lastWeight = people[i];
+        	if(firstWeight+lastWeight <=limit) {
+        		min++;
+        	}
+        	answer++;
+        }
+        return answer;
+   }
+}
