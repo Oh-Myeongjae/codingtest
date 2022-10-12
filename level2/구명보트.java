@@ -35,3 +35,56 @@ class Solution {
         return answer;
    }
 }
+/*
+public int solution(int[] people, int limit) {
+        int answer = 0;
+        int count = people.length;
+//        Arrays.sort(people);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int x : people)list.add(x);
+        Collections.sort(list);
+	      while(!list.isEmpty()) {
+	    	int firstWeight = list.get(0);
+	    	int lastWeight = list.get(list.size()-1);
+	    	
+	    	if(firstWeight+lastWeight<=limit) {
+	    		list.remove(0);
+	    	}
+	    	if(!list.isEmpty())list.remove(list.size()-1);
+	    	answer++;
+	    }
+        return answer;
+   }
+   
+   ==========================================================================================================================
+   public int solution(int[] people, int limit) {
+        int answer = 0;
+        int count = people.length;
+        //Arrays.sort(people);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int x : people)list.add(x);
+        Collections.sort(list);
+        int max = list.size()-1;
+        int min = 0;
+	      while(count>0) {
+	    	if(list.get(max)+list.get(min)<=limit) {
+	    		min++;
+          count--;
+	    	}
+          max--;
+	    	  count--;
+	    	  answer++;
+	    }
+        return answer;
+   }
+   
+   ==========================================================================================================================
+   
+   최초에 리스트를 이용해서 문제해결을 시도 했는데 시간 초과 에러가 발생했다.
+   하지만 이때 Collections.sort(list);의 방식을 Arrays.sort(people); 이후에 리스트에 추가만 하는 식으로 변했는데 통과가 되었다.
+   검색을 해보았더니 두개의 정렬 방식의 차이로 대부분 Collections.sort()가 더 시간복잡도가 적게 사용되나 
+   Arrays.sort()는 Dual-Pivot Quicksort를 사용하는데 Quick sort는 배열에서 좋은 성능을 보인다는 내용을 보았는데 이런부분이 적용된거 같다.
+   
+   하지만 원초적인 문제는 list의 remove하는 부분에서 가장 앞요소를 삭제하면서 나머지 요소가 앞쪽으로 한칸씩 이동하는 로직이 실행되면서 시간초과가 계속되었던것이다.
+   비슷하게 리스트를 사용했지만 요소를 지우지 않고 비교하는 요소의 위치를 변화시키며 지정하는 식으로 구현하였더니 해결되었다.
+*/
