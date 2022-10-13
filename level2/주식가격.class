@@ -7,3 +7,25 @@
 prices의 각 가격은 1 이상 10,000 이하인 자연수입니다.
 prices의 길이는 2 이상 100,000 이하입니다.
 */
+import java.util.*;
+
+public class TestQuest {
+	public int[] solution(int[] prices) {
+        int[] answer = new int[prices.length];
+        int size = prices.length;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int i=0;i<size;i++) {
+        	for(int x=i+1;x<size;x++) {
+        		answer[i]++;
+        		if(prices[x]<prices[i]) break;
+            }
+        }
+        return answer;
+    }
+	
+	public static void main(String[] args) {
+		TestQuest test1 = new TestQuest();
+        int[] num = test1.solution(new int[]{1, 2, 3, 2, 3});
+        System.out.println("정답 : "+Arrays.toString(num));
+		}
+	}
