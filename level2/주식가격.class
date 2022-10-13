@@ -35,8 +35,9 @@ public class TestQuest {
         Stack<Integer> beginIdxs = new Stack<>();
         int i=0;
         int[] terms = new int[prices.length];
-
         beginIdxs.push(i);
+	
+	//스택을 사용하는데 뒤에 숫자가 더 크면 앞쪽 숫자는 더 숫자가 줄어들지 않는다는 전제로 해결한 코드이다. 
         for (i=1; i<prices.length; i++) {
             while (!beginIdxs.empty() && prices[i] < prices[beginIdxs.peek()]) {
                 int beginIdx = beginIdxs.pop();
@@ -44,6 +45,9 @@ public class TestQuest {
             }
             beginIdxs.push(i);
         } 
+	
+	//여기까지 왔는데 남아있는것은 등장해서 끝까지 원래 숫자보다 작은적이 없다는 것이다.
+	//따라서 마지막 인덱스까지의 시간을 계산하는것이다.
         while (!beginIdxs.empty()) {
             int beginIdx = beginIdxs.pop();
             terms[beginIdx] = i - beginIdx - 1;
@@ -51,4 +55,5 @@ public class TestQuest {
 
         return terms;
     }
- * */
+ *  
+ */
