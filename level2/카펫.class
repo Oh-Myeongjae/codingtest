@@ -11,3 +11,21 @@ Leo가 본 카펫에서 갈색 격자의 수 brown, 노란색 격자의 수 yell
 노란색 격자의 수 yellow는 1 이상 2,000,000 이하인 자연수입니다.
 카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 깁니다.
 */
+import java.util.*;
+
+class 카펫 {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = {};
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i=1;i<=Math.sqrt(yellow);i++){
+            if(yellow%i==0)list.add(i);
+        }
+        for(int n : list){
+            int w = yellow/n;
+            int h = n;
+            if((w+2)*2+(h+2)*2-4 == brown)return new int[]{w+2,h+2};
+
+        }
+        return answer;
+    }
+}
