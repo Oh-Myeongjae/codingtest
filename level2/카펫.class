@@ -13,7 +13,7 @@ Leo가 본 카펫에서 갈색 격자의 수 brown, 노란색 격자의 수 yell
 */
 import java.util.*;
 
-class 카펫 {
+class 카펫{
     public int[] solution(int brown, int yellow) {
         int[] answer = {};
         List<Integer> list = new ArrayList<Integer>();
