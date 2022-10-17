@@ -22,3 +22,36 @@ cards의 원소는 cards의 길이 이하인 임의의 자연수입니다.
 cards에는 중복되는 원소가 존재하지 않습니다.
 cards[i]는 i + 1번 상자에 담긴 카드에 적힌 숫자를 의미합니다.
 */
+import java.util.*;
+
+public class test {
+    public int solution(int[] cards) {
+        int answer = 0;
+        boolean[] visit = new boolean[cards.length];
+        Arrays.fill(visit,false);
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i = 0 ; i < cards.length;i++){
+            int idx = i;
+            int temp = 0;
+            while(!visit[idx]){
+                visit[idx] = true;
+                idx = cards[idx] - 1;
+                temp++;
+            }
+            if(temp > 0){
+                list.add(temp);
+            }
+        }
+        Collections.sort(list);
+        if(list.size() == 1){
+            return 0;
+        }
+        return list.get(list.size() - 1) * list.get(list.size() - 2);
+    }
+
+    public static void main(String[] args) {
+        test test = new test();
+        int num = test.solution(new int[]{8,6,3,7,2,5,1,4});
+        System.out.println("정답 : "+ num);
+    }
+}
