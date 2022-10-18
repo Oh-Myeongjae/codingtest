@@ -7,3 +7,30 @@
 원형 수열은 처음과 끝이 연결되어 끊기는 부분이 없기 때문에 연속하는 부분 수열도 일반적인 수열보다 많아집니다.
 원형 수열의 모든 원소 elements가 순서대로 주어질 때, 원형 수열의 연속 부분 수열 합으로 만들 수 있는 수의 개수를 return 하도록 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+   Set<Integer> set = new HashSet<>();
+
+    public void func(int start, int[]arr, int finish){
+        int sum = 0;
+        int idx = start;
+        for(int i = 1;i<=finish;i++) {
+            sum += arr[idx];
+            idx++;
+            if (idx == arr.length)idx = 0;
+        }
+        set.add(sum);
+    }
+    public int solution(int[] elements) {
+        int answer = 0;
+
+        for(int x=0;x<elements.length;x++){
+            for(int y=1; y <= elements.length; y++){
+                func(x,elements,y);
+            }
+        }
+        answer = set.size();
+        return answer;
+    }
+}
