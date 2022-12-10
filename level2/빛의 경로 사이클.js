@@ -56,6 +56,5 @@ function solution(grid) {
             }
         }
     }
-
     return ans.sort((a, b) => a - b);
 }
