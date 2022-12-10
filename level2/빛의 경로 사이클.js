@@ -52,7 +52,6 @@ function solution(grid) {
                     r = r >= R ? 0 : r < 0 ? R - 1 : r;
                     c = c >= C ? 0 : c < 0 ? C - 1 : c;
                 }
-
                 ans.push(count);
             }
         }
