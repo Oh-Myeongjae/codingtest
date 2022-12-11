@@ -32,3 +32,13 @@
 1 ≤ b < a ≤ n ≤ 1,000,000
 정답은 항상 int 범위를 넘지 않게 주어집니다.
 */
+class Solution {
+    public int solution(int a, int b, int n) {
+        int answer = 0;
+        while(n>=a){
+            n+=b-a;
+            answer+=b;
+        }
+        return answer;
+    }
+}
