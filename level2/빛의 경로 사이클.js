@@ -44,7 +44,6 @@ function solution(grid) {
                 // 방문하지 않은 격자를 만날 동안
                 while (!visit[r][c][curDir]) {  
                     count++;
-
                     visit[r][c][curDir] = 1;
                     curDir = transDir[curDir][map[r][c]]; // 방향 전환
                     r += my[curDir]; // 좌표 갱신
