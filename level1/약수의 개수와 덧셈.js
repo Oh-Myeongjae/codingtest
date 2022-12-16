@@ -7,7 +7,7 @@
 1 ≤ left ≤ right ≤ 1,000
 */
 function solution(left, right) {
-    var answer = 0;
+   let answer = 0;
     const func = (num)=>{
         let sqrt = Math.sqrt(num)
         let arr = []
