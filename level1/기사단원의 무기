@@ -16,3 +16,23 @@
 
 무기점의 주인이 무기를 모두 만들기 위해 필요한 철의 무게를 return 하는 solution 함수를 완성하시오.
 */
+class Solution {
+    public int solution(int number, int limit, int power) {
+        int answer = 0;
+        for(int i = 1; i <= number; i++){
+            int n = func(i,limit,power);
+            answer += n;
+        }
+        return answer;
+    }
+    
+    public int func(int num,int l,int p){
+                    int count = 0;
+			        double d = Math.sqrt(num);
+			        for (int i=1; i<=d; i++) {
+						if(num%i ==0)count = count + (i == d ? 1 : 2);
+                        if(count >l)return p;
+					}
+			        return count;
+    }
+}
