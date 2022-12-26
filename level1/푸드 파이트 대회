@@ -20,3 +20,20 @@
 
 수웅이가 준비한 음식의 양을 칼로리가 적은 순서대로 나타내는 정수 배열 food가 주어졌을 때, 대회를 위한 음식의 배치를 나타내는 문자열을 return 하는 solution 함수를 완성해주세요.
 */
+class Solution {
+    public String solution(int[] food) {
+       String answer = "";
+        for(int i=1;i<food.length;i++){
+            if(food[i]<2)continue;
+            int n = food[i]/2;
+            String str = i+"";
+            answer += str.repeat(n);
+        }
+        answer+=0;
+        char[] chars = answer.toCharArray();
+        for (int i = chars.length-2; i >=0; i--) {
+            answer += chars[i];
+        }
+        return answer;
+    }
+}
