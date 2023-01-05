@@ -6,7 +6,6 @@ n을 x로 나눈 나머지가 1이 되도록 하는 가장 작은 자연수 x를
 
 제한사항
 3 ≤ n ≤ 1,000,000
-
 */
 function solution(n) {
     var answer = 0;
