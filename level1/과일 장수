@@ -14,17 +14,17 @@
 import java.util.*;
 
 class Solution {
-   public int solution(int k, int m, int[] score) {
-			        int answer = 0;
-			        int size = score.length/m;
-			        if(size == 0) return 0;
-			        int idx = score.length;
-			        Arrays.sort(score);
-			        for (int i = 0; i < size; i++) {
-						idx -= m;
-						int num = score[idx];
-						answer += num*m;
-					}
-			        return answer;
-			    }
+	public int solution(int k, int m, int[] score) {
+		int answer = 0;
+		int size = score.length/m;
+		if(size == 0) return 0;
+		int idx = score.length;
+		Arrays.sort(score);
+		for (int i = 0; i < size; i++) {
+			idx -= m;
+			int num = score[idx];
+			answer += num*m;
+		}
+		return answer;
+	}
 }
