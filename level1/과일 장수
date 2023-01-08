@@ -11,3 +11,20 @@
 (최저 사과 점수) x (한 상자에 담긴 사과 개수) x (상자의 개수) = 2 x 4 x 1 = 8
 사과의 최대 점수 k, 한 상자에 들어가는 사과의 수 m, 사과들의 점수 score가 주어졌을 때, 과일 장수가 얻을 수 있는 최대 이익을 return하는 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+   public int solution(int k, int m, int[] score) {
+			        int answer = 0;
+			        int size = score.length/m;
+			        if(size == 0) return 0;
+			        int idx = score.length;
+			        Arrays.sort(score);
+			        for (int i = 0; i < size; i++) {
+						idx -= m;
+						int num = score[idx];
+						answer += num*m;
+					}
+			        return answer;
+			    }
+}
