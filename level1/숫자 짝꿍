@@ -38,3 +38,4 @@ public String solution(String X, String Y) {
 			        return Long.parseLong(answer)+"";
 			    }
 }
+/*리팩토링중*/
