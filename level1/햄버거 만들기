@@ -18,3 +18,20 @@
 
 상수에게 전해지는 재료의 정보를 나타내는 정수 배열 ingredient가 주어졌을 때, 상수가 포장하는 햄버거의 개수를 return 하도록 solution 함수를 완성하시오.
 */
+class Solution {
+public int solution(int[] ingredient) {
+			        int answer = 0;
+			        StringBuilder str = new StringBuilder();
+			        for(int n : ingredient) {
+			        	str.append(n);
+			        	if(str.length()<4)continue;
+			        	int start = str.length()-4;
+			        	int end = str.length();
+			        	if(str.substring(start, end).equals("1231")) {
+			        	 	answer++;
+				        	str.delete(start, end);
+			        	}
+			        }
+			        return answer;
+			    }
+}
