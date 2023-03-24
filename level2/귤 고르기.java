@@ -14,7 +14,7 @@
 
 경화가 귤 k개를 고를 때 크기가 서로 다른 종류의 수의 최솟값을 return 하도록 solution 함수를 작성해주세요.
 */
-```
+
 import java.util.*;
 
 class Solution {
@@ -60,11 +60,7 @@ class Solution {
         return answer;
     }
 }
-
-```
-
-
-```
+=========================================================
 public int solution(int k, int[] tangerine) {
         int answer = 0;
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -89,4 +85,3 @@ public int solution(int k, int[] tangerine) {
         }
         return answer;
     }
-```
