@@ -14,3 +14,79 @@
 
 경화가 귤 k개를 고를 때 크기가 서로 다른 종류의 수의 최솟값을 return 하도록 solution 함수를 작성해주세요.
 */
+```
+import java.util.*;
+
+class Solution {
+    public int solution(int k, int[] tangerine) {
+        int answer = 0;
+        int box = 0;
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        
+        //귤의 사이즈 별로 몇개있는지 조사
+        for(int n : tangerine) {
+        	if(map.containsKey(n)) {
+        		map.put(n,map.get(n)+1);
+        	}else {
+        		map.put(n, 1);
+        	}
+        }
+        System.out.println("map : "+map);
+        
+    	//하나의 종류중 개수가 제일 많은거가 숫자가 몇인지?
+        int max = Collections.max(map.values());
+        System.out.println("max : "+max);
+        
+        //배열을 만들어서 개수 만큼 카운트
+        int[] arr = new int[max+1];
+        Arrays.fill(arr, 0);
+        
+        for(int n : map.values()) {
+        	arr[n]++;
+        }
+        System.out.println("arr : "+Arrays.toString(arr));
+        
+        //배열의 가장뒤부터(개수가 가장 많은 종류부터 사용) 0번인덱스 방향으로 사과를 담는다.
+        for (int i = arr.length-1; i > 0; i--) {
+			while(k>0 && arr[i]!=0) {
+			    k -= i;
+			    arr[i]--;
+			    answer++;
+//			    box +=i;
+//			    System.out.println("박스에 담은 귤 개수 : "+box);
+			}
+			if(k <= 0)break;
+       }
+        return answer;
+    }
+}
+
+```
+
+
+```
+public int solution(int k, int[] tangerine) {
+        int answer = 0;
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for(int n : tangerine) {
+        	if(map.containsKey(n)) {
+        		map.put(n,map.get(n)+1);
+        	}else {
+        		map.put(n, 1);
+        	}
+        }
+        System.out.println("map : "+map);
+        
+        //귤의 사이즈별로 정렬을 하는데 사이즈별로 가지고 있는 개수가 많은 사이즈부터 내림차순
+        ArrayList<Integer> list = new ArrayList<Integer>(map.keySet());
+        list.sort((a,b)->map.get(b)-map.get(a));
+        System.out.println("list : "+list);
+        
+        for(int n : list) {
+        	k-=map.get(n);
+        	answer++;
+        	if(k<=0)break;
+        }
+        return answer;
+    }
+```
