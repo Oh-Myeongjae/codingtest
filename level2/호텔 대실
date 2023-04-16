@@ -4,3 +4,46 @@
 한 번 사용한 객실은 퇴실 시간을 기준으로 10분간 청소를 하고 다음 손님들이 사용할 수 있습니다.
 예약 시각이 문자열 형태로 담긴 2차원 배열 book_time이 매개변수로 주어질 때, 코니에게 필요한 최소 객실의 수를 return 하는 solution 함수를 완성해주세요.
 */
+
+```
+import java.util.*;
+
+class Solution {
+    	public int trans(String time) {
+		String[] arr = time.split(":");
+		return Integer.valueOf(arr[0])*60 + Integer.valueOf(arr[1]);
+	}
+	
+	public int solution(String[][] book_time) {
+	    int answer = 0;
+	    int[][] booktime = new int[book_time.length][];
+	    for (int i = 0; i < book_time.length; i++) {
+			String[] book = book_time[i];
+			booktime[i] = new int[] {trans(book[0]),trans(book[1])};
+		}
+	    Arrays.sort(booktime, (a,b)->a[0]-b[0]);	    
+	    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+	    
+	    for (int i = 0; i < booktime.length; i++) {
+			int[] book = booktime[i];
+	    	boolean check = true;
+			if(map.size()==0) {
+				map.put(i, book[1]+10);
+			}else {
+				for(int room : map.keySet()) {
+					if(map.get(room)<=book[0]) {
+						map.put(room, book[1]+10);
+						check = false;
+						break;
+					}
+				}
+				if(check) {
+					map.put(i, book[1]+10);
+				}
+			}
+		}
+	    answer = map.size();
+	    return answer;
+    }
+}
+```
