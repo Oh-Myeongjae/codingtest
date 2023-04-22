@@ -21,7 +21,6 @@
 단, 목표 문자열을 작성할 수 없을 때는 -1을 저장합니다.
 */
 
-```
 public int[] solution(String[] keymap, String[] targets) {
         int[] answer = new int[targets.length];
         HashMap<Character, Integer> keyList = new HashMap<Character, Integer>();
@@ -56,4 +55,4 @@ public int[] solution(String[] keymap, String[] targets) {
         System.out.println("answer : "+Arrays.toString(answer));
         return answer;
     }
-```
+
