@@ -63,3 +63,33 @@ choices	뜻
 6	동의
 7	매우 동의
 */
+
+import java.util.*;
+
+class Solution {
+     public String solution(String[] survey, int[] choices) {
+        StringBuilder answer = new StringBuilder();
+        HashMap<Character,Integer> map = new HashMap<>();
+        String alpha = "RTCFJMAN";
+        for (int i = 0; i < alpha.length(); i++) {
+            char ch = alpha.charAt(i);
+            map.put(ch,0);
+        }
+
+        for (int i = 0; i < choices.length; i++) {
+            int n = choices[i];
+            if(n != 4){
+                char key = n < 4 ? survey[i].charAt(0) : survey[i].charAt(1);
+                map.put(key, map.get(key) + Math.abs(4 - n));
+            }
+        }
+         
+        for (int i = 0; i < alpha.length(); i=i+2) {
+            char first = alpha.charAt(i);
+            char second = alpha.charAt(i+1);
+
+            answer.append(map.get(first) >= map.get(second) ? first : second);
+        }
+        return answer.toString();
+    }
+}
