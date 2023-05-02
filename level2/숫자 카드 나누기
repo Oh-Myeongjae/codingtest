@@ -10,7 +10,53 @@
 영희가 [5, 17]이 적힌 카드를 갖는다면, 철수가 가진 카드들의 숫자는 모두 10으로 나눌 수 있고, 영희가 가진 카드들의 숫자는 모두 10으로 나눌 수 없습니다. 
 따라서 철수와 영희는 각각 [10, 20]이 적힌 카드, [5, 17]이 적힌 카드로 나눠 가졌다면 조건에 해당하는 양의 정수 a는 10이 됩니다.
 
-철수가 가진 카드에 적힌 숫자들을 나타내는 정수 배열 arrayA와 영희가 가진 카드에 적힌 숫자들을 나타내는 정수 배열 arrayB가 주어졌을 때, 주어진 조건을 만족하는 가장 큰 양의 정수 a를 return하도록 solution 함수를 완성해 주세요. 만약, 조건을 만족하는 a가 없다면, 0을 return 해 주세요.
-
-
+철수가 가진 카드에 적힌 숫자들을 나타내는 정수 배열 arrayA와 영희가 가진 카드에 적힌 숫자들을 나타내는 정수 배열 arrayB가 주어졌을 때, 
+주어진 조건을 만족하는 가장 큰 양의 정수 a를 return하도록 solution 함수를 완성해 주세요. 만약, 조건을 만족하는 a가 없다면, 0을 return 해 주세요.
 */
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Solution {
+   public int max = 0;
+	
+	public void cal(int[] arr1, int[] arr2) {
+		
+		 int min = Arrays.stream(arr1).min().getAsInt();
+		 ArrayList<Integer> divi = new ArrayList<Integer>();
+		 
+		 for(int i=1;i<=Math.sqrt(min);i++) {
+		    	if(min%i==0) {
+		    		divi.add(i);
+		    		divi.add(min/i);
+		    	}
+		    }
+		 List<Integer> list = divi.stream().filter((n)->{
+		 for(int x = 0; x < arr1.length; x++) {
+		 if(arr1[x]%n!=0 || n==1) {
+		 return false;
+		 }
+		 }
+		 return true;
+		 }).collect(Collectors.toList());
+		    
+		    for(int num : list) {
+		    	if(num == 1)continue;
+		    	boolean check = true;
+		    	for(int x : arr2) {
+		    		if(x%num==0) {
+		    			check = false;
+						break;
+		    		}
+		    	}
+		    	if(check && max<num)max = num;
+		    }
+	}
+	
+	public int solution(int[] arrayA, int[] arrayB) {
+	    int answer = 0;
+	    cal(arrayA, arrayB);
+	    cal(arrayB, arrayA);
+	    answer = max;
+	    return answer;
+    }
+}
