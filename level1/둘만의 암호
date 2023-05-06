@@ -9,3 +9,20 @@ skip에 있는 알파벳은 제외하고 건너뜁니다.
 
 두 문자열 s와 skip, 그리고 자연수 index가 매개변수로 주어질 때 위 규칙대로 s를 변환한 결과를 return하도록 solution 함수를 완성해주세요.
 */
+class Solution {
+   public String solution(String s, String skip, int index) {
+        String answer = "";
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            for (int j = 0; j < index; j++) {
+                ch += 1;
+                if('z'<ch){
+                    ch -= 26;
+                }
+                if(skip.indexOf(ch) != -1)j--;
+            }
+            answer += ch;
+        }
+        return answer;
+    }
+}
