@@ -18,3 +18,22 @@ k일 다음부터는 출연 가수의 점수가 기존의 명예의 전당 목�
 
 매일 발표된 명예의 전당의 최하위 점수를 return하는 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+    public int[] solution(int k, int[] score) {
+        int[] answer = new int[score.length];
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < score.length; i++) {
+            int num = score[i];
+            if(list.size()<k) {
+                list.add(num);
+            }else if (list.get(0)<num) {
+                list.set(0,num);
+            }
+            Collections.sort(list);
+            answer[i] = list.get(0);
+        }
+        return answer;
+    }
+}
