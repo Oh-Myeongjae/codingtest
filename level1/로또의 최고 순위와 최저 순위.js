@@ -83,4 +83,29 @@ function solution(lottos, win_nums) {
 
     return answer;
 }
+======================================================================================================================
+class Solution {
+   public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer = new int[2];
+        int count = 0;
+        int zeroCount = 0;
+
+        for (int lotto : lottos) {
+            if(lotto == 0){
+                zeroCount++;
+            }else{
+                for (int winNum : win_nums) {
+                    if(winNum == lotto){
+                        count++;
+                        break;
+                    }
+                }
+            }
+        }
+        int max = count+zeroCount;
+        answer[0] = max<=1 ? 6 : 7-(max);
+        answer[1] = count<=1 ? 6 : 7-count;
+        return answer;
+    }
+}
 
