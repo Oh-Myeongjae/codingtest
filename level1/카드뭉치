@@ -12,3 +12,20 @@
 
 문자열로 이루어진 배열 cards1, cards2와 원하는 단어 배열 goal이 매개변수로 주어질 때, cards1과 cards2에 적힌 단어들로 goal를 만들 있다면 "Yes"를, 만들 수 없다면 "No"를 return하는 solution 함수를 완성해주세요.
 */
+class Solution {
+ public String solution(String[] cards1, String[] cards2, String[] goal) {
+        String answer = "Yes";
+        int cards1Idx = 0;
+        int cards2Idx = 0;
+        for (String s : goal) {
+            if(cards1Idx < cards1.length && cards1[cards1Idx].equals(s)){
+                cards1Idx++;
+            } else if (cards2Idx < cards2.length && cards2[cards2Idx].equals(s)) {
+                cards2Idx++;
+            }else{
+                answer = "No";
+            }
+        }
+        return answer;
+    }
+}
