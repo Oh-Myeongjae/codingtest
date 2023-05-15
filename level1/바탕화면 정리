@@ -28,3 +28,30 @@
 
 최소한의 이동거리를 갖는 드래그의 시작점과 끝점을 담은 정수 배열을 return하는 solution 함수를 작성해 주세요. 드래그의 시작점이 (lux, luy), 끝점이 (rdx, rdy)라면 정수 배열 [lux, luy, rdx, rdy]를 return하면 됩니다.
 */
+import java.util.*;
+class Solution {
+     public int[] solution(String[] wallpaper) {
+        int[] answer = new int[4];
+        Arrays.fill(answer,-1);
+        for (int i = 0; i < wallpaper.length; i++) {
+            for (int j = 0; j < wallpaper[i].length(); j++) {
+                char ch = wallpaper[i].charAt(j);
+                if('#'==ch){
+                    if(answer[0]==-1){
+                        answer[0] = i;
+                    }
+                    if(answer[1] == -1 || answer[1]>j){
+                        answer[1]= j;
+                    }
+                    if(answer[2]<i+1){
+                        answer[2]=i+1;
+                    }
+                    if (answer[3]<j+1){
+                        answer[3]=j+1;
+                    }
+                }
+            }
+        }
+        return answer;
+    }
+}
