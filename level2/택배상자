@@ -26,3 +26,32 @@
 
 택배 기사님이 원하는 상자 순서를 나타내는 정수 배열 order가 주어졌을 때, 영재가 몇 개의 상자를 실을 수 있는지 return 하는 solution 함수를 완성하세요.
 */
+import java.util.*;
+
+class Solution {
+    public int solution(int[] order) {
+        int answer = 0;
+        int location = 0;
+        int veltNum = 1;
+        Stack<Integer> stack = new Stack<>();
+
+        while (location<order.length) {
+            int now = order[location];
+            if (veltNum == now) {
+                veltNum++;
+                answer++;
+                location++;
+            } else if (!stack.isEmpty() && stack.peek() == now) {
+                stack.pop();
+                answer++;
+                location++;
+            } else if (veltNum>order.length) {
+                break;
+            }else{
+                 stack.push(veltNum);
+                 veltNum++;
+            }
+        }
+        return answer;
+    }
+}
