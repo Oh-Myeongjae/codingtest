@@ -9,3 +9,52 @@
 멈춰둔 과제가 여러 개일 경우, 가장 최근에 멈춘 과제부터 시작합니다.
 과제 계획을 담은 이차원 문자열 배열 plans가 매개변수로 주어질 때, 과제를 끝낸 순서대로 이름을 배열에 담아 return 하는 solution 함수를 완성해주세요.
 */
+import java.util.*;
+class Solution {
+     public String[] solution(String[][] plans) {
+        String[] answer = new String[plans.length];
+        int idx = 0;
+        int now = 0;
+        Stack<String[]> remain = new Stack<>();
+        TreeMap<Integer,String[]> map = new TreeMap<>();
+
+        // 새로 해야할 일들을 시작시간 기준으로 오름차순 정렬
+        for (String[] plan : plans) {
+            int start = Integer.parseInt(plan[1].split(":")[0]) *60 + Integer.parseInt(plan[1].split(":")[1]);
+            map.put(start, new String[]{plan[0],Integer.parseInt(plan[2])+""});
+        }
+
+        while(remain.size()!=0 || map.size()!=0){   //남은작업이 없거나 새로 해야할 작업이 없을때 까지 반복
+            if(remain.size() == 0 && map.size()!=0){    // 남은작업은 없는데 새로 해야할 작업이 있을때
+                remain.push(map.get(map.firstKey()));
+                now = map.firstKey();
+                map.remove(map.firstKey());
+                continue;
+            }
+
+            String[] arr = remain.peek();
+            int end = now + Integer.parseInt(arr[1]);
+
+            if(map.size() != 0){    // 새로해야할 작업이 있을때
+                int nextStart = map.firstKey(); // 새로해야할 작업의 시작시간
+                if(end<=nextStart){ // 기존작업이 새로해야할 작업 시작시간 이전에 끝날때
+                    answer[idx] = arr[0];
+                    idx++;
+                    now = end;
+                    remain.pop();
+                }else{  // 기존작업이 새로해야할 작업 시작시간보다 늦게 끝날때
+                    now = nextStart;
+                    arr[1] = end-nextStart+"";
+                    remain.push(map.get(map.firstKey()));
+                    map.remove(map.firstKey());
+                }
+            }else{  // 새로해야할 작업은 없고 남은 작업만 있을때
+             answer[idx] = arr[0];
+             idx++;
+             remain.pop();
+            }
+        }
+        System.out.println("final = " + Arrays.toString(answer));
+        return answer;
+    }
+}
