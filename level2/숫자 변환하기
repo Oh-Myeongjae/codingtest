@@ -9,3 +9,27 @@ x에 3을 곱합니다.
 
 이때 x를 y로 만들 수 없다면 -1을 return 해주세요.
 */
+import java.util.*;
+
+class Solution {
+    public int solution(int x, int y, int n) {
+        int answer = 0;
+        int[] arr = new int[y+1];
+        Arrays.fill(arr,-1);
+        arr[x] = 0;
+        for (int i = x; i < y; i++) {
+            if(arr[i] == -1)continue;
+            if(i+n<=y){
+                arr[i+n] = arr[i+n] == -1 ? arr[i]+1 : Math.min(arr[i]+1,arr[i+n]);
+            }
+            if(i*2<=y){
+                arr[i*2] = arr[i*2] == -1 ? arr[i]+1 : Math.min(arr[i]+1,arr[i*2]);
+            }
+            if(i*3<=y){
+                arr[i*3] = arr[i*3] == -1 ? arr[i]+1 : Math.min(arr[i]+1,arr[i*3]);
+            }
+        }
+        answer = arr[y];
+        return answer;
+    }
+}
