@@ -20,3 +20,29 @@
 
 롤케이크에 올려진 토핑들의 번호를 저장한 정수 배열 topping이 매개변수로 주어질 때, 롤케이크를 공평하게 자르는 방법의 수를 return 하도록 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+     public int solution(int[] topping) {
+        int answer = 0;
+        HashMap<Integer,Integer> rMap = new HashMap<>();
+        HashMap<Integer,Integer> lMap = new HashMap<>();
+
+        for (int i : topping) {
+            rMap.put(i,rMap.getOrDefault(i,0)+1);
+        }
+
+        for (int i = 1; i < topping.length; i++) {
+            int n = topping[i-1];
+            if(rMap.get(n)==1){
+                rMap.remove(n);
+            }else{
+                rMap.put(n,rMap.get(n)-1);
+            }
+            lMap.put(n,lMap.getOrDefault(n,0)+1);
+
+            if(rMap.size() == lMap.size())answer++;
+        }
+        return answer;
+    }
+}
