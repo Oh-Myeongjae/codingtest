@@ -18,3 +18,25 @@
 
 민수와 마법의 엘리베이터가 있는 층을 나타내는 정수 storey 가 주어졌을 때, 0층으로 가기 위해 필요한 마법의 돌의 최소값을 return 하도록 solution 함수를 완성하세요.
 */
+import java.util.*;
+
+class Solution {
+    int minCount = 0;
+    public void func(int num,int count) {
+        if(num < 10){
+            int min = count+(num>=6 ? 11-num : num);
+            minCount = minCount == 0 ? min : Math.min(min,minCount);
+        }else{
+            int next = num/10;
+            int remain = num%10;
+            func(next,count+remain);
+            func(next+1,count+(10-remain));
+        }
+    }
+    public int solution(int storey) {
+        int answer = 0;
+        func(storey,0);
+        answer = minCount;
+        return answer;
+    }
+}
