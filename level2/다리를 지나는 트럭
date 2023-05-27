@@ -12,3 +12,29 @@ solution 함수의 매개변수로 다리에 올라갈 수 있는 트럭 수 bri
 
 이때 모든 트럭이 다리를 건너려면 최소 몇 초가 걸리는지 return 하도록 solution 함수를 완성하세요.
 */
+import java.util.*;
+
+class Solution {
+     public int solution(int bridge_length, int weight, int[] truck_weights) {
+        int answer = 0;
+        int max = 0;
+        int idx = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        do {
+            if (queue.size() >= bridge_length) {
+                max -= queue.remove();
+            }
+            if (idx<truck_weights.length && truck_weights[idx] + max <= weight) {
+                int now = truck_weights[idx];
+                queue.add(now);
+                max += now;
+                idx++;
+            } else {
+                queue.add(0);
+            }
+            answer++;
+        }while (max > 0);
+         
+        return answer;
+    }
+}
