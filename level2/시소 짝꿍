@@ -23,14 +23,14 @@ class Solution {
                 map.put(weight,1);
             }
         }
-        // System.out.println("map = " + map);
+
         TreeSet<Integer> set =  new TreeSet<>(map.keySet());
         HashMap<Long,Integer> result = new HashMap<>();
         for (int i = 2; i <=4 ; i++) {
             for (Integer el : set) {
                 long temp = el * i;
                 if(result.containsKey(temp)){
-                    answer += result.get(temp) * map.get(el);
+                     answer += (long) result.get(temp) * map.get(el);
                     result.put(temp, result.get(temp) + map.get(el));
                 }else{
                     result.put(temp,map.get(el));
