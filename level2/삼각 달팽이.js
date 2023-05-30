@@ -52,3 +52,71 @@ function solution(n) {
     }
     return answer;
 }
+/*
+(java)
+class Solution {
+     public int[] solution(int n) {
+        if(n<=2){
+            if(n==1)return new int[]{1};
+            else return new int[]{1,2,3};
+        }
+        int max = 0;
+
+        int[][] arr = new int[n][];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = new int[i+1];
+            max+=i+1;
+        }
+
+        int[] limit = new int[]{n-1,n-1,1};
+        int[] point = new int[]{0,0};
+        int status = 0;
+
+        for (int i = 1; i <=max ; i++) {
+            arr[point[0]][point[1]] = i;
+
+            if(status == 0){
+                if(point[0] != limit[status]){
+                    point[0]++;
+                }else{
+                    point[1]++;
+                    limit[status]-=1;
+                    status = 1;
+                }
+            } else if (status == 1) {
+                if(point[1] != limit[status]){
+                    point[1]++;
+                }else{
+                    point[0]--;
+                    point[1]--;
+                    limit[status] -= 2;
+                    status = 2;
+                }
+            }else {
+                if(point[0] != limit[status]){
+                    point[0]--;
+                    point[1]--;
+                }else{
+                    point[0]++;
+                    limit[status] += 2;
+                    status = 0;
+                }
+            }
+//            for (int j = 0; j < arr.length; j++) {
+//                System.out.println((j+1)+"층 = " + Arrays.toString(arr[j]));
+//            }
+//            System.out.println("=============================================");
+        }
+        int[] answer = new int[max];
+        int idx = 0;
+        for (int[] ints : arr) {
+            for (int anInt : ints) {
+                answer[idx] = anInt;
+                idx++;
+            }
+        }
+//        System.out.println("answer = " + Arrays.toString(answer));
+        return answer;
+    }
+}
+*/
