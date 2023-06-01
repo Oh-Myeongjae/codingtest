@@ -8,3 +8,16 @@
 
 정수 k와 원점과의 거리를 나타내는 정수 d가 주어졌을 때, 점이 총 몇 개 찍히는지 return 하는 solution 함수를 완성하세요.
 */
+class Solution {
+     public long solution(int k, int d) {
+        long answer = 0;
+        long dis = d*d;
+        for (int i = 0; i <= d; i+=k) {
+            long h = i*i;
+            double width = Math.sqrt(dis-h);
+            int x = (int)(width/k);
+            answer+=x+1;
+        }
+        return answer;
+    }
+}
