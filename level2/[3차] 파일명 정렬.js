@@ -80,3 +80,51 @@ function solution(files) {
     answer = files
     return answer;
 }
+/*
+(java)
+
+import java.util.*;
+
+class Solution {
+     public String[] func(String str){
+        StringBuilder head = new StringBuilder();
+        StringBuilder number = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if(c>='0' && c<='9'){
+                if(number.length()<=5){
+                    number.append(c);
+                }else{
+                    break;
+                }
+            }else if(number.length() == 0){
+                head.append(c);
+            }else{
+                break;
+            }
+        }
+        return new String[]{head.toString(),number.toString()};
+    }
+
+    public String[] solution(String[] files) {
+        Arrays.sort(files, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                String[] arr1 = func(o1.toUpperCase());
+                String[] arr2 = func(o2.toUpperCase());
+
+                int num = arr1[0].compareTo(arr2[0]);
+
+                if(num != 0) return num;
+                else {
+                    int a1 = Integer.parseInt(arr1[1]);
+                    int a2 = Integer.parseInt(arr2[1]);
+                    return a1 - a2;
+                }
+            }
+        });
+        return files;
+    }
+}
+*/
