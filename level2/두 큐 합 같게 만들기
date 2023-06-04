@@ -31,3 +31,45 @@ queue1에서 3을 추출하여 queue2에 추가합니다. 그리고 queue2에서
 
 단, 어떤 방법으로도 각 큐의 원소 합을 같게 만들 수 없는 경우, -1을 return 해주세요.
 */
+import java.util.*;
+
+class Solution {
+      public int solution(int[] queue1, int[] queue2) {
+        int answer = 0;
+        Queue<Integer> list1 = new LinkedList<>();
+        Queue<Integer> list2 = new LinkedList<>();
+        long sum1 = 0;
+        long sum2 = 0;
+
+        for (int i = 0; i < queue1.length; i++) {
+            list1.add(queue1[i]);
+            sum1 += queue1[i];
+
+            list2.add(queue2[i]);
+            sum2 += queue2[i];
+        }
+
+        int count = 0;
+        while (true) {
+            if(count>=queue1.length*4)return -1;
+            if (sum1 == sum2) {
+                answer = count;
+                break;
+            } else if (sum1 > sum2) {
+                int num = list1.peek();
+                list2.add(num);
+                sum2 += num;
+                sum1 -= num;
+                list1.poll();
+            } else {
+                int num = list2.peek();
+                list1.add(num);
+                sum1 += num;
+                sum2 -= num;
+                list2.poll();
+            }
+            count++;
+        }
+        return answer;
+    }
+}
