@@ -29,3 +29,7 @@ function solution(word) {
     func('')
     return answer;
 }
+/*
+(java)
+
+*/
