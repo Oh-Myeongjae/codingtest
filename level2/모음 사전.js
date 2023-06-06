@@ -31,6 +31,19 @@ function solution(word) {
 }
 /*
 (java)
+
+총 5+25+125+625+3125= 3905개 인데,
+
+가장 먼저, 각 알파벳으로 시작할 수 있는 단어는 각각 781개
+
+=> a로 시작하는 단어는 781개
+
+그렇다면 e로 시작하는 단어는 앞에 a로 시작하는 단어 뒤에 나올테니까 적어도 781 다음부터 겠죠?
+
+​
+
+자릿수에 따라 781 / 156 / 31 / 6 / 1 이므로, 주어진 word를 한글자씩 쪼개서 자릿수 별로 answer에 더해주면 됩니다.
+
 public int solution(String word) {
         int answer = 0, per = 3905;
         for(String s : word.split("")) answer += "AEIOU".indexOf(s) * (per /= 5) + 1;
