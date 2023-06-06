@@ -40,8 +40,6 @@ function solution(word) {
 
 그렇다면 e로 시작하는 단어는 앞에 a로 시작하는 단어 뒤에 나올테니까 적어도 781 다음부터 겠죠?
 
-​
-
 자릿수에 따라 781 / 156 / 31 / 6 / 1 이므로, 주어진 word를 한글자씩 쪼개서 자릿수 별로 answer에 더해주면 됩니다.
 
 public int solution(String word) {
