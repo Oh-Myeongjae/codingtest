@@ -63,3 +63,62 @@ function solution(orders, course) {
     }
     return answer.sort();
 }
+/*
+(JAVA)
+import java.util.*;
+
+class Solution {
+   TreeSet<String> newList = new TreeSet<>();
+    HashMap<String,Integer> map = new HashMap<>();
+    int max = 0;
+
+    public void func (String make, String str, int limit){
+        if(make.length() == limit){
+            // String[] sArr = make.split("");
+            // Arrays.sort(sArr);
+            // make = String.join("",sArr);
+            int num = map.getOrDefault(make,0)+1;
+            if(max<num){
+                max = num;
+            }
+            map.put(make,num);
+        }else{
+            for (int i = 0; i < str.length(); i++) {
+                func(make+str.charAt(i),str.substring(i+1),limit);
+            }
+        }
+    }
+    public String[] solution(String[] orders, int[] course) {
+        for (int i = 0; i < orders.length; i++) {
+            String order = orders[i]; 
+            String[] sArr = order.split("");
+            Arrays.sort(sArr);
+            order = String.join("",sArr);
+            orders[i] = order;
+        }
+        for (int n : course) {
+            map.clear();
+            max = 0;
+            for (String order : orders) {
+                if(order.length()<n)continue;
+                // String[] sArr = order.split("");
+                // Arrays.sort(sArr);
+                // order = String.join("",sArr);
+                func("",order,n);
+            }
+//            System.out.println("max = " + max);
+//            System.out.println("map = " + map);
+//            System.out.println("=======================================");
+            if(max<2)continue;
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                if(entry.getValue()==max){
+                    newList.add(entry.getKey());
+                }
+            }
+        }
+//        System.out.println("newList = " + newList);
+        String[] answer = newList.toArray(new String[0]);
+        return answer;
+    }
+}
+*/
