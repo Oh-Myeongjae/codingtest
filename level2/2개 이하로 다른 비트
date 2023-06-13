@@ -18,3 +18,43 @@ f(7) = 11 입니다. 다음 표와 같이 7보다 큰 수들 중에서 비트가
 11	000...1011	2
 정수들이 담긴 배열 numbers가 매개변수로 주어집니다. numbers의 모든 수들에 대하여 각 수의 f 값을 배열에 차례대로 담아 return 하도록 solution 함수를 완성해주세요.
 */
+class Solution {
+    public long[] solution(long[] numbers) {
+        long[] answer = new long[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            long num = numbers[i];
+            if(num<=2){
+                answer[i] = num+1;
+                continue;
+            }
+            StringBuilder bit = new StringBuilder();
+
+            while (num>0){
+                bit.insert(0,num%2);
+                num /= 2;
+            }
+            bit.insert(0,0);
+//            System.out.println("bit = " + bit);
+
+            for (int j = bit.length()-1; j > 0 ; j--) {
+                char ch = bit.charAt(j);
+                if(ch == '0'){
+                    bit.setCharAt(j,'1');
+                    break;
+                }else{
+                    char temp = bit.charAt(j-1);
+                    if(temp == '0'){
+                        bit.setCharAt(j,'0');
+                        bit.setCharAt(j-1,'1');
+                        break;
+                    }
+                }
+            }
+//            System.out.println("bit = " + bit);
+//            System.out.println("=======================================");
+            answer[i] = Long.parseLong(bit.toString(),2);
+        }
+//        System.out.println("answer = " + Arrays.toString(answer));
+        return answer;
+    }
+}
