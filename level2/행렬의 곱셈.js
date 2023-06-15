@@ -22,3 +22,24 @@ function solution(arr1, arr2) {
     }
     return answer;
 }
+/*
+(java)
+class Solution {
+  public int[][] solution(int[][] arr1, int[][] arr2) {
+        int[][] answer = new int[arr1.length][arr2[0].length];
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr2[0].length; j++) {
+                int sum = 0;
+                for (int k = 0; k < arr1[i].length; k++) {
+                    int a = arr1[i][k];
+                    int b = arr2[k][j];
+                    sum += a*b;
+                }
+                answer[i][j] = sum;
+            }
+        }
+        // System.out.println("Arrays.deepToString(answer) = " + Arrays.deepToString(answer));
+        return answer;
+    }
+}
+*/
