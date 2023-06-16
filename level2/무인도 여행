@@ -14,3 +14,40 @@
 
 만약 지낼 수 있는 무인도가 없다면 -1을 배열에 담아 return 해주세요.
 */
+import java.util.*;
+
+class Solution {
+    int[][] vitsited;
+    public int func(String[] map, int x, int y){
+        int num = 0;
+        char ch = map[x].charAt(y);
+        if(vitsited[x][y] == 0 && ch != 'X'){
+             num += Integer.parseInt(ch+"");
+            vitsited[x][y] = 1;
+            if(x-1 >= 0)num += func(map,x-1,y);
+            if(x+1 < map.length)num += func(map,x+1,y);
+            if(y-1 >= 0)num += func(map,x,y-1);
+            if(y+1 < map[x].length())num += func(map,x,y+1);
+        }
+        return num;
+    }
+    public int[] solution(String[] maps) {
+        int[] answer = {};
+        ArrayList<Integer> list = new ArrayList<>();
+        vitsited = new int[maps.length][maps[0].length()];
+
+        for (int i = 0; i < maps.length; i++) {
+            for (int j = 0; j < maps[i].length(); j++) {
+                int sum = 0;
+                if(maps[i].charAt(j)!='X' && vitsited[i][j]==0){
+                    sum += func(maps,i,j);
+                }
+                if(sum != 0)list.add(sum);
+            }
+        }
+        Collections.sort(list);
+        System.out.println("list = " + list);
+        answer = list.size() == 0 ? new int[]{-1} : list.stream().mapToInt(Integer::intValue).toArray();
+        return answer;
+    }
+}
