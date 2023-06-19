@@ -22,6 +22,7 @@
 */
 import java.util.*;
 
+//토핑의 개수는 상관없이 종류가 중요하기 때문에 토핑의 이름을 키값으로 해서 양쪽의 키값의 개수가 같은순간만 카운팅하면 되겠다
 class Solution {
      public int solution(int[] topping) {
         int answer = 0;
