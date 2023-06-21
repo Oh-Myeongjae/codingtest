@@ -20,3 +20,57 @@ image
 
 마인이 갖고 있는 곡괭이의 개수를 나타내는 정수 배열 picks와 광물들의 순서를 나타내는 문자열 배열 minerals가 매개변수로 주어질 때, 마인이 작업을 끝내기까지 필요한 최소한의 피로도를 return 하는 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+     public int solution(int[] picks, String[] minerals) {
+        int answer = 0;
+        HashMap<String,Integer> mineralMap = new HashMap<>();
+        mineralMap.put("diamond",0);
+        mineralMap.put("iron",1);
+        mineralMap.put("stone",2);
+
+        int[][] energy = new int[3][3];
+        for (int i = 0; i < energy.length; i++) {
+            int num = i;
+            for (int j = 0; j < energy[i].length; j++) {
+                energy[i][j] = (int)Math.pow(5,num);
+                if(num>0)num--;
+            }
+        }
+        int max = 0;
+        for (int pick : picks) {
+            max+=pick;
+        }
+
+        List<int[]> list = new ArrayList<>();
+        for (int i = 0; i < minerals.length; i=i+5) {
+            int num = 0;
+            for (int j = 0; j < 5; j++) {
+                if(i+j< minerals.length)num += energy[2][mineralMap.get(minerals[i+j])];
+            }
+            list.add(new int[]{i,num});
+        }
+        if(list.size()>max){
+            list = list.subList(0,max);
+        }
+
+        list.sort((a, b) -> b[1] - a[1]);
+
+        for (int i = 0; i < picks.length; i++) {
+            if(list.size()<=0)break;
+            if(picks[i]>0){
+                int num = 0;
+                int start = list.get(0)[0];
+                for (int j = start; j < start+5; j++) {
+                    if(j< minerals.length)num += energy[i][mineralMap.get(minerals[j])];
+                }
+                answer+=num;
+                list.remove(0);
+                picks[i]--;
+                if(picks[i]>0)i--;
+            }
+        }
+        return answer;
+    }
+}
