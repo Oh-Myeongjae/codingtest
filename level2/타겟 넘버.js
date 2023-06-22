@@ -34,3 +34,27 @@ function solution(numbers, target) {
     func(0,0,lastIdx)
     return answer;
 }
+/*
+(java)
+class Solution {
+    int sum = 0;
+    int[] list;
+    int num;
+    public void func (int idx, int n){
+        if(idx>=list.length){
+            if(n==num)sum++;
+            return;
+        }
+        func(idx+1,n+list[idx]);
+        func(idx+1,n-list[idx]);
+    }
+    public int solution(int[] numbers, int target) {
+        int answer = 0;
+        list = numbers;
+        num = target;
+        func(0,0);
+        answer = sum;
+        return answer;
+    }
+}
+*/
