@@ -17,3 +17,33 @@
 
 준호가 몇 라운드까지 막을 수 있는지 return 하도록 solution 함수를 완성해주세요.
 */
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int k, int[] enemy) {
+        int answer = 0;
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        int idx = 0;
+        for (int i = 0; i < k; i++) {
+            if(idx>= enemy.length)break;
+            queue.add(enemy[idx]);
+            idx++;
+        }
+
+        while (idx < enemy.length){
+            int now = enemy[idx];
+            int min = queue.peek();
+            if(min<=now){
+                queue.poll();
+                n -= min;
+                queue.add(now);
+            }else{
+                n -= now;
+            }
+            if(n<0)break;
+            idx++;
+        }
+        answer = idx;
+        return answer;
+    }
+}
