@@ -48,3 +48,22 @@ function solution(skill, skill_trees) {
     }
     return answer;
 }
+/*
+(java)
+public int solution(String skill, String[] skill_trees) {
+        int answer = 0;
+        String[] sArr = skill.split("");
+
+        for (String skillTree : skill_trees) {
+            int idx = 0;
+            for (int i = 0; i < skillTree.length(); i++) {
+                String str = skillTree.charAt(i)+"";
+                if(idx<sArr.length && sArr[idx].equals(str)){
+                    idx++;
+                }
+            }
+            if(sArr.length<=idx)answer++;
+        }
+        return answer;
+    }
+*/
