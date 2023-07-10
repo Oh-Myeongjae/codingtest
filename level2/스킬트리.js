@@ -52,17 +52,29 @@ function solution(skill, skill_trees) {
 (java)
 public int solution(String skill, String[] skill_trees) {
         int answer = 0;
+        HashMap<String,Integer> map = new HashMap<>();
         String[] sArr = skill.split("");
+        for (String s : sArr) {
+            map.put(s,1);
+        }
 
         for (String skillTree : skill_trees) {
-            int idx = 0;
+            StringBuilder sb = new StringBuilder();
+            boolean check = true;
             for (int i = 0; i < skillTree.length(); i++) {
-                String str = skillTree.charAt(i)+"";
-                if(idx<sArr.length && sArr[idx].equals(str)){
-                    idx++;
+                char ch = skillTree.charAt(i);
+                if(map.containsKey(ch)){
+                    sb.append(ch);
                 }
             }
-            if(sArr.length<=idx)answer++;
+
+            for (int i = 0; i < sb.length(); i++) {
+                if(sb.charAt(i) != skill.charAt(i)){
+                    check = false;
+                    break;
+                }
+            }
+            if(check)answer++;
         }
         return answer;
     }
