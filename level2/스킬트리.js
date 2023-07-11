@@ -50,32 +50,28 @@ function solution(skill, skill_trees) {
 }
 /*
 (java)
-public int solution(String skill, String[] skill_trees) {
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
         int answer = 0;
-        HashMap<String,Integer> map = new HashMap<>();
         String[] sArr = skill.split("");
-        for (String s : sArr) {
-            map.put(s,1);
-        }
 
         for (String skillTree : skill_trees) {
-            StringBuilder sb = new StringBuilder();
+            int idx = 0;
             boolean check = true;
             for (int i = 0; i < skillTree.length(); i++) {
-                char ch = skillTree.charAt(i);
-                if(map.containsKey(ch)){
-                    sb.append(ch);
-                }
-            }
-
-            for (int i = 0; i < sb.length(); i++) {
-                if(sb.charAt(i) != skill.charAt(i)){
-                    check = false;
-                    break;
+                String str = skillTree.charAt(i)+"";
+                if(skill.contains(str)){
+                    if(sArr[idx].equals(str)){
+                        idx++;
+                    }else{
+                        check = false;
+                        break;
+                    }
                 }
             }
             if(check)answer++;
         }
         return answer;
     }
+}
 */
