@@ -21,3 +21,10 @@ function solution(s) {
     }
     return answer;
 }
+/*
+(java)
+  public int solution(String s) {
+        int answer = Integer.parseInt(s);
+        return answer;
+    }
+*/
