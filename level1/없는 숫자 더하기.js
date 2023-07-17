@@ -22,3 +22,13 @@ function solution(numbers) {
     answer =  arr.reduce((a,b)=>a+b)
     return answer;
 }
+/*
+(java)
+public int solution(int[] numbers) {
+        int answer = 45;
+        for (int number : numbers) {
+            answer -= number;
+        }
+        return answer;
+    }
+*/
