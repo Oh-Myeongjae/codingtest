@@ -104,3 +104,64 @@ function solution(fees, records) {
     }
     return answer;
 }
+/**
+(java)
+import java.util.*;
+
+class Solution {
+    //시간을 00:00분부터 지금까지 몇분 지났는지 분단위로 변환
+    public int getTime(String time){
+        String[] arr = time.split(":");
+        int hour = Integer.parseInt(arr[0])*60;
+        int min = Integer.parseInt(arr[1]);
+        return hour + min;
+    }
+    public int[] solution(int[] fees, String[] records) {
+        /*
+            pRecord : 입차 출차 정보를 기록하기 위한 map
+            pTime : 차량 마다 총 주차한 시간 기록 -- 나중에 차량번호가 작은 자동차부터 정산하기 때문에 TreeMap을 이용해서 오름차순 정렬
+        */
+        HashMap<String, Integer> pRecord = new HashMap<>();
+        TreeMap<String, Integer> pTime = new TreeMap<>();
+
+        // IN인 경우 pRecord에 차량 번호와 시간을 분으로 변환해서 기록해두었다가 OUT하는 순간에 주차시간을 pTime에 누적해주고 pRecord에서 삭제
+        for (String record : records) {
+            String[] sArr = record.split(" ");
+
+            String carNumber = sArr[1];
+            int time = getTime(sArr[0]);
+            String state = sArr[2];
+
+            if (state.equals("IN")){
+                pRecord.put(carNumber,time);
+            }else{
+                int spendTime = time-pRecord.get(carNumber);
+                pTime.put(carNumber,pTime.getOrDefault(carNumber,0)+spendTime);
+                pRecord.remove(carNumber);
+            }
+        }
+
+        //만약 pRecord에 남아있다면 입차한 후에 출차한 기록이 없다는 것이므로 23:59분애 출차하는것으로 계산해서 pTime에 누적
+        for (Map.Entry<String, Integer> entry : pRecord.entrySet()) {
+            String carNumber = entry.getKey();
+            int spendTime = (23*60 + 59)-pRecord.get(carNumber);
+            pTime.put(carNumber,pTime.getOrDefault(carNumber,0)+spendTime);
+        }
+
+        int[] answer = new int[pTime.size()];
+        int idx = 0;
+
+        //pTime에 차량번호가 작은 순서대로 정렬되어있기 떄문에 순서대로 보면서 주차요금 계산해주어서 answer에 값을 할당
+        for (Integer totalTime : pTime.values()) {
+            if(totalTime<=fees[0]){
+                answer[idx] = fees[1];
+            }else{
+                int remainTime = (int)Math.ceil((totalTime-fees[0])/(double)fees[2]);
+                answer[idx] = fees[1] + remainTime * fees[3];
+            }
+            idx++;
+        }
+        return answer;
+    }
+}
+/
