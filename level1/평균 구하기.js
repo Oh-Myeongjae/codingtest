@@ -12,3 +12,16 @@ function solution(arr) {
     answer = sum/arr.length
     return answer;
 }
+/*
+(java)
+class Solution {
+    public double solution(int[] arr) {
+        int sum = 0;
+        for (int i : arr) {
+            sum += i;
+        }
+        double answer = sum/(double)arr.length;
+        return answer;
+    }
+}
+*/
