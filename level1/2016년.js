@@ -36,3 +36,25 @@ function solution(a, b) {
     answer = day[sum%7]
     return answer;
 }
+/*
+(java)
+class Solution {
+     public String solution(int a, int b) {
+        String answer = "";
+        int sum = 0;    // 2016년 1월 0일 부터 현재날짜 까지 얼마나 됐는지 일(day)로 변환
+        
+        String[] days = {"THU","FRI","SAT","SUN","MON","TUE","WED"};
+        int[] month = new int[]{0,31,29,31,30,31,30,31,31,30,31,30,31};
+        
+        //a달 직전 달까지 일수를 구하고 현재 a달의 날짜인 b만큼을 더함
+        for (int i = 1; i <a ; i++) {
+            sum += month[i];
+        }
+        sum += b;
+        
+        //sum%7 --> 일주일마다 요일은 똑같기 때문에 7로 나눠서 나머지 만큼 요일을 이동해주면 현재 요일이 나온다 
+        answer = days[sum % 7];
+        return answer;
+    }
+}
+*/
