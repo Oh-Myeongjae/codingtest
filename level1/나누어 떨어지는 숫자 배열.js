@@ -22,3 +22,24 @@ function solution(arr, divisor) {
    return check ?  answer :  [-1]
  
 }
+/*
+(java)
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] arr, int divisor) {
+        List<Integer> num = new ArrayList<Integer>();
+        for(int n : arr){
+            if(n%divisor == 0)num.add(n);
+        }
+        System.out.println(num.size());
+        if(num.size()==0)return new int[]{-1};
+        int[] answer = new int[num.size()];
+        for(int i=0;i<num.size();i++){
+            answer[i] = num.get(i);
+        }
+        Arrays.sort(answer);
+        return answer;
+    }
+}
+*/
