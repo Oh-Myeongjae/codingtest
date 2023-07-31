@@ -28,3 +28,18 @@ function solution(s){
     }
     return answer;
 }
+/*
+(java)
+import java.util.*;
+
+class Solution {
+    public boolean solution(String s) {
+        boolean answer = true;
+        s = s.toLowerCase();
+        long pCount = Arrays.stream(s.split("")).filter((ch)->ch.equals("p")).count();
+        long yCount = Arrays.stream(s.split("")).filter((ch)->ch.equals("y")).count();
+        answer = pCount == yCount;
+        return answer;
+    }
+}
+*/
