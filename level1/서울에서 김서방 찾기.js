@@ -13,3 +13,17 @@ function solution(seoul) {
     var answer = `김서방은 ${x}에 있다`;
     return answer;
 }
+/*
+(java)
+import java.util.*;
+
+class Solution {
+    public String solution(String[] seoul) {
+        String answer = "";
+        List<String> list = new ArrayList<>(Arrays.asList(seoul));
+        int idx = list.indexOf("Kim");
+        answer = String.format("김서방은 %d에 있다",idx);
+        return answer;
+    }
+}
+*/
