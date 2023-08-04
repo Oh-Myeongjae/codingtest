@@ -24,3 +24,25 @@ function solution(participant, completion) {
 }
 //해쉬라는것을 이용하여 풀면 성능을 반정도 개선가능하나
 //아직은 개념을 잘모르기때문에 조금더 공부해서 도전해 보도록 해야겠다
+/*
+(java)
+import java.util.*;
+
+class Solution {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        HashMap<String,Integer> map = new HashMap<>();
+        for (String s : completion) {
+            map.put(s,0);
+        }
+        for (String s : participant) {
+            if(map.remove(s) == null){
+                answer = s;
+                break;
+            }
+        }        
+        if(completion.length == 0)answer = participant[0];
+        return answer;
+    }
+}
+*/
