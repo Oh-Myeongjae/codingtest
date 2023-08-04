@@ -24,3 +24,15 @@ function solution(n) {
 }
 
 //"수박".repeat(n).slice(0,n);
+
+/*
+(java)
+class Solution {
+    public String solution(int n) {
+        String answer = "";
+        String str = "수박";
+        answer = str.repeat(n);
+        return answer.substring(0,n);
+    }
+}
+*/
