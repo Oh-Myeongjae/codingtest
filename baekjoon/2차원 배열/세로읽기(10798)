@@ -27,3 +27,29 @@ Aa0aPAf985Bz1EhCz2W3D1gkD6x
 출력
 영석이가 세로로 읽은 순서대로 글자들을 출력한다. 이때, 글자들을 공백 없이 연속해서 출력한다. 
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[][] sArr = new String[5][];
+        int maxSize = 0;
+        for (int i = 0; i < 5; i++) {
+            String[] arr = br.readLine().split("");
+            sArr[i] = arr;
+            maxSize = Math.max(maxSize, arr.length);
+        }
+
+        for (int i = 0; i < maxSize; i++) {
+            for (int j = 0; j < 5; j++) {
+                try{
+                    System.out.print(sArr[j][i]);
+                }catch (Exception e){
+                    continue;
+                }
+            }
+        }
+    }
+}
