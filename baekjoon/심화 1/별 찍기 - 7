@@ -8,3 +8,40 @@
 출력
 첫째 줄부터 2×N-1번째 줄까지 차례대로 별을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder answer = new StringBuilder();
+
+        int n = Integer.parseInt(br.readLine());
+        int max = 2*n-1;
+
+        String[] sbArr = new String[n];
+        StringBuilder sb = new StringBuilder();
+
+        String empty = " ";
+        String str = "*";
+        int size = -1;
+
+        for (int i = 0; i < max; i++) {
+            if(i < n){
+                sb.append(empty.repeat(n-i-1));
+                size+=2;
+                sb.append(str.repeat(size));
+                sb.append("\n");
+                
+                sbArr[i] = sb.toString();
+                answer.append(sb);
+
+                sb.setLength(0);
+            }else {
+                answer.append(sbArr[max-1-i]);
+            }
+        }
+        System.out.printf(answer.toString());
+    }
+}
