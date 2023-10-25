@@ -22,6 +22,6 @@ public class Main {
         for (String s : list) {
             sb.append(s).append("\n");
         }
-        System.out.print(sb);
+        System.out.println(sb);
     }
 }
