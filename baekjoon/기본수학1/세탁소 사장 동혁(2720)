@@ -18,3 +18,25 @@
 출력
 각 테스트케이스에 대해 필요한 쿼터의 개수, 다임의 개수, 니켈의 개수, 페니의 개수를 공백으로 구분하여 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int[] money = new int[]{25,10,5,1};
+
+        int limit = Integer.parseInt(br.readLine());
+        for (int i = 0; i <limit ; i++) {
+            int num = Integer.parseInt(br.readLine());
+            for (int n : money) {
+                sb.append(num/n).append(" ");
+                num %= n;
+            }
+            sb.append("\n");
+        }
+        System.out.print(sb);
+    }
+}
