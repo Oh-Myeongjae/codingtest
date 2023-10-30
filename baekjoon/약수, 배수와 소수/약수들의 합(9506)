@@ -20,3 +20,40 @@ n이 완전수라면, n을 n이 아닌 약수들의 합으로 나타내어 출�
 
 n이 완전수가 아니라면 n is NOT perfect. 를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        while(true){
+            int num = Integer.parseInt(br.readLine());
+            if(num == -1)break;
+
+            List<Integer> list = new ArrayList<>();
+            int sum = 0;
+
+            for (int i = 1; i < num ; i++) {
+                if(num%i == 0){
+                    list.add(i);
+                    sum += i;
+                }
+            }
+            sb.append(num);
+            if(sum == num){
+                sb.append(" = ");
+                for (int i = 0; i < list.size(); i++) {
+                    int n = list.get(i);
+                    sb.append(n);
+                    sb.append(i == list.size()-1 ? "\n" : " + ");
+                }
+            }else {
+                sb.append(" is NOT perfect.\n");
+            }
+        }
+        System.out.println(sb);
+    }
+}
