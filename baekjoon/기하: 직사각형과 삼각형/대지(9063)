@@ -18,3 +18,37 @@
 출력
 첫째 줄에 N 개의 점을 둘러싸는 최소 크기의 직사각형의 넓이를 출력하시오. 
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int answer = 0;
+        long size = Integer.parseInt(br.readLine());
+        List<Integer> xList = new ArrayList<>();
+        List<Integer> yList = new ArrayList<>();
+
+        if(size != 1){
+            for (int i = 0; i < size; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+
+                xList.add(x);
+                yList.add(y);
+            }
+
+            Collections.sort(xList);
+            Collections.sort(yList);
+
+            int xLength = xList.get(xList.size()-1) - xList.get(0);
+            int yLength = yList.get(yList.size()-1) - yList.get(0);
+
+            answer = xLength * yLength;
+        }
+        System.out.println(answer);
+    }
+}
