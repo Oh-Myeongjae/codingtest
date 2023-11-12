@@ -8,3 +8,23 @@ N개의 수가 주어졌을 때, 이를 오름차순으로 정렬하는 프로�
 출력
 첫째 줄부터 N개의 줄에 오름차순으로 정렬한 결과를 한 줄에 하나씩 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.TreeSet;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        TreeSet<Integer> set = new TreeSet<>();
+        int size = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < size; i++) {
+            set.add(Integer.parseInt(br.readLine()));
+        }
+
+        for (Integer integer : set) {
+            System.out.println(integer);
+        }
+    }
+}
