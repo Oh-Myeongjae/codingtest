@@ -8,3 +8,35 @@
 출력
 첫째 줄부터 N개의 줄에 점을 정렬한 결과를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int size = Integer.parseInt(br.readLine());
+        TreeMap<Integer, TreeSet<Integer>> map = new TreeMap<>();
+
+        for (int i = 0; i < size; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int value = Integer.parseInt(st.nextToken());
+            int key= Integer.parseInt(st.nextToken());
+
+            map.put(key,map.getOrDefault(key,new TreeSet<>()));
+            map.get(key).add(value);
+        }
+
+        for (Integer yPoint : map.keySet()) {
+            for (Integer xPoint: map.get(yPoint)) {
+                sb.append(xPoint).append(' ').append(yPoint).append('\n');
+            }
+        }
+        System.out.println(sb);
+    }
+}
