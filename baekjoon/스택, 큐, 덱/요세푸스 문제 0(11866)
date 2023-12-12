@@ -12,3 +12,42 @@ N과 K가 주어지면 (N, K)-요세푸스 순열을 구하는 프로그램을 �
 출력
 예제와 같이 요세푸스 순열을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Queue<Integer> queue = new LinkedList<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        sb.append('<');
+
+        int size = Integer.parseInt(st.nextToken());
+        int target = Integer.parseInt(st.nextToken());
+        int count = 0;
+
+        for (int i = 1; i <= size ; i++) {
+            queue.offer(i);
+        }
+
+        while (size>0){
+            int num = queue.poll();
+            if(num != 0){
+                count++;
+                if(count == target){
+                    size--;
+                    sb.append(num).append(size==0 ? '>' : ", ");
+                    queue.add(0);
+                    count = 0;
+                }else queue.add(num);
+            }else queue.add(0);
+        }
+
+        System.out.println(sb);
+    }
+}
