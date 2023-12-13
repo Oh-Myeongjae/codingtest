@@ -16,3 +16,54 @@ back: 큐의 가장 뒤에 있는 정수를 출력한다. 만약 큐에 들어�
 출력
 출력해야하는 명령이 주어질 때마다, 한 줄에 하나씩 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        Queue<Integer> queue = new LinkedList<>();
+        int size = Integer.parseInt(br.readLine());
+        int last = 0;
+
+        for (int i = 0; i < size; i++) {
+            String str = br.readLine();
+            String[] word = str.split(" ");
+
+            switch (word[0]) {
+                case "push":
+                    int n = Integer.parseInt(word[1]);
+                    queue.add(n);
+                    last = n;
+                    break;
+                case "pop" :
+                    if(queue.size()>0){
+                        sb.append(queue.poll()).append('\n');
+                    }else sb.append(-1).append('\n');
+                    break;
+                case "size" :
+                    sb.append(queue.size()).append('\n');
+                    break;
+                case "empty" :
+                    sb.append(queue.isEmpty() ? 1 : 0).append('\n');
+                    break;
+                case "front" :
+                    if(queue.size()>0){
+                        sb.append(queue.peek()).append('\n');
+                    }else sb.append(-1).append('\n');
+                    break;
+                case "back" :
+                    if(queue.size()>0){
+                        sb.append(last).append('\n');
+                    }else sb.append(-1).append('\n');
+                    break;
+            }
+        }
+
+        System.out.println(sb);
+    }
+}
