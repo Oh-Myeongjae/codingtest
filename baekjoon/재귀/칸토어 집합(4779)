@@ -30,3 +30,43 @@
 출력
 입력으로 주어진 N에 대해서, 해당하는 칸토어 집합의 근사를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+public class Main {
+    public static char[] arr;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+//        int size = Integer.parseInt(br.readLine());
+        while (true){
+            String str = br.readLine();
+            if(str == null)break;
+            int num = Integer.parseInt(str);
+            int end = (int) Math.pow(3,num);
+            arr = new char[end];
+            Arrays.fill(arr,'-');
+
+            trans(0, end, true);
+            sb.append(arr).append('\n');
+        }
+        System.out.println(sb);
+    }
+
+    public static void trans(int start, int end, boolean status){
+        if(status){
+            int divi = (end-start)/3;
+            int mid  = start+divi;
+            for (int i = mid; i < mid+divi ; i++) {
+                arr[i] = ' ';
+            }
+            if(start+1 == end)return;
+            trans(start,mid,true);
+            trans(mid+divi,end,true);
+        }
+    }
+}
