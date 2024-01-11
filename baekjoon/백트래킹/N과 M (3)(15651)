@@ -11,6 +11,45 @@
 한 줄에 하나씩 문제의 조건을 만족하는 수열을 출력한다. 중복되는 수열을 여러 번 출력하면 안되며, 각 수열은 공백으로 구분해서 출력해야 한다.
 
 수열은 사전 순으로 증가하는 순서로 출력해야 한다.
-
-
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static char[] arr;
+    public static int max;
+
+    public static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        arr = new char[M];
+        max = N;
+
+        func(0);
+
+        System.out.println(sb);
+    }
+
+    public static void func(int depth) {
+        if (depth >= arr.length) {
+            for (char c : arr) {
+                sb.append(c).append(' ');
+            }
+            sb.append('\n');
+            return;
+        }
+        for (int i = 1; i <= max; i++) {
+            arr[depth] = Character.forDigit(i,10);
+            func(depth + 1);
+        }
+    }
+}
