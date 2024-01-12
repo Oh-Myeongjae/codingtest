@@ -10,3 +10,73 @@ N이 주어졌을 때, 퀸을 놓는 방법의 수를 구하는 프로그램을 
 출력
 첫째 줄에 퀸 N개를 서로 공격할 수 없게 놓는 경우의 수를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static boolean[][] arr;
+    public static int max;
+    public static int answer;
+    public static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int size = Integer.parseInt(st.nextToken());
+
+
+        arr = new boolean[size][size];
+        max = size;
+
+        func(0);
+        sb.append(answer);
+
+        System.out.println(sb);
+    }
+
+    public static void func(int depth) {
+        if(depth==max){
+            answer++;
+            return;
+        }
+        for (int i = 0; i < max; i++) {
+            if(check(depth,i)){
+                arr[depth][i] = true;
+                func(depth+1);
+                arr[depth][i] = false;
+            }
+        }
+    }
+
+    public static boolean check(int x, int y) {
+        //가로
+        for (int i = 0; i < max; i++) {
+            if(arr[x][i])return false;
+        }
+
+        //세로
+        for (int i = 0; i < max; i++) {
+            if(arr[i][y])return false;
+        }
+        
+        int count = 1;
+        
+        //대각
+        for (int i = x-1; i >= 0; i--) {
+            if(y+count<max && arr[i][y+count])return false;
+            if(y-count>=0 && arr[i][y-count])return false;
+            count++;
+        }
+        count = 1;
+
+        for (int i = x+1; i < max; i++) {
+            if(y+count<max && arr[i][y+count])return false;
+            if(y-count>=0 && arr[i][y-count])return false;
+        }
+
+        return true;
+    }
+}
