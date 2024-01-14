@@ -52,12 +52,7 @@ public class Main {
     }
 
     public static boolean check(int x, int y) {
-        //가로
-        for (int i = 0; i < max; i++) {
-            if(arr[x][i])return false;
-        }
-
-        //세로
+        /세로
         for (int i = 0; i < max; i++) {
             if(arr[i][y])return false;
         }
