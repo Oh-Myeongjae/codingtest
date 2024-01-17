@@ -39,12 +39,10 @@ PyPy3: 1172ms
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
     public static int[][] arr = new int[9][9];
-
     public static boolean done;
     public static StringBuilder sb = new StringBuilder();
 
@@ -58,58 +56,47 @@ public class Main {
             }
         }
 
-        func(0);
-        for (int[] ints : arr) {
-            for (int n : ints) {
-                sb.append(n).append(' ');
-            }
-            sb.append('\n');
-        }
+        func(0, 0);
+
         System.out.println(sb);
     }
 
-    public static void func(int depth) {
-        for (int i = 0; i < 9; i++) {
-            if (arr[depth][i] == 0) {
-                for (int j = 1; j <= 9; j++) {
-                    if (makeTemp(depth, i, j)) {
-                        arr[depth][i] = j;
-                    }
+    public static void func(int x, int y) {
+        if (x == 9) {
+            for (int[] ints : arr) {
+                for (int n : ints) {
+                    sb.append(n).append(' ');
                 }
-                System.out.println("=============================");
-                for (int[] ints : arr) {
-                    System.out.println(Arrays.toString(ints));
-                }
-                System.out.println("=============================");
-                if (depth == 8 && i == 8) {
-                    for (int k = 0; k < 9; k += 3) {
-                        for (int l = 0; l < 9; l += 3) {
-                            check(k, l);
-                        }
-                    }
-                    if (done) return;
-                } else {
-                    func(i == 8 ? depth + 1 : depth);
-                }
-//                arr[depth][i] = 0;
+                sb.append('\n');
             }
+            done = true;
+            return;
+        }
+        if (arr[x][y] == 0) {
+            for (int i = 1; i <= 9; i++) {
+                if (makeTemp(x, y, i)) {
+                    arr[x][y] = i;
+                    func(y == 8 ? x + 1 : x, y == 8 ? 0 : y + 1);
+                }
+                if(done)return;
+            }
+            arr[x][y] = 0;
+        } else {
+            func(y == 8 ? x + 1 : x, y == 8 ? 0 : y + 1);
         }
     }
-
-    private static void check(int k, int l) {
-        int num = 45;
-        for (int i = k; i < k + 3; i++) {
-            for (int j = l; j < l + 3; j++) {
-                num -= arr[i][j];
-            }
-        }
-        done = num == 0 ? true : false;
-    }
-
     private static boolean makeTemp(int x, int y, int n) {
         for (int i = 0; i < 9; i++) {
             if (i != x && arr[i][y] == n) return false; //세로
             if (i != y && arr[x][i] == n) return false; //가로
+        }
+        int startX = x/3 *3;
+        int startY = y/3 *3;
+
+        for (int i = startX; i < startX+3; i++) {
+            for (int j = startY; j < startY+3; j++) {
+                if(arr[i][j]==n)return false;
+            }
         }
         return true;
     }
