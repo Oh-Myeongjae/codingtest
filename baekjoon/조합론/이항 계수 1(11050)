@@ -17,3 +17,42 @@
  
 \(\binom{N}{K}\)를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static StringBuilder sb = new StringBuilder();
+    public static int[][] arr;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //int size = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < 1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int M = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+
+            arr = new int[M+1][M+1];
+            int answer = func(M,N);
+
+            sb.append(answer).append('\n');
+        }
+        System.out.println(sb);
+    }
+
+    public static int func(int m, int n) {
+        if(m == n || n == 0){
+            arr[m][n] = 1;
+            return 1;
+        }
+        if(arr[m][n] != 0) return arr[m][n];
+        else{
+            int num = func(m-1,n-1) + func(m-1,n);
+            arr[m][n] = num;
+            return num;
+        }
+    }
+}
