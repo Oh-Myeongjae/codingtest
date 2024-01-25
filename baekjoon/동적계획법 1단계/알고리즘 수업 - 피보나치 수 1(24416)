@@ -25,3 +25,40 @@ fibonacci(n) {
 출력
 코드1 코드2 실행 횟수를 한 줄에 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static StringBuilder sb = new StringBuilder();
+    public static int[] f;
+    public static int reCount;
+    public static int dpCount;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int size = Integer.parseInt(br.readLine());
+        f = new int[size+1];
+        
+        fib(size);
+        fibonacci(size);
+
+        System.out.println(reCount+" "+dpCount);
+    }
+
+    public static int fib(int n) {
+        if (n == 1 || n == 2) {
+            reCount++;
+            return 1;   // 코드1
+        } else return fib(n - 1) + fib(n - 2);
+    }
+
+    public static int fibonacci(int n) {
+        if (n <= 2) f[n] = 1;
+        for (int i = 3; i <= n; i++) {
+            f[i] = f[i - 1] + f[i - 2];    // 코드2
+            dpCount++;
+        }
+        return f[n];
+    }
+}
