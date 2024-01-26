@@ -15,3 +15,55 @@ N이 3보다 클 경우, 크기 N의 패턴은 공백으로 채워진 가운데�
 출력
 첫째 줄부터 N번째 줄까지 별을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static StringBuilder sb = new StringBuilder();
+    public static char[][] arr;
+
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int size = Integer.parseInt(br.readLine());
+        arr = new char[size][size];
+
+        func(0,0,size);
+
+        for (char[] chars : arr) {
+            for (char c : chars) {
+                sb.append(c);
+            }
+            sb.append('\n');
+        }
+        System.out.println(sb);
+    }
+
+    public static void func (int x, int y, int dist) {
+        if(dist == 1){
+            arr[x][y] = '*';
+            return;
+        }
+
+        int num = dist/3;
+
+        for (int i = x; i < x+dist; i+=num) {
+            for (int j = y; j < y+dist; j+=num) {
+                if(i == x+num && j == y+num){
+                    trans(i,j,num);
+                }else{
+                    func(i,j,num);
+                }
+            }
+        }
+    }
+
+    public static void trans (int x, int y, int dist) {
+        for (int i = x; i < x+dist; i++) {
+            for (int j = y; j < y+dist; j++) {
+                arr[i][j] = ' ';
+            }
+        }
+    }
+}
