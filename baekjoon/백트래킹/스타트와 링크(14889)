@@ -27,3 +27,67 @@ i\j	1	2	3	4
 출력
 첫째 줄에 스타트 팀과 링크 팀의 능력치의 차이의 최솟값을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    static int[][] S;
+    static int N;
+    static int minDiff = Integer.MAX_VALUE;
+
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine());
+        S = new int[N][N];
+
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < N; j++) {
+                S[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        boolean[] selected = new boolean[N];
+        divideTeams(0, 0, selected);
+
+        System.out.println(minDiff);
+    }
+
+    private static void divideTeams(int index, int count, boolean[] selected) {
+        if (count == N / 2) {
+            calculateDifference(selected);
+            return;
+        }
+
+        for (int i = index; i < N; i++) {
+            if (!selected[i]) {
+                selected[i] = true;
+                divideTeams(i + 1, count + 1, selected);
+                selected[i] = false;
+            }
+        }
+    }
+
+    private static void calculateDifference(boolean[] selected) {
+        int startTeamAbility = 0;
+        int linkTeamAbility = 0;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (selected[i] && selected[j]) {
+                    startTeamAbility += S[i][j];
+                } else if (!selected[i] && !selected[j]) {
+                    linkTeamAbility += S[i][j];
+                }
+            }
+        }
+
+        int diff = Math.abs(startTeamAbility - linkTeamAbility);
+        minDiff = Math.min(minDiff, diff);
+    }
+}
