@@ -14,3 +14,30 @@
 출력
 첫 번째 줄에 지원이가 만들 수 있는 길이가 N인 모든 2진 수열의 개수를 15746으로 나눈 나머지를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        int[] dp = new int[N + 1];
+
+        // 초기값 설정
+        dp[1] = 1;
+        if (N >= 2)
+            dp[2] = 2;
+
+        // 동적 계획법을 사용하여 각 경우의 수를 계산
+        for (int i = 3; i <= N; i++) {
+            // 이전 단계의 경우의 수에서 1을 더한 것과 2를 더한 것을 더해서 나머지를 구함
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 15746;
+        }
+
+        System.out.println(dp[N]);
+    }
+}
