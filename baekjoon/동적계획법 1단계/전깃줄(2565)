@@ -34,7 +34,6 @@ public class Main {
             A[i] = Integer.parseInt(st.nextToken());
             B[i] = Integer.parseInt(st.nextToken());
         }
-        br.close();
 
         int[] lis = new int[N]; // LIS를 저장할 배열
         Arrays.fill(lis, 1); // 초기값은 1로 설정 (자기 자신만의 길이)
