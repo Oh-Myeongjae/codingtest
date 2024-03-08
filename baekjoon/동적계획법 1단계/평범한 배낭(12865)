@@ -14,3 +14,45 @@
 출력
 한 줄에 배낭에 넣을 수 있는 물건들의 가치합의 최댓값을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken()); // 물건의 수
+        int K = Integer.parseInt(st.nextToken()); // 배낭의 최대 무게
+
+        // 물건의 무게와 가치를 저장하는 배열
+        int[] weights = new int[N];
+        int[] values = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            weights[i] = Integer.parseInt(st.nextToken());
+            values[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // DP 배열 초기화
+        int[][] dp = new int[N + 1][K + 1];
+
+        // 물건을 하나씩 고려하며 DP 배열 채우기
+        for (int i = 1; i <= N; i++) {
+            for (int w = 1; w <= K; w++) {
+                if (weights[i - 1] <= w) {
+                    // 현재 물건을 넣을 수 있는 경우
+                    dp[i][w] = Math.max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i - 1][w]);
+                } else {
+                    // 현재 물건을 넣을 수 없는 경우
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        System.out.println(dp[N][K]); // 배낭에 넣을 수 있는 물건들의 가치의 최댓값 출력
+    }
+}
