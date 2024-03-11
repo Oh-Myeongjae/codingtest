@@ -10,3 +10,45 @@
 출력
 첫째 줄에 구하고자 하는 기약분수의 분자와 분모를 뜻하는 두 개의 자연수를 빈 칸을 사이에 두고 순서대로 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 첫 번째 분수 입력 받기
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int A1 = Integer.parseInt(st.nextToken());
+        int B1 = Integer.parseInt(st.nextToken());
+
+        // 두 번째 분수 입력 받기
+        st = new StringTokenizer(br.readLine());
+        int A2 = Integer.parseInt(st.nextToken());
+        int B2 = Integer.parseInt(st.nextToken());
+
+        // 분자와 분모의 최대공약수를 구해서 기약분수로 만들기
+        int numerator = A1 * B2 + A2 * B1; // 두 분수의 분자의 합
+        int denominator = B1 * B2; // 두 분수의 분모의 곱
+
+        int gcd = gcd(numerator, denominator); // 최대공약수 구하기
+
+        // 기약분수로 만들기
+        numerator /= gcd;
+        denominator /= gcd;
+
+        System.out.println(numerator + " " + denominator);
+    }
+
+    // 최대공약수를 계산하는 함수
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = a % b;
+            a = b;
+            b = temp;
+        }
+        return a;
+    }
+}
