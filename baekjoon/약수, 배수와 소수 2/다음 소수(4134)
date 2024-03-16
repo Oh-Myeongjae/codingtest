@@ -8,3 +8,59 @@
 출력
 각각의 테스트 케이스에 대해서 n보다 크거나 같은 소수 중 가장 작은 소수를 한 줄에 하나씩 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine()); // 테스트 케이스의 개수
+
+        for (int t = 0; t < T; t++) {
+            long n = Long.parseLong(br.readLine()); // n값 입력
+
+            long prime = findNextPrime(n); // n보다 크거나 같은 소수 찾기
+            System.out.println(prime);
+        }
+    }
+
+    // 주어진 수보다 크거나 같은 소수 찾기
+    public static long findNextPrime(long n) {
+        if (n <= 1) {
+            return 2; // 1 또는 0 이하는 2로 처리
+        }
+
+        if (n % 2 == 0) {
+            n++; // 짝수라면 다음 홀수로 이동
+        }
+
+        while (!isPrime(n)) {
+            n += 2; // 소수가 아니면 다음 홀수로 이동
+        }
+
+        return n;
+    }
+
+    // 소수 판별 함수
+    public static boolean isPrime(long num) {
+        if (num <= 1) {
+            return false;
+        }
+        if (num == 2 || num == 3) {
+            return true;
+        }
+        if (num % 2 == 0 || num % 3 == 0) {
+            return false;
+        }
+
+        for (long i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
