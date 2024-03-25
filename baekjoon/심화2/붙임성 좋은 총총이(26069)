@@ -36,3 +36,38 @@ $20$의 문자열이며, 서로 같지 않다.
 출력
 마지막 기록 이후 무지개 댄스를 추는 사람의 수를 출력하라.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int answer = 0;
+        int n = Integer.parseInt(br.readLine()); // 사람들이 만난 기록의 수
+
+        HashSet<String> set = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            String str1 = st.nextToken();
+            String str2 = st.nextToken();
+
+            if(str1.equals("ChongChong") || str2.equals("ChongChong")){
+                set.add(str1);
+                set.add(str2);
+            } else if (set.contains(str1) || set.contains(str2)) {
+                set.add(str1);
+                set.add(str2);
+            }
+        }
+
+        answer += set.size();
+
+        System.out.println(answer);
+    }
+}
