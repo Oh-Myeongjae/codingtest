@@ -14,3 +14,39 @@
 출력
 첫째 줄에 각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 사람의 수 입력
+        int N = Integer.parseInt(br.readLine());
+
+        // 각 사람이 돈을 인출하는데 걸리는 시간 입력
+        int[] times = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            times[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // 시간 오름차순으로 정렬
+        Arrays.sort(times);
+
+        int totalTime = 0; // 각 사람이 돈을 인출하는데 필요한 시간의 합
+
+        // 각 사람이 돈을 인출하는데 걸리는 시간의 합 계산
+        for (int i = 0; i < N; i++) {
+            // i번째 사람이 돈을 인출하는데 걸리는 시간은 (N-i) * Pi
+            totalTime += (N - i) * times[i];
+        }
+
+        System.out.println(totalTime);
+
+        br.close();
+    }
+}
