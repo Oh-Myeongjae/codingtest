@@ -12,3 +12,40 @@
 출력
 첫째 줄에 정답을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 수식 입력 받기
+        String expression = "00009-00009"; // 임의의 입력
+        String[] numbers = expression.split("[+-]"); // '+' 또는 '-'를 기준으로 숫자만 배열에 저장
+        String[] operators = expression.replaceAll("[0-9]", "").split(""); // 숫자를 제거하고 연산자만 배열에 저장
+
+        // 첫 번째 숫자를 먼저 결과에 저장
+        int result = Integer.parseInt(numbers[0]);
+
+        // 덧셈, 뺄셈을 차례로 적용하여 최소값 계산
+        for (int i = 1; i < numbers.length; i++) {
+            int num = Integer.parseInt(numbers[i]);
+            String operator = operators[i - 1];
+
+            if (operator.equals("+")) {
+                result += num;
+            } else if (operator.equals("-")) {
+                result -= num;
+            }
+        }
+
+        bw.write(result + "\n");
+
+        br.close();
+        bw.close();
+    }
+}
