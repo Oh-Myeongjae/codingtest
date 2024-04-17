@@ -18,3 +18,40 @@
 출력
 표준 출력으로 제일 왼쪽 도시에서 제일 오른쪽 도시로 가는 최소 비용을 출력한다. 
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        int N = Integer.parseInt(br.readLine());
+        long[] distArr = new long[N-1];
+        long[] oilArr = new long[N];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < distArr.length; i++) {
+            distArr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < oilArr.length; i++) {
+            oilArr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        long sum = 0;
+        long minCost = Integer.MAX_VALUE;
+
+        for (int i = 0; i < N-1; i++) {
+            long cost = oilArr[i];
+            minCost = Math.min(minCost,cost);
+
+            sum += minCost*distArr[i];
+        }
+
+        System.out.println(sum);
+    }
+}
