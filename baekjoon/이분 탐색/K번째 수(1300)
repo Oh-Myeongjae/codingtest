@@ -10,3 +10,53 @@
 출력
 B[k]를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 배열의 크기 N과 찾을 인덱스 k 입력 받기
+        int N = Integer.parseInt(br.readLine());
+        long k = Long.parseLong(br.readLine());
+
+        // 이분 탐색을 사용하여 B[k]를 찾음
+        long left = 1;
+        long right = (long) N * N; // B 배열의 최대 값
+        long answer = 0;
+
+        while (left <= right) {
+            long mid = (left + right) / 2;
+            long cnt = countLessEqual(mid, N); // mid 이하인 수의 개수
+
+            if (cnt < k) {
+                left = mid + 1;
+            } else {
+                answer = mid;
+                right = mid - 1;
+            }
+        }
+
+        bw.write(answer + "\n");
+
+        br.close();
+        bw.close();
+    }
+
+    // 이차원 배열 A에서 mid 이하인 수의 개수를 구하는 메소드
+    private static long countLessEqual(long mid, int N) {
+        long count = 0;
+
+        for (int i = 1; i <= N; i++) {
+            count += Math.min(mid / i, N); // i행에서 mid 이하인 수의 개수
+        }
+
+        return count;
+    }
+}
