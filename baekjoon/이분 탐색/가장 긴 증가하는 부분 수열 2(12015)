@@ -12,3 +12,57 @@
 출력
 첫째 줄에 수열 A의 가장 긴 증가하는 부분 수열의 길이를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 수열의 크기 N 입력 받기
+        int N = Integer.parseInt(br.readLine());
+
+        // 수열 A 입력 받기
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] A = new int[N];
+        for (int i = 0; i < N; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // LIS(Longest Increasing Subsequence) 구하기
+        int[] LIS = new int[N]; // LIS 배열
+        int length = 0; // LIS의 길이
+
+        for (int i = 0; i < N; i++) {
+            int idx = lowerBound(LIS, 0, length, A[i]); // 이분 탐색으로 적절한 위치 찾기
+            if (idx == length) { // 현재 숫자가 LIS의 마지막 숫자보다 큰 경우
+                LIS[length++] = A[i];
+            } else { // 현재 숫자가 LIS의 마지막 숫자보다 작거나 같은 경우
+                LIS[idx] = A[i];
+            }
+        }
+
+        bw.write(length + "\n");
+
+        br.close();
+        bw.close();
+    }
+
+    // lower bound 구하는 메소드
+    private static int lowerBound(int[] arr, int start, int end, int target) {
+        while (start < end) {
+            int mid = (start + end) / 2;
+            if (arr[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid;
+            }
+        }
+        return end;
+    }
+}
