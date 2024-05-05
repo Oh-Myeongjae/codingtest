@@ -10,3 +10,44 @@
 출력
 첫째 줄에 입력으로 주어진 M개의 수에 대해서, 각 수가 적힌 숫자 카드를 상근이가 가지고 있으면 1을, 아니면 0을 공백으로 구분해 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 상근이가 가지고 있는 숫자 카드의 개수 N 입력 받기
+        int N = Integer.parseInt(br.readLine());
+
+        // 상근이가 가지고 있는 숫자 카드 입력 받기 (집합으로 저장)
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        HashSet<Integer> cardSet = new HashSet<>();
+        for (int i = 0; i < N; i++) {
+            cardSet.add(Integer.parseInt(st.nextToken()));
+        }
+
+        // 상근이가 가지고 있는 숫자 카드 중에 해당하는지 여부를 검사할 숫자의 개수 M 입력 받기
+        int M = Integer.parseInt(br.readLine());
+
+        // 각 숫자가 상근이가 가지고 있는 숫자 카드 중에 있는지 확인하고 결과 출력
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < M; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            if (cardSet.contains(num)) {
+                bw.write("1 ");
+            } else {
+                bw.write("0 ");
+            }
+        }
+
+        br.close();
+        bw.close();
+    }
+}
