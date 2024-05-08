@@ -14,3 +14,47 @@
 출력
 현재 회사에 있는 사람의 이름을 사전 순의 역순으로 한 줄에 한 명씩 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+
+        // 현재 회사에 있는 직원을 저장할 집합
+        HashSet<String> employees = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String name = st.nextToken();
+            String action = st.nextToken();
+
+            // 출근한 경우 집합에 추가
+            if (action.equals("enter")) {
+                employees.add(name);
+            } 
+            // 퇴근한 경우 집합에서 제거
+            else {
+                employees.remove(name);
+            }
+        }
+
+        // 사전 순의 역순으로 정렬하여 출력
+        TreeSet<String> sortedEmployees = new TreeSet<>(employees);
+        for (String employee : sortedEmployees.descendingSet()) {
+            bw.write(employee + "\n");
+        }
+
+        br.close();
+        bw.close();
+    }
+}
