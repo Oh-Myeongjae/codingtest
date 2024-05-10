@@ -10,3 +10,50 @@
 출력
 듣보잡의 수와 그 명단을 사전순으로 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken()); // 듣도 못한 사람의 수
+        int m = Integer.parseInt(st.nextToken()); // 보도 못한 사람의 수
+
+        // 듣도 못한 사람의 명단을 저장할 집합
+        HashSet<String> unheard = new HashSet<>();
+        // 듣보잡의 명단을 저장할 집합
+        TreeSet<String> unheardAndUnseen = new TreeSet<>();
+
+        // 듣도 못한 사람의 명단 입력
+        for (int i = 0; i < n; i++) {
+            unheard.add(br.readLine());
+        }
+
+        // 보도 못한 사람의 명단을 확인하면서 듣보잡인지 검사
+        for (int i = 0; i < m; i++) {
+            String name = br.readLine();
+            // 듣보잡인 경우 집합에 추가
+            if (unheard.contains(name)) {
+                unheardAndUnseen.add(name);
+            }
+        }
+
+        // 듣보잡의 수와 명단을 출력
+        bw.write(unheardAndUnseen.size() + "\n");
+        for (String name : unheardAndUnseen) {
+            bw.write(name + "\n");
+        }
+
+        br.close();
+        bw.close();
+    }
+}
