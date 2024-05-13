@@ -9,6 +9,67 @@
 
 출력
 첫째 줄에 대칭 차집합의 원소의 개수를 출력한다.
-
-
 */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 집합 A와 B의 원소의 개수 입력
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int sizeA = Integer.parseInt(st.nextToken());
+        int sizeB = Integer.parseInt(st.nextToken());
+
+        // 집합 A와 B를 저장할 HashSet 생성
+        HashSet<Integer> setA = new HashSet<>();
+        HashSet<Integer> setB = new HashSet<>();
+
+        // 집합 A의 원소 입력
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < sizeA; i++) {
+            setA.add(Integer.parseInt(st.nextToken()));
+        }
+
+        // 집합 B의 원소 입력
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < sizeB; i++) {
+            setB.add(Integer.parseInt(st.nextToken()));
+        }
+
+        // 대칭 차집합의 원소 개수를 계산하여 출력
+        int symmetricDifferenceSize = symmetricDifference(setA, setB);
+        bw.write(symmetricDifferenceSize + "\n");
+
+        br.close();
+        bw.close();
+    }
+
+    // 대칭 차집합의 원소 개수를 계산하는 함수
+    private static int symmetricDifference(HashSet<Integer> setA, HashSet<Integer> setB) {
+        HashSet<Integer> symmetricDifference = new HashSet<>();
+
+        // A-B
+        for (int element : setA) {
+            if (!setB.contains(element)) {
+                symmetricDifference.add(element);
+            }
+        }
+
+        // B-A
+        for (int element : setB) {
+            if (!setA.contains(element)) {
+                symmetricDifference.add(element);
+            }
+        }
+
+        return symmetricDifference.size();
+    }
+}
