@@ -10,3 +10,42 @@
 출력
 한 줄에 하나씩 N줄에 걸쳐 백준이의 동생이 말해야 하는 수를 순서대로 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            int x = Integer.parseInt(br.readLine());
+
+            if (maxHeap.size() == minHeap.size()) {
+                maxHeap.offer(x);
+                if (!minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
+                    minHeap.offer(maxHeap.poll());
+                    maxHeap.offer(minHeap.poll());
+                }
+            } else {
+                minHeap.offer(x);
+                if (maxHeap.peek() > minHeap.peek()) {
+                    minHeap.offer(maxHeap.poll());
+                    maxHeap.offer(minHeap.poll());
+                }
+            }
+
+            sb.append(maxHeap.peek()).append('\n');
+        }
+
+        System.out.print(sb.toString());
+        br.close();
+    }
+}
