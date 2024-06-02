@@ -16,3 +16,61 @@
 출력
 필요한 메모리 M 바이트를 확보하기 위한 앱 비활성화의 최소의 비용을 계산하여 한 줄에 출력해야 한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 첫째 줄: N과 M
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        // 둘째 줄: 각 앱이 사용 중인 메모리
+        int[] memory = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            memory[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        // 셋째 줄: 각 앱의 비활성화 비용
+        int[] cost = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            cost[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        // 최대 비용 합
+        int sumCost = 0;
+        for (int i = 0; i < N; i++) {
+            sumCost += cost[i];
+        }
+        
+        // DP 배열: dp[c] = 비용 c로 얻을 수 있는 최대 메모리
+        int[] dp = new int[sumCost + 1];
+        
+        for (int i = 0; i < N; i++) {
+            int appMemory = memory[i];
+            int appCost = cost[i];
+            for (int j = sumCost; j >= appCost; j--) {
+                dp[j] = Math.max(dp[j], dp[j - appCost] + appMemory);
+            }
+        }
+        
+        // 최소 비용 찾기
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i <= sumCost; i++) {
+            if (dp[i] >= M) {
+                result = i;
+                break;
+            }
+        }
+        
+        // 결과 출력
+        System.out.println(result);
+    }
+}
