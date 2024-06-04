@@ -12,3 +12,74 @@
 출력
 첫째 줄에 문제에 주어진 연산을 K번 했을 때, 만들 수 있는 가장 큰 수를 출력한다. 만약 연산을 K번 할 수 없으면 -1을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] input = br.readLine().split(" ");
+        String N = input[0];
+        int K = Integer.parseInt(input[1]);
+
+        System.out.println(getMaxNumber(N, K));
+    }
+
+    public static String getMaxNumber(String N, int K) {
+        int len = N.length();
+        if (len == 1) return "-1";
+
+        Queue<State> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        
+        queue.add(new State(N, 0));
+        visited.add(N + "0");
+        String maxNum = "-1";
+
+        while (!queue.isEmpty()) {
+            State current = queue.poll();
+
+            if (current.count == K) {
+                if (maxNum.compareTo(current.number) < 0) {
+                    maxNum = current.number;
+                }
+                continue;
+            }
+
+            for (int i = 0; i < len - 1; i++) {
+                for (int j = i + 1; j < len; j++) {
+                    if (i == 0 && current.number.charAt(j) == '0') continue;
+
+                    String swapped = swap(current.number, i, j);
+                    if (!visited.contains(swapped + (current.count + 1))) {
+                        visited.add(swapped + (current.count + 1));
+                        queue.add(new State(swapped, current.count + 1));
+                    }
+                }
+            }
+        }
+
+        return maxNum;
+    }
+
+    private static String swap(String s, int i, int j) {
+        char[] chars = s.toCharArray();
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+        return new String(chars);
+    }
+
+    static class State {
+        String number;
+        int count;
+
+        State(String number, int count) {
+            this.number = number;
+            this.count = count;
+        }
+    }
+}
