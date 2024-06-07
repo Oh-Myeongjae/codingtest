@@ -12,3 +12,59 @@ n(2 ≤ n ≤ 100)개의 도시가 있다. 그리고 한 도시에서 출발하�
 출력
 n개의 줄을 출력해야 한다. i번째 줄에 출력하는 j번째 숫자는 도시 i에서 j로 가는데 필요한 최소 비용이다. 만약, i에서 j로 갈 수 없는 경우에는 그 자리에 0을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+        
+        int[][] dist = new int[n + 1][n + 1];
+        
+        // Initialize the distance matrix
+        for (int i = 1; i <= n; i++) {
+            Arrays.fill(dist[i], 100000 * n); // A large value to indicate infinity
+            dist[i][i] = 0; // Distance to itself is zero
+        }
+        
+        for (int i = 0; i < m; i++) {
+            String[] busInfo = br.readLine().split(" ");
+            int from = Integer.parseInt(busInfo[0]);
+            int to = Integer.parseInt(busInfo[1]);
+            int cost = Integer.parseInt(busInfo[2]);
+            dist[from][to] = Math.min(dist[from][to], cost); // If multiple buses, take the minimum cost
+        }
+        
+        // Floyd-Warshall Algorithm
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
+        }
+        
+        // Print the result
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (dist[i][j] == 100000 * n) {
+                    sb.append("0 ");
+                } else {
+                    sb.append(dist[i][j]).append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+        
+        System.out.print(sb.toString());
+    }
+}
