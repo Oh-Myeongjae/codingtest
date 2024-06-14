@@ -21,3 +21,50 @@
 출력
 첫째 줄에 모든 폭발이 끝난 후 남은 문자열을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String inputString = br.readLine();
+        String bombString = br.readLine();
+        
+        int bombLength = bombString.length();
+        char lastBombChar = bombString.charAt(bombLength - 1);
+        Stack<Character> stack = new Stack<>();
+        
+        for (int i = 0; i < inputString.length(); i++) {
+            stack.push(inputString.charAt(i));
+            
+            if (stack.size() >= bombLength && stack.peek() == lastBombChar) {
+                boolean isBomb = true;
+                for (int j = 0; j < bombLength; j++) {
+                    if (stack.get(stack.size() - bombLength + j) != bombString.charAt(j)) {
+                        isBomb = false;
+                        break;
+                    }
+                }
+                
+                if (isBomb) {
+                    for (int j = 0; j < bombLength; j++) {
+                        stack.pop();
+                    }
+                }
+            }
+        }
+        
+        StringBuilder result = new StringBuilder();
+        for (char c : stack) {
+            result.append(c);
+        }
+        
+        if (result.length() == 0) {
+            System.out.println("FRULA");
+        } else {
+            System.out.println(result.toString());
+        }
+    }
+}
