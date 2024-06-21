@@ -18,3 +18,46 @@
 출력
 서로 볼 수 있는 쌍의 수를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int N = Integer.parseInt(br.readLine());
+        int[] heights = new int[N];
+        
+        for (int i = 0; i < N; i++) {
+            heights[i] = Integer.parseInt(br.readLine());
+        }
+        
+        Stack<int[]> stack = new Stack<>();
+        long count = 0;
+        
+        for (int i = 0; i < N; i++) {
+            int currentHeight = heights[i];
+            int sameHeightCount = 1;
+            
+            while (!stack.isEmpty() && stack.peek()[0] <= currentHeight) {
+                int[] top = stack.pop();
+                count += top[1];
+                
+                if (top[0] == currentHeight) {
+                    sameHeightCount += top[1];
+                }
+            }
+            
+            if (!stack.isEmpty()) {
+                count++;
+            }
+            
+            stack.push(new int[]{currentHeight, sameHeightCount});
+        }
+        
+        System.out.println(count);
+    }
+}
+
