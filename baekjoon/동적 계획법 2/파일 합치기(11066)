@@ -12,3 +12,54 @@
 출력
 프로그램은 표준 출력에 출력한다. 각 테스트 데이터마다 정확히 한 행에 출력하는데, 모든 장을 합치는데 필요한 최소비용을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+
+        while (T-- > 0) {
+            int K = Integer.parseInt(br.readLine());
+            int[] files = new int[K];
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            for (int i = 0; i < K; i++) {
+                files[i] = Integer.parseInt(st.nextToken());
+            }
+
+            System.out.println(minCostToMergeFiles(files));
+        }
+    }
+
+    private static int minCostToMergeFiles(int[] files) {
+        int n = files.length;
+
+        // Prefix sum array to store the sum of files from 0 to i
+        int[] prefixSum = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + files[i];
+        }
+
+        // DP array to store the minimum cost to merge files from i to j
+        int[][] dp = new int[n][n];
+
+        // Fill the DP array
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i <= n - length; i++) {
+                int j = i + length - 1;
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k < j; k++) {
+                    int cost = dp[i][k] + dp[k + 1][j] + prefixSum[j + 1] - prefixSum[i];
+                    dp[i][j] = Math.min(dp[i][j], cost);
+                }
+            }
+        }
+
+        return dp[0][n - 1];
+    }
+}
