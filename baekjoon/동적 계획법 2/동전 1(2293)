@@ -10,3 +10,38 @@ n가지 종류의 동전이 있다. 각각의 동전이 나타내는 가치는 �
 출력
 첫째 줄에 경우의 수를 출력한다. 경우의 수는 231보다 작다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 첫째 줄에 n, k가 주어진다.
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+        
+        // 동전의 가치를 저장할 배열
+        int[] coins = new int[n];
+        for (int i = 0; i < n; i++) {
+            coins[i] = Integer.parseInt(br.readLine());
+        }
+        
+        // 경우의 수를 저장할 배열
+        int[] dp = new int[k + 1];
+        dp[0] = 1; // 가치 0을 만드는 경우의 수는 1 (동전을 사용하지 않는 경우)
+        
+        // 동전을 하나씩 사용하여 경우의 수를 계산
+        for (int coin : coins) {
+            for (int j = coin; j <= k; j++) {
+                dp[j] += dp[j - coin];
+            }
+        }
+        
+        // 결과 출력
+        System.out.println(dp[k]);
+    }
+}
