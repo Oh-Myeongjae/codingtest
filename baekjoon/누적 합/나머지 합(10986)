@@ -12,3 +12,48 @@
 출력
 첫째 줄에 연속된 부분 구간의 합이 M으로 나누어 떨어지는 구간의 개수를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.HashMap;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 첫째 줄에 N과 M이 주어진다
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        // 둘째 줄에 N개의 수가 주어진다
+        int[] A = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        // 누적합을 저장할 배열과 해시맵
+        long[] prefixSum = new long[N + 1];
+        HashMap<Long, Integer> remainderCount = new HashMap<>();
+        
+        // 결과 변수
+        long count = 0;
+        
+        // 나머지가 0인 경우를 처리하기 위해 초기값 세팅
+        remainderCount.put(0L, 1);
+        
+        // 누적합 계산 및 나머지 카운트 업데이트
+        for (int i = 1; i <= N; i++) {
+            prefixSum[i] = prefixSum[i - 1] + A[i - 1];
+            long remainder = (prefixSum[i] % M + M) % M; // 나머지를 항상 양수로 만들기
+            
+            count += remainderCount.getOrDefault(remainder, 0);
+            remainderCount.put(remainder, remainderCount.getOrDefault(remainder, 0) + 1);
+        }
+        
+        // 결과 출력
+        System.out.println(count);
+    }
+}
