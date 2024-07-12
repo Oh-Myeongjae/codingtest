@@ -15,3 +15,73 @@
 제한
 1 ≤ N, M ≤ 2000
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 첫째 줄에 N, M, K가 주어진다.
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        
+        // 보드의 각 행의 상태를 저장할 2차원 배열
+        char[][] board = new char[N][M];
+        for (int i = 0; i < N; i++) {
+            board[i] = br.readLine().toCharArray();
+        }
+        
+        // 두 가지 색칠 패턴에 따른 필요한 변경 개수의 누적합 배열
+        int[][][] prefixSum = new int[2][N + 1][M + 1];
+        
+        // 각 위치의 칸이 두 가지 패턴 중에서 몇 개가 잘못된 칸인지 계산
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                // 체스판 패턴1: 왼쪽 위가 흰색(W)
+                if ((i + j) % 2 == 0) {
+                    prefixSum[0][i + 1][j + 1] = board[i][j] == 'B' ? 1 : 0;
+                } else {
+                    prefixSum[0][i + 1][j + 1] = board[i][j] == 'W' ? 1 : 0;
+                }
+                // 체스판 패턴2: 왼쪽 위가 검은색(B)
+                if ((i + j) % 2 == 0) {
+                    prefixSum[1][i + 1][j + 1] = board[i][j] == 'W' ? 1 : 0;
+                } else {
+                    prefixSum[1][i + 1][j + 1] = board[i][j] == 'B' ? 1 : 0;
+                }
+            }
+        }
+        
+        // 누적합 계산
+        for (int p = 0; p < 2; p++) {
+            for (int i = 1; i <= N; i++) {
+                for (int j = 1; j <= M; j++) {
+                    prefixSum[p][i][j] += prefixSum[p][i - 1][j] + prefixSum[p][i][j - 1] - prefixSum[p][i - 1][j - 1];
+                }
+            }
+        }
+        
+        // KxK 크기의 체스판을 찾으면서 최소 칠하기 횟수 찾기
+        int minRepaints = Integer.MAX_VALUE;
+        for (int i = K; i <= N; i++) {
+            for (int j = K; j <= M; j++) {
+                // 패턴1 기준 다시 칠해야 하는 개수
+                int repaints1 = prefixSum[0][i][j] - prefixSum[0][i - K][j] - prefixSum[0][i][j - K] + prefixSum[0][i - K][j - K];
+                // 패턴2 기준 다시 칠해야 하는 개수
+                int repaints2 = prefixSum[1][i][j] - prefixSum[1][i - K][j] - prefixSum[1][i][j - K] + prefixSum[1][i - K][j - K];
+                
+                // 두 패턴 중 최소 칠하기 횟수 갱신
+                minRepaints = Math.min(minRepaints, Math.min(repaints1, repaints2));
+            }
+        }
+        
+        // 결과 출력
+        System.out.println(minRepaints);
+    }
+}
