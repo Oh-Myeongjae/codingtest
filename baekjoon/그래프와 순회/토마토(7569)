@@ -16,3 +16,89 @@
 출력
 여러분은 토마토가 모두 익을 때까지 최소 며칠이 걸리는지를 계산해서 출력해야 한다. 만약, 저장될 때부터 모든 토마토가 익어있는 상태이면 0을 출력해야 하고, 토마토가 모두 익지는 못하는 상황이면 -1을 출력해야 한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+
+public class Main {
+    static int M, N, H;
+    static int[][][] box;
+    static int[][][] days;
+    static boolean[][][] visited;
+    
+    static int[] dx = {1, -1, 0, 0, 0, 0};
+    static int[] dy = {0, 0, 1, -1, 0, 0};
+    static int[] dz = {0, 0, 0, 0, 1, -1};
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        H = Integer.parseInt(st.nextToken());
+        
+        box = new int[H][N][M];
+        days = new int[H][N][M];
+        visited = new boolean[H][N][M];
+        
+        Queue<int[]> queue = new LinkedList<>();
+        
+        for (int h = 0; h < H; h++) {
+            for (int n = 0; n < N; n++) {
+                st = new StringTokenizer(br.readLine());
+                for (int m = 0; m < M; m++) {
+                    box[h][n][m] = Integer.parseInt(st.nextToken());
+                    if (box[h][n][m] == 1) {
+                        queue.add(new int[] {h, n, m});
+                        visited[h][n][m] = true;
+                    }
+                }
+            }
+        }
+        
+        bfs(queue);
+        
+        int maxDays = 0;
+        boolean allRipe = true;
+        
+        for (int h = 0; h < H; h++) {
+            for (int n = 0; n < N; n++) {
+                for (int m = 0; m < M; m++) {
+                    if (box[h][n][m] == 0 && !visited[h][n][m]) {
+                        allRipe = false;
+                    }
+                    maxDays = Math.max(maxDays, days[h][n][m]);
+                }
+            }
+        }
+        
+        System.out.println(allRipe ? maxDays : -1);
+    }
+    
+    public static void bfs(Queue<int[]> queue) {
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int z = current[0];
+            int y = current[1];
+            int x = current[2];
+            
+            for (int i = 0; i < 6; i++) {
+                int nz = z + dz[i];
+                int ny = y + dy[i];
+                int nx = x + dx[i];
+                
+                if (nz >= 0 && ny >= 0 && nx >= 0 && nz < H && ny < N && nx < M) {
+                    if (!visited[nz][ny][nx] && box[nz][ny][nx] == 0) {
+                        visited[nz][ny][nx] = true;
+                        queue.add(new int[] {nz, ny, nx});
+                        days[nz][ny][nx] = days[z][y][x] + 1;
+                    }
+                }
+            }
+        }
+    }
+}
