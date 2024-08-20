@@ -37,3 +37,56 @@ $N$ 이하의 서로 다른 정수임이 보장된다.
 출력
 포닉스가 순열을 청소할 수 있으면 YES, 불가능하다면 NO를 출력한다.
 */
+import java.io.*;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedRead,er br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        int size = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+
+        String answer = "YES";
+
+        int[] arr = new int[4];
+        int[] numList = new int[size];
+
+        for (int i = 0; i < numList.length; i++) {
+            numList[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for (Integer num : numList) {
+            int idx = checkIdx(num,arr);
+
+            if(idx >= arr.length){
+             answer = "NO";
+             break;
+            }
+
+            arr[idx] = num;
+        }
+
+        bw.write(answer + "\n");
+
+        br.close();
+        bw.close();
+    }
+
+    private static int checkIdx(Integer num, int[] arr) {
+        int max = 1000000;
+        int idx = arr.length;
+
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i]<num && (num-arr[i]<max)){
+                max = num-arr[i];
+                idx = i;
+
+            }
+        }
+
+        return idx;
+    }
+}
