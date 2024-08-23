@@ -24,3 +24,77 @@
 출력
 100번 칸에 도착하기 위해 주사위를 최소 몇 번 굴려야 하는지 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+    static int[] board = new int[101]; // 1부터 100까지의 보드를 나타냄
+    static int[] dist = new int[101]; // 최소 주사위 굴린 횟수 저장
+    static boolean[] visited = new boolean[101]; // 방문 여부 체크
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken()); // 사다리 수
+        int M = Integer.parseInt(st.nextToken()); // 뱀 수
+        
+        // 보드 초기화 (1부터 100까지의 칸)
+        for (int i = 1; i <= 100; i++) {
+            board[i] = i;
+        }
+        
+        // 사다리 정보 입력
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            board[x] = y; // 사다리를 타면 y로 이동
+        }
+        
+        // 뱀 정보 입력
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            board[u] = v; // 뱀을 타면 v로 이동
+        }
+        
+        // BFS 탐색
+        bfs();
+        
+        // 100번 칸에 도착할 때의 최소 주사위 굴린 횟수 출력
+        System.out.println(dist[100]);
+    }
+    
+    public static void bfs() {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(1); // 1번 칸에서 시작
+        visited[1] = true;
+        dist[1] = 0; // 시작 지점이므로 굴린 횟수는 0
+        
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            
+            // 1에서 6까지의 주사위 눈을 굴림
+            for (int dice = 1; dice <= 6; dice++) {
+                int next = current + dice;
+                
+                // 100번 칸을 넘으면 안되므로 체크
+                if (next > 100) continue;
+                
+                // 사다리나 뱀이 있으면 이동
+                next = board[next];
+                
+                // 아직 방문하지 않은 칸이면 방문
+                if (!visited[next]) {
+                    visited[next] = true;
+                    dist[next] = dist[current] + 1;
+                    queue.add(next);
+                }
+            }
+        }
+    }
+}
