@@ -14,3 +14,85 @@ N×M의 행렬로 표현되는 맵이 있다. 맵에서 0은 이동할 수 있�
 출력
 첫째 줄에 최단 거리를 출력한다. 불가능할 때는 -1을 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+    static class Node {
+        int x, y, dist, broken;
+
+        Node(int x, int y, int dist, int broken) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+            this.broken = broken;
+        }
+    }
+
+    static int N, M;
+    static int[][] map;
+    static boolean[][][] visited;
+    static int[] dx = { -1, 1, 0, 0 };
+    static int[] dy = { 0, 0, -1, 1 };
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        map = new int[N][M];
+        visited = new boolean[N][M][2];  // [x][y][0]은 벽을 안 부순 상태, [x][y][1]은 벽을 부순 상태
+
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            for (int j = 0; j < M; j++) {
+                map[i][j] = line.charAt(j) - '0';
+            }
+        }
+
+        int result = bfs();
+        System.out.println(result);
+    }
+
+    static int bfs() {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(0, 0, 1, 0));  // (0, 0)에서 시작, 거리 1, 벽을 부수지 않은 상태
+        visited[0][0][0] = true;
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+
+            // 목적지에 도달한 경우
+            if (current.x == N - 1 && current.y == M - 1) {
+                return current.dist;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int nx = current.x + dx[i];
+                int ny = current.y + dy[i];
+
+                if (nx >= 0 && ny >= 0 && nx < N && ny < M) {
+                    // 벽이 아닌 경우, 벽을 부수지 않고 이동
+                    if (map[nx][ny] == 0 && !visited[nx][ny][current.broken]) {
+                        visited[nx][ny][current.broken] = true;
+                        queue.add(new Node(nx, ny, current.dist + 1, current.broken));
+                    }
+
+                    // 벽을 만난 경우, 벽을 부수고 이동 (벽을 아직 안 부쉈을 때만)
+                    if (map[nx][ny] == 1 && current.broken == 0 && !visited[nx][ny][1]) {
+                        visited[nx][ny][1] = true;
+                        queue.add(new Node(nx, ny, current.dist + 1, 1));
+                    }
+                }
+            }
+        }
+
+        // 목적지에 도달할 수 없는 경우
+        return -1;
+    }
+}
