@@ -15,3 +15,88 @@ K개의 줄에 걸쳐 입력으로 주어진 그래프가 이분 그래프이면
 1 ≤ V ≤ 20,000
 1 ≤ E ≤ 200,000
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static int V, E; // 정점의 개수, 간선의 개수
+    static ArrayList<Integer>[] graph;
+    static int[] colors; // 각 정점의 색깔을 저장 (-1: 방문안함, 0: 빨간색, 1: 파란색)
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int K = Integer.parseInt(br.readLine()); // 테스트 케이스 수
+
+        for (int t = 0; t < K; t++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            V = Integer.parseInt(st.nextToken());
+            E = Integer.parseInt(st.nextToken());
+
+            // 그래프 초기화
+            graph = new ArrayList[V + 1];
+            for (int i = 1; i <= V; i++) {
+                graph[i] = new ArrayList<>();
+            }
+
+            // 간선 정보 입력
+            for (int i = 0; i < E; i++) {
+                st = new StringTokenizer(br.readLine());
+                int u = Integer.parseInt(st.nextToken());
+                int v = Integer.parseInt(st.nextToken());
+                graph[u].add(v);
+                graph[v].add(u);
+            }
+
+            // 색깔 배열 초기화 (-1로 초기화: 방문하지 않음)
+            colors = new int[V + 1];
+            for (int i = 1; i <= V; i++) {
+                colors[i] = -1;
+            }
+
+            // 그래프가 이분 그래프인지 확인
+            boolean isBipartite = true;
+            for (int i = 1; i <= V; i++) {
+                if (colors[i] == -1) { // 방문하지 않은 정점에 대해 BFS 탐색
+                    if (!bfs(i)) {
+                        isBipartite = false;
+                        break;
+                    }
+                }
+            }
+
+            // 결과 출력
+            if (isBipartite) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
+        }
+    }
+
+    // BFS로 이분 그래프 판별
+    static boolean bfs(int start) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        colors[start] = 0; // 시작 정점을 빨간색으로 칠함 (0)
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+
+            for (int neighbor : graph[current]) {
+                if (colors[neighbor] == -1) { // 아직 방문하지 않은 정점인 경우
+                    colors[neighbor] = 1 - colors[current]; // 현재 정점의 반대 색깔로 칠함
+                    queue.add(neighbor);
+                } else if (colors[neighbor] == colors[current]) { // 인접한 정점이 같은 색깔인 경우
+                    return false; // 이분 그래프가 아님
+                }
+            }
+        }
+        return true;
+    }
+}
