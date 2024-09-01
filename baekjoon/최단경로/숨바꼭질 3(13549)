@@ -10,3 +10,57 @@
 출력
 수빈이가 동생을 찾는 가장 빠른 시간을 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    static final int MAX = 100000; // 문제에서 주어진 최대 범위
+    static int[] time = new int[MAX + 1]; // 각 위치까지 걸리는 시간을 저장하는 배열
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken()); // 수빈이의 위치
+        int K = Integer.parseInt(st.nextToken()); // 동생의 위치
+        
+        System.out.println(bfs(N, K)); // BFS를 사용하여 최단 시간을 구함
+    }
+    
+    public static int bfs(int N, int K) {
+        Queue<Integer> queue = new LinkedList<>();
+        Arrays.fill(time, -1); // 모든 시간을 -1로 초기화 (방문하지 않음을 의미)
+        queue.add(N);
+        time[N] = 0; // 수빈이의 시작 위치는 0초
+        
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            
+            // 현재 위치가 동생의 위치(K)라면 그때의 시간을 반환
+            if (current == K) {
+                return time[current];
+            }
+            
+            // 1. 순간이동 (2 * X, 0초 후 도착)
+            if (current * 2 <= MAX && time[current * 2] == -1) {
+                queue.add(current * 2);
+                time[current * 2] = time[current]; // 0초 후 도착하므로 현재 시간과 동일
+            }
+            
+            // 2. 걷기 (X - 1, 1초 후 도착)
+            if (current - 1 >= 0 && time[current - 1] == -1) {
+                queue.add(current - 1);
+                time[current - 1] = time[current] + 1; // 1초 후 도착
+            }
+            
+            // 3. 걷기 (X + 1, 1초 후 도착)
+            if (current + 1 <= MAX && time[current + 1] == -1) {
+                queue.add(current + 1);
+                time[current + 1] = time[current] + 1; // 1초 후 도착
+            }
+        }
+        
+        return -1; // 이론적으로 도달할 수 없는 경우는 없음
+    }
+}
