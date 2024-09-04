@@ -22,6 +22,120 @@
 테스트 케이스마다
 
 입력에서 주어진 목적지 후보들 중 불가능한 경우들을 제외한 목적지들을 공백으로 분리시킨 오름차순의 정수들로 출력한다.
-
-
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static class Node implements Comparable<Node> {
+        int vertex, dist;
+
+        Node(int vertex, int dist) {
+            this.vertex = vertex;
+            this.dist = dist;
+        }
+
+        public int compareTo(Node other) {
+            return this.dist - other.dist;
+        }
+    }
+
+    static final int INF = 200000000;
+    static ArrayList<Node>[] graph;
+    static int[] dist;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int T = Integer.parseInt(br.readLine());
+
+        while (T-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken()); // 교차로의 개수
+            int m = Integer.parseInt(st.nextToken()); // 도로의 개수
+            int t = Integer.parseInt(st.nextToken()); // 목적지 후보의 개수
+
+            st = new StringTokenizer(br.readLine());
+            int s = Integer.parseInt(st.nextToken()); // 출발지
+            int g = Integer.parseInt(st.nextToken()); // g 교차로
+            int h = Integer.parseInt(st.nextToken()); // h 교차로
+
+            graph = new ArrayList[n + 1];
+            for (int i = 1; i <= n; i++) {
+                graph[i] = new ArrayList<>();
+            }
+
+            for (int i = 0; i < m; i++) {
+                st = new StringTokenizer(br.readLine());
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());
+                int d = Integer.parseInt(st.nextToken());
+                graph[a].add(new Node(b, d));
+                graph[b].add(new Node(a, d));
+            }
+
+            // 목적지 후보들
+            ArrayList<Integer> candidates = new ArrayList<>();
+            for (int i = 0; i < t; i++) {
+                candidates.add(Integer.parseInt(br.readLine()));
+            }
+
+            // 출발지 s에서 다익스트라
+            int[] distFromS = dijkstra(s, n);
+
+            // g에서 다익스트라
+            int[] distFromG = dijkstra(g, n);
+
+            // h에서 다익스트라
+            int[] distFromH = dijkstra(h, n);
+
+            ArrayList<Integer> result = new ArrayList<>();
+            for (int x : candidates) {
+                // s -> g -> h -> x 또는 s -> h -> g -> x의 경로 확인
+                int path1 = distFromS[g] + distFromG[h] + distFromH[x]; // s -> g -> h -> x
+                int path2 = distFromS[h] + distFromH[g] + distFromG[x]; // s -> h -> g -> x
+
+                // 원래 s -> x까지의 최단 거리와 비교
+                if (distFromS[x] == path1 || distFromS[x] == path2) {
+                    result.add(x);
+                }
+            }
+
+            Collections.sort(result);
+            for (int res : result) {
+                sb.append(res).append(" ");
+            }
+            sb.append("\n");
+        }
+        System.out.print(sb.toString());
+    }
+
+    // 다익스트라 알고리즘
+    public static int[] dijkstra(int start, int n) {
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        dist = new int[n + 1];
+        Arrays.fill(dist, INF);
+        dist[start] = 0;
+        pq.add(new Node(start, 0));
+
+        while (!pq.isEmpty()) {
+            Node cur = pq.poll();
+            int currentVertex = cur.vertex;
+            int currentDist = cur.dist;
+
+            if (currentDist > dist[currentVertex]) continue;
+
+            for (Node neighbor : graph[currentVertex]) {
+                int nextVertex = neighbor.vertex;
+                int nextDist = currentDist + neighbor.dist;
+
+                if (nextDist < dist[nextVertex]) {
+                    dist[nextVertex] = nextDist;
+                    pq.add(new Node(nextVertex, nextDist));
+                }
+            }
+        }
+
+        return dist;
+    }
+}
