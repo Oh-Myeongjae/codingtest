@@ -8,3 +8,53 @@ n개의 서로 다른 양의 정수 a1, a2, ..., an으로 이루어진 수열이
 출력
 문제의 조건을 만족하는 쌍의 개수를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // 입력 받기
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 첫 번째 줄: 수열의 크기 n
+        int n = Integer.parseInt(br.readLine());
+        
+        // 두 번째 줄: 수열에 포함되는 수
+        String[] input = br.readLine().split(" ");
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(input[i]);
+        }
+        
+        // 세 번째 줄: x값
+        int x = Integer.parseInt(br.readLine());
+        
+        // 배열 정렬
+        Arrays.sort(arr);
+        
+        // 투 포인터 설정
+        int left = 0;
+        int right = n - 1;
+        int count = 0;
+        
+        // 투 포인터로 두 수의 합이 x인 쌍을 찾기
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            
+            if (sum == x) {
+                count++;
+                left++;
+                right--;
+            } else if (sum < x) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        
+        // 결과 출력
+        System.out.println(count);
+    }
+}
