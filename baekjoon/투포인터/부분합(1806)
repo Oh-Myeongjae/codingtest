@@ -8,3 +8,50 @@
 출력
 첫째 줄에 구하고자 하는 최소의 길이를 출력한다. 만일 그러한 합을 만드는 것이 불가능하다면 0을 출력하면 된다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // 입력 받기
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 첫 번째 줄: N과 S 입력 받기
+        String[] firstInput = br.readLine().split(" ");
+        int N = Integer.parseInt(firstInput[0]);
+        int S = Integer.parseInt(firstInput[1]);
+
+        // 두 번째 줄: 수열 입력 받기
+        String[] secondInput = br.readLine().split(" ");
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(secondInput[i]);
+        }
+
+        // 투 포인터 알고리즘 사용
+        int left = 0, right = 0, sum = 0;
+        int minLength = Integer.MAX_VALUE;
+
+        while (true) {
+            // 현재 구간 합이 S 이상이면 길이 갱신 후 왼쪽 포인터 증가
+            if (sum >= S) {
+                minLength = Math.min(minLength, right - left);
+                sum -= arr[left++];
+            }
+            // 현재 구간 합이 S 미만이면 오른쪽 포인터 증가
+            else if (right == N) {
+                break;  // 오른쪽 포인터가 끝에 도달했으면 종료
+            } else {
+                sum += arr[right++];
+            }
+        }
+
+        // 결과 출력
+        if (minLength == Integer.MAX_VALUE) {
+            System.out.println(0);
+        } else {
+            System.out.println(minLength);
+        }
+    }
+}
