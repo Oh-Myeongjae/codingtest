@@ -15,3 +15,70 @@
 출력
 첫째 줄에 자연수 N을 연속된 소수의 합으로 나타낼 수 있는 경우의 수를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Main {
+
+    // 에라토스테네스의 체를 이용해 소수를 구하는 함수
+    public static ArrayList<Integer> getPrimes(int N) {
+        boolean[] isPrime = new boolean[N + 1];
+        ArrayList<Integer> primes = new ArrayList<>();
+
+        // 2 이상은 소수로 설정
+        for (int i = 2; i <= N; i++) {
+            isPrime[i] = true;
+        }
+
+        // 에라토스테네스의 체 알고리즘
+        for (int i = 2; i * i <= N; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= N; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        // 소수 리스트에 추가
+        for (int i = 2; i <= N; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+
+        return primes;
+    }
+
+    public static void main(String[] args) throws IOException {
+        // 입력 받기
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        // 소수 구하기
+        ArrayList<Integer> primes = getPrimes(N);
+
+        // 투 포인터 알고리즘을 이용한 연속된 소수의 합 찾기
+        int left = 0, right = 0, sum = 0, count = 0;
+
+        while (true) {
+            // 합이 N보다 크거나 같으면 왼쪽 포인터를 이동
+            if (sum >= N) {
+                if (sum == N) {
+                    count++;
+                }
+                sum -= primes.get(left++);
+            }
+            // 합이 N보다 작으면 오른쪽 포인터를 이동
+            else if (right == primes.size()) {
+                break; // 오른쪽 포인터가 끝에 도달했으면 종료
+            } else {
+                sum += primes.get(right++);
+            }
+        }
+
+        // 결과 출력
+        System.out.println(count);
+    }
+}
