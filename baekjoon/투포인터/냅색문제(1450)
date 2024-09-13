@@ -10,3 +10,80 @@ N개의 물건을 가방에 넣는 방법의 수를 구하는 프로그램을 �
 출력
 첫째 줄에 가방에 넣는 방법의 수를 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static int N, C;
+    static int[] weights;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken()); // 물건의 개수
+        C = Integer.parseInt(st.nextToken()); // 가방의 최대 무게
+
+        weights = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            weights[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // N을 반으로 나눠서 처리 (Meet-in-the-Middle)
+        int mid = N / 2;
+        int[] firstHalf = Arrays.copyOfRange(weights, 0, mid);
+        int[] secondHalf = Arrays.copyOfRange(weights, mid, N);
+
+        // 각 절반에 대해 가능한 부분집합들의 무게 합 계산
+        List<Integer> firstSums = new ArrayList<>();
+        List<Integer> secondSums = new ArrayList<>();
+
+        calculateSums(firstHalf, firstSums);
+        calculateSums(secondHalf, secondSums);
+
+        // 두 번째 리스트는 정렬해서 투 포인터를 사용하기 쉽게 한다
+        Collections.sort(secondSums);
+
+        // 두 리스트에서 가능한 조합의 수를 계산
+        long count = 0;
+        for (int sum : firstSums) {
+            count += countValidPairs(secondSums, C - sum);
+        }
+
+        // 결과 출력
+        System.out.println(count);
+    }
+
+    // 부분집합의 무게 합을 계산하는 함수
+    private static void calculateSums(int[] arr, List<Integer> sums) {
+        int n = arr.length;
+        for (int i = 0; i < (1 << n); i++) {
+            int sum = 0;
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
+                    sum += arr[j];
+                }
+            }
+            sums.add(sum);
+        }
+    }
+
+    // 투 포인터를 사용해서 C 이하의 합을 가질 수 있는 쌍의 개수를 세는 함수
+    private static int countValidPairs(List<Integer> list, int limit) {
+        int left = 0;
+        int right = list.size() - 1;
+        int count = 0;
+
+        while (left <= right) {
+            if (list.get(left) <= limit) {
+                count += (right - left + 1);
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return count;
+    }
+}
