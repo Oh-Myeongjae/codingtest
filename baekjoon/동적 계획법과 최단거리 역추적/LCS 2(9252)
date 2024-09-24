@@ -10,3 +10,57 @@ LCS(Longest Common Subsequence, 최장 공통 부분 수열)문제는 두 수열
 첫째 줄에 입력으로 주어진 두 문자열의 LCS의 길이를, 둘째 줄에 LCS를 출력한다.
 LCS가 여러 가지인 경우에는 아무거나 출력하고, LCS의 길이가 0인 경우에는 둘째 줄을 출력하지 않는다.
 */
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 첫 번째 문자열 입력
+        String str1 = br.readLine();
+        // 두 번째 문자열 입력
+        String str2 = br.readLine();
+
+        int len1 = str1.length();
+        int len2 = str2.length();
+
+        // DP 테이블 초기화
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        // DP 테이블 계산
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        // LCS의 길이 출력
+        System.out.println(dp[len1][len2]);
+
+        // LCS 문자열 역추적
+        StringBuilder lcs = new StringBuilder();
+        int i = len1, j = len2;
+
+        while (i > 0 && j > 0) {
+            if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                lcs.append(str1.charAt(i - 1)); // 공통 문자를 추가
+                i--;
+                j--;
+            } else {
+                // 더 큰 값을 가진 방향으로 이동
+                if (dp[i - 1][j] > dp[i][j - 1]) {
+                    i--;
+                } else {
+                    j--;
+                }
+            }
+        }
+
+        // LCS 문자열을 뒤집어서 출력
+        System.out.println(lcs.reverse().toString());
+    }
+}
