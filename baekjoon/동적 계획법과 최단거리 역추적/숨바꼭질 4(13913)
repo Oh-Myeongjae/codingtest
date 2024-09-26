@@ -12,3 +12,70 @@
 
 둘째 줄에 어떻게 이동해야 하는지 공백으로 구분해 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int N, K; // 수빈이의 위치 N과 동생의 위치 K
+    static int[] dist = new int[100001]; // 위치에 대한 최단 거리
+    static int[] prev = new int[100001]; // 이전 위치 추적용 배열
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+
+        // BFS 탐색을 위한 큐
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(N);
+        dist[N] = 0; // 시작 위치의 거리 초기화
+
+        // BFS 탐색
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+
+            // 수빈이가 동생을 찾은 경우
+            if (current == K) {
+                break;
+            }
+
+            // 걷기: current - 1
+            if (current - 1 >= 0 && dist[current - 1] == 0) {
+                dist[current - 1] = dist[current] + 1;
+                prev[current - 1] = current; // 경로 추적
+                queue.offer(current - 1);
+            }
+
+            // 걷기: current + 1
+            if (current + 1 <= 100000 && dist[current + 1] == 0) {
+                dist[current + 1] = dist[current] + 1;
+                prev[current + 1] = current; // 경로 추적
+                queue.offer(current + 1);
+            }
+
+            // 순간이동: current * 2
+            if (current * 2 <= 100000 && dist[current * 2] == 0) {
+                dist[current * 2] = dist[current] + 1;
+                prev[current * 2] = current; // 경로 추적
+                queue.offer(current * 2);
+            }
+        }
+
+        // 가장 빠른 시간 출력
+        System.out.println(dist[K]);
+
+        // 경로 역추적
+        List<Integer> path = new ArrayList<>();
+        for (int i = K; i != N; i = prev[i]) {
+            path.add(i);
+        }
+        path.add(N);
+        Collections.reverse(path); // 역순으로 저장했으므로 뒤집기
+
+        // 경로 출력
+        for (int position : path) {
+            System.out.print(position + " ");
+        }
+    }
+}
