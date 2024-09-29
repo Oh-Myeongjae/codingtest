@@ -23,3 +23,81 @@ n의 자릿수로 0 이 포함된 경우에 주의해야 한다. 예를 들어�
 출력
 A에서 B로 변환하기 위해 필요한 최소한의 명령어 나열을 출력한다. 가능한 명령어 나열이 여러가지면, 아무거나 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static class Register {
+        int value;
+        String command;
+
+        Register(int value, String command) {
+            this.value = value;
+            this.command = command;
+        }
+    }
+
+    static final int MAX = 10000;
+    static boolean[] visited;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine()); // 테스트 케이스 개수
+
+        for (int t = 0; t < T; t++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+
+            // BFS로 최단 경로 탐색
+            String result = bfs(A, B);
+            System.out.println(result);
+        }
+    }
+
+    static String bfs(int A, int B) {
+        visited = new boolean[MAX];
+        Queue<Register> queue = new LinkedList<>();
+        queue.offer(new Register(A, ""));
+        visited[A] = true;
+
+        while (!queue.isEmpty()) {
+            Register current = queue.poll();
+
+            // 목표값에 도달하면 명령어 출력
+            if (current.value == B) {
+                return current.command;
+            }
+
+            // D 명령어
+            int D = (current.value * 2) % MAX;
+            if (!visited[D]) {
+                visited[D] = true;
+                queue.offer(new Register(D, current.command + "D"));
+            }
+
+            // S 명령어
+            int S = current.value == 0 ? 9999 : current.value - 1;
+            if (!visited[S]) {
+                visited[S] = true;
+                queue.offer(new Register(S, current.command + "S"));
+            }
+
+            // L 명령어
+            int L = (current.value % 1000) * 10 + (current.value / 1000);
+            if (!visited[L]) {
+                visited[L] = true;
+                queue.offer(new Register(L, current.command + "L"));
+            }
+
+            // R 명령어
+            int R = (current.value % 10) * 1000 + (current.value / 10);
+            if (!visited[R]) {
+                visited[R] = true;
+                queue.offer(new Register(R, current.command + "R"));
+            }
+        }
+
+        return "";
+    }
+}
