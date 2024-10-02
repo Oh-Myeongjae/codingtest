@@ -12,3 +12,111 @@ n(1 ≤ n ≤ 100)개의 도시가 있다. 그리고 한 도시에서 출발하�
 
 그 다음에는 n×n개의 줄을 출력해야 한다. i×n+j번째 줄에는 도시 i에서 도시 j로 가는 최소 비용에 포함되어 있는 도시의 개수 k를 출력한다. 그 다음, 도시 i에서 도시 j로 가는 경로를 공백으로 구분해 출력한다. 이때, 도시 i와 도시 j도 출력해야 한다. 만약, i에서 j로 갈 수 없는 경우에는 0을 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final int INF = 100000000; // 무한대를 표현할 큰 값
+    static int[][] dist;
+    static int[][] next;
+    static int n, m;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        m = Integer.parseInt(br.readLine());
+
+        dist = new int[n + 1][n + 1];
+        next = new int[n + 1][n + 1];
+
+        // 거리 배열을 INF로 초기화하고, next 배열을 초기화
+        for (int i = 1; i <= n; i++) {
+            Arrays.fill(dist[i], INF);
+            dist[i][i] = 0; // 자기 자신으로 가는 거리는 0
+            for (int j = 1; j <= n; j++) {
+                next[i][j] = 0; // 초기에는 경로가 없다고 설정
+            }
+        }
+
+        // 버스 정보 입력
+        for (int i = 0; i < m; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            if (cost < dist[a][b]) {  // 최소 비용만 저장
+                dist[a][b] = cost;
+                next[a][b] = b;  // 경로 초기화
+            }
+        }
+
+        // 플로이드–워셜 알고리즘 수행
+        floydWarshall();
+
+        // 최소 비용 출력
+        printDistances();
+
+        // 경로 출력
+        printPaths();
+    }
+
+    static void floydWarshall() {
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        next[i][j] = next[i][k];  // 경로 갱신 (중간 경로로 설정)
+                    }
+                }
+            }
+        }
+    }
+
+    static void printDistances() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (dist[i][j] == INF) {
+                    sb.append("0 ");
+                } else {
+                    sb.append(dist[i][j]).append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+        System.out.print(sb);
+    }
+
+    static void printPaths() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (dist[i][j] == INF) {
+                    sb.append("0\n");
+                } else {
+                    List<Integer> path = getPath(i, j);
+                    sb.append(path.size()).append(" ");
+                    for (int city : path) {
+                        sb.append(city).append(" ");
+                    }
+                    sb.append("\n");
+                }
+            }
+        }
+        System.out.print(sb);
+    }
+
+    static List<Integer> getPath(int start, int end) {
+        List<Integer> path = new ArrayList<>();
+        if (next[start][end] == 0) {
+            return path; // 갈 수 없는 경로
+        }
+        path.add(start);
+        while (start != end) {
+            start = next[start][end];
+            path.add(start);
+        }
+        return path;
+    }
+}
