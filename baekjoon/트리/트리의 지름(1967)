@@ -31,12 +31,18 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine()); // 노드의 개수
 
+        // N이 1일 경우 예외 처리: 트리의 지름은 0
+        if (n == 1) {
+            System.out.println(0);
+            return;
+        }
+
         tree = new ArrayList[n + 1]; // 1-based indexing
         visited = new boolean[n + 1];
 
         // 트리 초기화
         for (int i = 1; i <= n; i++) {
-            tree[i] = new ArrayList<>();
+            tree[i] = new ArrayList<>();  // 반드시 각 노드에 대해 ArrayList 초기화
         }
 
         // 간선 정보 입력 받기
@@ -45,6 +51,7 @@ public class Main {
             int parent = Integer.parseInt(st.nextToken());
             int child = Integer.parseInt(st.nextToken());
             int weight = Integer.parseInt(st.nextToken());
+
             tree[parent].add(new Node(child, weight));
             tree[child].add(new Node(parent, weight)); // 무방향 그래프이므로 양방향 추가
         }
@@ -89,3 +96,4 @@ public class Main {
         }
     }
 }
+
