@@ -17,3 +17,53 @@
 출력
 입력으로 주어진 이진 검색 트리를 후위 순회한 결과를 한 줄에 하나씩 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static class Node {
+        int value;
+        Node left, right;
+
+        Node(int value) {
+            this.value = value;
+        }
+    }
+
+    static Node insert(Node node, int value) {
+        if (node == null) {
+            return new Node(value); // 노드가 없으면 새로 삽입
+        }
+        if (value < node.value) {
+            node.left = insert(node.left, value); // 왼쪽 서브트리에 삽입
+        } else {
+            node.right = insert(node.right, value); // 오른쪽 서브트리에 삽입
+        }
+        return node;
+    }
+
+    static void postOrder(Node node, StringBuilder sb) {
+        if (node == null) return;
+        postOrder(node.left, sb);   // 왼쪽 서브트리 방문
+        postOrder(node.right, sb);  // 오른쪽 서브트리 방문
+        sb.append(node.value).append("\n"); // 루트 방문 (후위 순회)
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+        Node root = null;
+
+        // 입력으로 주어진 전위 순회를 통해 트리 구성
+        while ((input = br.readLine()) != null && !input.isEmpty()) {
+            int value = Integer.parseInt(input);
+            root = insert(root, value); // 트리에 값을 삽입
+        }
+
+        // 후위 순회 결과 출력
+        StringBuilder sb = new StringBuilder();
+        postOrder(root, sb); // 후위 순회
+        System.out.print(sb.toString()); // 출력
+    }
+}
+
