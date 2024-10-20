@@ -12,3 +12,82 @@
 출력
 입력으로 주어진 그래프에 트리가 없다면 "No trees."를, 한 개라면 "There is one tree."를, T개(T > 1)라면 "A forest of T trees."를 테스트 케이스 번호와 함께 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int[] parent; // 부모를 저장하는 배열
+    static boolean[] visited; // 방문 여부를 저장하는 배열
+    static ArrayList<Integer>[] adjList; // 그래프의 인접 리스트
+    static boolean isTree; // 사이클이 있는지 여부
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int caseNum = 1; // 테스트 케이스 번호
+        
+        while (true) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken()); // 정점의 개수
+            int m = Integer.parseInt(st.nextToken()); // 간선의 개수
+            
+            if (n == 0 && m == 0) break; // 종료 조건
+            
+            // 그래프 초기화
+            adjList = new ArrayList[n + 1];
+            visited = new boolean[n + 1];
+            for (int i = 1; i <= n; i++) {
+                adjList[i] = new ArrayList<>();
+            }
+            
+            // 간선 정보 입력
+            for (int i = 0; i < m; i++) {
+                st = new StringTokenizer(br.readLine());
+                int u = Integer.parseInt(st.nextToken());
+                int v = Integer.parseInt(st.nextToken());
+                adjList[u].add(v);
+                adjList[v].add(u);
+            }
+            
+            int treeCount = 0; // 트리의 개수
+            
+            // DFS를 통해 각 연결 요소가 트리인지 확인
+            for (int i = 1; i <= n; i++) {
+                if (!visited[i]) {
+                    isTree = true; // 새로운 연결 요소는 트리라고 가정
+                    dfs(i, -1); // DFS 시작 (부모는 -1)
+                    if (isTree) {
+                        treeCount++; // 트리인 경우 카운트 증가
+                    }
+                }
+            }
+            
+            // 결과 출력
+            sb.append("Case ").append(caseNum).append(": ");
+            if (treeCount == 0) {
+                sb.append("No trees.\n");
+            } else if (treeCount == 1) {
+                sb.append("There is one tree.\n");
+            } else {
+                sb.append("A forest of ").append(treeCount).append(" trees.\n");
+            }
+            caseNum++;
+        }
+        
+        System.out.print(sb.toString());
+    }
+    
+    // DFS를 사용하여 연결 요소 탐색 및 트리 여부 확인
+    static void dfs(int node, int parent) {
+        visited[node] = true;
+        
+        for (int neighbor : adjList[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, node); // 자식 노드 방문
+            } else if (neighbor != parent) {
+                // 이미 방문한 노드가 부모가 아니라면 사이클이 존재
+                isTree = false;
+            }
+        }
+    }
+}
