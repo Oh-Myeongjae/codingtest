@@ -14,3 +14,60 @@
 출력
 영상을 압축한 결과를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+
+    static char[][] video;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 입력 받기
+        int N = Integer.parseInt(br.readLine());
+        video = new char[N][N];
+
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            for (int j = 0; j < N; j++) {
+                video[i][j] = line.charAt(j);
+            }
+        }
+
+        // 쿼드 트리 압축 결과 출력
+        System.out.println(compress(0, 0, N));
+    }
+
+    // 압축하는 함수
+    public static String compress(int x, int y, int size) {
+        // 모든 값이 같은지 확인
+        if (checkSame(x, y, size)) {
+            return String.valueOf(video[x][y]);
+        }
+
+        // 4분할
+        int newSize = size / 2;
+        String topLeft = compress(x, y, newSize);
+        String topRight = compress(x, y + newSize, newSize);
+        String bottomLeft = compress(x + newSize, y, newSize);
+        String bottomRight = compress(x + newSize, y + newSize, newSize);
+
+        // 압축 결과를 괄호로 묶어서 반환
+        return "(" + topLeft + topRight + bottomLeft + bottomRight + ")";
+    }
+
+    // 해당 영역이 모두 같은 값인지 확인하는 함수
+    public static boolean checkSame(int x, int y, int size) {
+        char first = video[x][y];
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                if (video[i][j] != first) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
