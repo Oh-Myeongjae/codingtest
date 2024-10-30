@@ -8,3 +8,39 @@
 출력
 첫째 줄에 A를 B번 곱한 수를 C로 나눈 나머지를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        // 입력 받기
+        long A = Long.parseLong(st.nextToken());
+        long B = Long.parseLong(st.nextToken());
+        long C = Long.parseLong(st.nextToken());
+
+        // 분할 정복을 이용한 모듈러 거듭제곱 결과 출력
+        System.out.println(modularExponentiation(A, B, C));
+    }
+
+    // 분할 정복을 이용한 모듈러 거듭제곱 함수
+    public static long modularExponentiation(long base, long exponent, long mod) {
+        if (exponent == 0) {
+            return 1;
+        }
+
+        long half = modularExponentiation(base, exponent / 2, mod);
+        long result = (half * half) % mod;
+
+        if (exponent % 2 != 0) {
+            result = (result * base) % mod;
+        }
+
+        return result;
+    }
+}
