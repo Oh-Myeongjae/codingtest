@@ -17,3 +17,55 @@
  
 \(\binom{N}{K}\)를 1,000,000,007로 나눈 나머지를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static final int MOD = 1_000_000_007;
+    static long[] factorial;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        // 팩토리얼 미리 계산
+        factorial = new long[N + 1];
+        factorial[0] = 1;
+        for (int i = 1; i <= N; i++) {
+            factorial[i] = factorial[i - 1] * i % MOD;
+        }
+
+        // 이항 계수 계산
+        long result = factorial[N] * modInverse(factorial[K], MOD) % MOD;
+        result = result * modInverse(factorial[N - K], MOD) % MOD;
+        
+        System.out.println(result);
+    }
+
+    // 분할 정복을 이용한 모듈러 역원 계산
+    public static long modInverse(long base, int mod) {
+        return modularExponentiation(base, mod - 2, mod);
+    }
+
+    // 분할 정복을 이용한 거듭제곱
+    public static long modularExponentiation(long base, long exponent, int mod) {
+        if (exponent == 0) {
+            return 1;
+        }
+        
+        long half = modularExponentiation(base, exponent / 2, mod);
+        long result = half * half % mod;
+        
+        if (exponent % 2 != 0) {
+            result = result * base % mod;
+        }
+        
+        return result;
+    }
+}
