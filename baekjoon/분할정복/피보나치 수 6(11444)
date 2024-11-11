@@ -16,3 +16,51 @@ n이 주어졌을 때, n번째 피보나치 수를 구하는 프로그램을 작
 출력
 첫째 줄에 n번째 피보나치 수를 1,000,000,007으로 나눈 나머지를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    static final int MOD = 1_000_000_007;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        long n = Long.parseLong(br.readLine());
+
+        if (n == 0) {
+            System.out.println(0);
+        } else {
+            int[][] result = matrixPower(new int[][]{{1, 1}, {1, 0}}, n - 1);
+            System.out.println(result[0][0]); // F_n % MOD
+        }
+    }
+
+    // 행렬의 거듭제곱 (분할 정복)
+    public static int[][] matrixPower(int[][] matrix, long exp) {
+        if (exp == 1) {
+            return matrix;
+        }
+
+        int[][] half = matrixPower(matrix, exp / 2);
+        half = matrixMultiply(half, half);
+
+        if (exp % 2 != 0) {
+            half = matrixMultiply(half, new int[][]{{1, 1}, {1, 0}});
+        }
+
+        return half;
+    }
+
+    // 행렬 곱셈 (모듈러 MOD)
+    public static int[][] matrixMultiply(int[][] a, int[][] b) {
+        int[][] result = new int[2][2];
+
+        result[0][0] = (int) (((long) a[0][0] * b[0][0] + (long) a[0][1] * b[1][0]) % MOD);
+        result[0][1] = (int) (((long) a[0][0] * b[0][1] + (long) a[0][1] * b[1][1]) % MOD);
+        result[1][0] = (int) (((long) a[1][0] * b[0][0] + (long) a[1][1] * b[1][0]) % MOD);
+        result[1][1] = (int) (((long) a[1][0] * b[0][1] + (long) a[1][1] * b[1][1]) % MOD);
+
+        return result;
+    }
+}
