@@ -14,3 +14,47 @@ KOI 부설 과학연구소에서는 많은 종류의 산성 용액과 알칼리�
 출력
 첫째 줄에 특성값이 0에 가장 가까운 용액을 만들어내는 두 용액의 특성값을 출력한다. 출력해야 하는 두 용액은 특성값의 오름차순으로 출력한다. 특성값이 0에 가장 가까운 용액을 만들어내는 경우가 두 개 이상일 경우에는 그 중 아무것이나 하나를 출력한다.
 */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int N = Integer.parseInt(br.readLine());
+        int[] solutions = new int[N];
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            solutions[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        Arrays.sort(solutions);
+
+        int left = 0;
+        int right = N - 1;
+        int closestSum = Integer.MAX_VALUE;
+        int resultLeft = 0, resultRight = 0;
+
+        while (left < right) {
+            int sum = solutions[left] + solutions[right];
+
+            if (Math.abs(sum) < Math.abs(closestSum)) {
+                closestSum = sum;
+                resultLeft = solutions[left];
+                resultRight = solutions[right];
+            }
+
+            if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        System.out.println(resultLeft + " " + resultRight);
+    }
+}
