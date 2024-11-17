@@ -18,8 +18,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         
-        int N = Integer.parseInt(st.nextToken()); // 물건의 개수
-        int C = Integer.parseInt(st.nextToken()); // 최대 무게
+        int N = Integer.parseInt(st.nextToken());
+        long C = Long.parseLong(st.nextToken());
         
         int[] weights = new int[N];
         st = new StringTokenizer(br.readLine());
@@ -27,51 +27,39 @@ public class Main {
             weights[i] = Integer.parseInt(st.nextToken());
         }
         
-        // 두 개의 그룹으로 나누어 처리
-        List<Integer> leftSums = new ArrayList<>();
-        List<Integer> rightSums = new ArrayList<>();
+        if (C == 0) {
+            System.out.println(1);
+            return;
+        }
         
-        // 왼쪽 절반의 합 계산
+        List<Long> leftSums = new ArrayList<>();
+        List<Long> rightSums = new ArrayList<>();
+        
         calculateSums(weights, 0, N / 2, 0, leftSums);
-        // 오른쪽 절반의 합 계산
         calculateSums(weights, N / 2, N, 0, rightSums);
         
-        // 오른쪽 합을 정렬
         Collections.sort(rightSums);
         
         long count = 0;
-        
-        // 왼쪽 합에 대해 가능한 오른쪽 합 탐색
-        for (int sum : leftSums) {
-            if (sum > C) continue; // 이미 무게를 초과한 경우
-            int remaining = C - sum;
-            count += upperBound(rightSums, remaining); // 가능한 경우의 수 추가
-        }
-
-        // 각 물건이 단독으로 가방에 들어갈 수 있는 경우 추가
-        for (int weight : weights) {
-            if (weight == C) {
-                count++;
+        for (long sum : leftSums) {
+            if (sum <= C) {
+                count += upperBound(rightSums, C - sum);
             }
         }
-
+        
         System.out.println(count);
     }
     
-    // 부분 집합의 합 계산 함수
-    private static void calculateSums(int[] weights, int start, int end, int currentSum, List<Integer> sums) {
+    private static void calculateSums(int[] weights, int start, int end, long currentSum, List<Long> sums) {
         if (start == end) {
             sums.add(currentSum);
             return;
         }
-        // 현재 물건을 포함하지 않는 경우
         calculateSums(weights, start + 1, end, currentSum, sums);
-        // 현재 물건을 포함하는 경우
         calculateSums(weights, start + 1, end, currentSum + weights[start], sums);
     }
     
-    // upper bound 찾기 (남은 무게 이하의 합의 개수 계산)
-    private static int upperBound(List<Integer> list, int value) {
+    private static int upperBound(List<Long> list, long value) {
         int low = 0, high = list.size();
         while (low < high) {
             int mid = (low + high) / 2;
@@ -84,4 +72,3 @@ public class Main {
         return low;
     }
 }
-
