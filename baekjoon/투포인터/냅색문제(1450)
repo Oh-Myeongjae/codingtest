@@ -47,7 +47,14 @@ public class Main {
             int remaining = C - sum;
             count += upperBound(rightSums, remaining); // 가능한 경우의 수 추가
         }
-        
+
+        // 각 물건이 단독으로 가방에 들어갈 수 있는 경우 추가
+        for (int weight : weights) {
+            if (weight == C) {
+                count++;
+            }
+        }
+
         System.out.println(count);
     }
     
@@ -77,3 +84,4 @@ public class Main {
         return low;
     }
 }
+
