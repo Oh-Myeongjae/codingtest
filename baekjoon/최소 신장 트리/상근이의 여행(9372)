@@ -21,3 +21,30 @@
 
 상근이가 모든 국가를 여행하기 위해 타야 하는 비행기 종류의 최소 개수를 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        
+        int T = Integer.parseInt(br.readLine()); // 테스트 케이스 수
+        
+        while (T-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken()); // 국가의 수
+            int M = Integer.parseInt(st.nextToken()); // 비행기의 종류 수
+            
+            // 간선 정보는 입력만 받고, 최소 비행기 수는 항상 N - 1이므로 저장하지 않아도 됨.
+            for (int i = 0; i < M; i++) {
+                br.readLine(); // 간선 정보는 읽기만 함
+            }
+            
+            // 연결 그래프에서 최소 비행기 수는 항상 N - 1
+            sb.append(N - 1).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+}
