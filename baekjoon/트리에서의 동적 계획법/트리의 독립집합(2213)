@@ -10,3 +10,86 @@
 출력
 첫째 줄에 최대 독립집합의 크기를 출력한다. 둘째 줄에는 최대 독립집합에 속하는 정점을 오름차순으로 출력한다. 최대 독립 집합이 하나 이상일 경우에는 하나만 출력하면 된다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int[] weights;
+    static List<Integer>[] tree;
+    static int[][] dp;
+    static boolean[] visited;
+    static List<Integer> resultNodes;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+
+        weights = new int[n + 1];
+        tree = new ArrayList[n + 1];
+        dp = new int[n + 1][2]; // dp[i][0]: i를 포함하지 않는 최대 독립 집합, dp[i][1]: i를 포함하는 최대 독립 집합
+        visited = new boolean[n + 1];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= n; i++) {
+            weights[i] = Integer.parseInt(st.nextToken());
+            tree[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            tree[u].add(v);
+            tree[v].add(u);
+        }
+
+        // Calculate DP values
+        dfs(1);
+
+        // Determine the nodes in the maximum independent set
+        resultNodes = new ArrayList<>();
+        visited = new boolean[n + 1];
+        findNodes(1, dp[1][1] > dp[1][0]);
+
+        // Print results
+        System.out.println(Math.max(dp[1][0], dp[1][1]));
+        Collections.sort(resultNodes);
+        for (int node : resultNodes) {
+            System.out.print(node + " ");
+        }
+    }
+
+    // DFS to calculate DP values
+    private static void dfs(int node) {
+        visited[node] = true;
+        dp[node][0] = 0; // Node is not included
+        dp[node][1] = weights[node]; // Node is included
+
+        for (int neighbor : tree[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor);
+                dp[node][0] += Math.max(dp[neighbor][0], dp[neighbor][1]);
+                dp[node][1] += dp[neighbor][0];
+            }
+        }
+    }
+
+    // Find nodes in the maximum independent set
+    private static void findNodes(int node, boolean include) {
+        visited[node] = true;
+        if (include) {
+            resultNodes.add(node);
+        }
+
+        for (int neighbor : tree[node]) {
+            if (!visited[neighbor]) {
+                if (include) {
+                    findNodes(neighbor, false);
+                } else {
+                    findNodes(neighbor, dp[neighbor][1] > dp[neighbor][0]);
+                }
+            }
+        }
+    }
+}
+
