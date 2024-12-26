@@ -24,3 +24,53 @@
 출력
 주어진 친구 관계 그래프에서 아이디어를 전파하는데 필요한 얼리 아답터의 최소 수를 하나의 정수로 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static List<Integer>[] tree;
+    static int[][] dp;
+    static boolean[] visited;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        tree = new ArrayList[N + 1];
+        dp = new int[N + 1][2]; // dp[i][0]: i가 얼리 아답터가 아닐 때 최소 얼리 아답터 수, dp[i][1]: i가 얼리 아답터일 때 최소 얼리 아답터 수
+        visited = new boolean[N + 1];
+
+        for (int i = 1; i <= N; i++) {
+            tree[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < N - 1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            tree[u].add(v);
+            tree[v].add(u);
+        }
+
+        // Calculate the minimum number of early adopters
+        dfs(1);
+
+        // The result is the minimum of including or not including the root node as an early adopter
+        System.out.println(Math.min(dp[1][0], dp[1][1]));
+    }
+
+    // DFS to calculate DP values
+    private static void dfs(int node) {
+        visited[node] = true;
+        dp[node][0] = 0; // Node is not an early adopter
+        dp[node][1] = 1; // Node is an early adopter
+
+        for (int neighbor : tree[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor);
+                dp[node][0] += dp[neighbor][1]; // If current node is not an early adopter, all children must be early adopters
+                dp[node][1] += Math.min(dp[neighbor][0], dp[neighbor][1]); // If current node is an early adopter, children can be either
+            }
+        }
+    }
+}
