@@ -29,3 +29,101 @@ XXXXXXX...XXXX... ..XXXX.....XX.... ....X............
 출력
 첫째 줄에 문제에서 주어진 걸리는 날을 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int R, C;
+    static char[][] lake;
+    static boolean[][] visited;
+    static Queue<int[]> waterQueue = new LinkedList<>();
+    static Queue<int[]> nextWaterQueue = new LinkedList<>();
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+
+    static boolean[][] swanVisited;
+    static Queue<int[]> swanQueue = new LinkedList<>();
+    static int[] swanPos;
+
+    // BFS for water melting
+    static void melt() {
+        while (!waterQueue.isEmpty()) {
+            int[] pos = waterQueue.poll();
+            for (int d = 0; d < 4; d++) {
+                int nx = pos[0] + dx[d];
+                int ny = pos[1] + dy[d];
+                if (nx >= 0 && nx < R && ny >= 0 && ny < C && lake[nx][ny] == 'X') {
+                    lake[nx][ny] = '.';  // Melt ice
+                    nextWaterQueue.add(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+
+    // BFS to check if swans can meet
+    static boolean canSwansMeet() {
+        Queue<int[]> nextSwanQueue = new LinkedList<>();
+        while (!swanQueue.isEmpty()) {
+            int[] pos = swanQueue.poll();
+            for (int d = 0; d < 4; d++) {
+                int nx = pos[0] + dx[d];
+                int ny = pos[1] + dy[d];
+                if (nx >= 0 && nx < R && ny >= 0 && ny < C && !swanVisited[nx][ny]) {
+                    swanVisited[nx][ny] = true;
+                    if (lake[nx][ny] == 'L') {
+                        return true;
+                    }
+                    if (lake[nx][ny] == '.') {
+                        swanQueue.add(new int[]{nx, ny});
+                    } else {
+                        nextSwanQueue.add(new int[]{nx, ny});
+                    }
+                }
+            }
+        }
+        swanQueue = nextSwanQueue;
+        return false;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        lake = new char[R][C];
+        visited = new boolean[R][C];
+        swanVisited = new boolean[R][C];
+
+        int swanCount = 0;
+        for (int i = 0; i < R; i++) {
+            lake[i] = br.readLine().toCharArray();
+            for (int j = 0; j < C; j++) {
+                if (lake[i][j] != 'X') {
+                    waterQueue.add(new int[]{i, j});
+                    visited[i][j] = true;
+                }
+                if (lake[i][j] == 'L') {
+                    if (swanCount == 0) {
+                        swanQueue.add(new int[]{i, j});
+                        swanVisited[i][j] = true;
+                        swanPos = new int[]{i, j};
+                        swanCount++;
+                    }
+                }
+            }
+        }
+
+        int days = 0;
+        while (true) {
+            if (canSwansMeet()) {
+                System.out.println(days);
+                break;
+            }
+            melt();
+            waterQueue = nextWaterQueue;
+            nextWaterQueue = new LinkedList<>();
+            days++;
+        }
+    }
+}
