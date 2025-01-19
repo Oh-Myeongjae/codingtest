@@ -26,21 +26,20 @@
 출력
 입력 형식과 같은 형식으로 미네랄 모양을 출력한다.
 */
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
     static int R, C;
     static char[][] cave;
-    static int[] dx = {1, -1, 0, 0};
-    static int[] dy = {0, 0, 1, -1};
+    static boolean[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         R = Integer.parseInt(st.nextToken());
         C = Integer.parseInt(st.nextToken());
         cave = new char[R][C];
@@ -50,122 +49,91 @@ public class Main {
         }
 
         int N = Integer.parseInt(br.readLine());
-        int[] heights = new int[N];
-
         st = new StringTokenizer(br.readLine());
+        int[] throwsHeight = new int[N];
+
         for (int i = 0; i < N; i++) {
-            heights[i] = Integer.parseInt(st.nextToken());
+            throwsHeight[i] = Integer.parseInt(st.nextToken());
         }
 
         for (int i = 0; i < N; i++) {
-            throwStick(heights[i], i % 2 == 0);
-            applyGravity();
+            throwStick(throwsHeight[i], i % 2 == 0);
+            dropCluster();
         }
 
         printCave();
     }
 
-    static void throwStick(int height, boolean leftToRight) {
+    static void throwStick(int height, boolean fromLeft) {
         int row = R - height;
-        if (leftToRight) {
+        if (fromLeft) {
             for (int col = 0; col < C; col++) {
                 if (cave[row][col] == 'x') {
                     cave[row][col] = '.';
-                    break;
+                    return;
                 }
             }
         } else {
             for (int col = C - 1; col >= 0; col--) {
                 if (cave[row][col] == 'x') {
                     cave[row][col] = '.';
-                    break;
+                    return;
                 }
             }
         }
     }
 
-    static void applyGravity() {
-        boolean[][] visited = new boolean[R][C];
-
-        // Mark all minerals connected to the bottom
+    static void dropCluster() {
+        visited = new boolean[R][C];
         for (int col = 0; col < C; col++) {
-            if (cave[R-1][col] == 'x' && !visited[R-1][col]) {
-                bfs(R-1, col, visited);
+            if (cave[R - 1][col] == 'x' && !visited[R - 1][col]) {
+                dfs(R - 1, col);
             }
         }
 
-        // Collect floating minerals
         List<int[]> floatingCluster = new ArrayList<>();
         for (int row = 0; row < R; row++) {
             for (int col = 0; col < C; col++) {
                 if (cave[row][col] == 'x' && !visited[row][col]) {
                     floatingCluster.add(new int[]{row, col});
+                    cave[row][col] = '.';
                 }
             }
         }
 
-        if (!floatingCluster.isEmpty()) {
-            int dropDistance = calculateDropDistance(floatingCluster, visited);
-            dropCluster(floatingCluster, dropDistance);
+        if (floatingCluster.isEmpty()) return;
+
+        int dropDistance = Integer.MAX_VALUE;
+        for (int[] pos : floatingCluster) {
+            int x = pos[0], y = pos[1];
+            int distance = 0;
+            while (x + distance + 1 < R && cave[x + distance + 1][y] == '.') {
+                distance++;
+            }
+            dropDistance = Math.min(dropDistance, distance);
+        }
+
+        for (int[] pos : floatingCluster) {
+            cave[pos[0] + dropDistance][pos[1]] = 'x';
         }
     }
 
-    static void bfs(int startX, int startY, boolean[][] visited) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{startX, startY});
-        visited[startX][startY] = true;
-
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int x = current[0], y = current[1];
-
-            for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
-
-                if (nx >= 0 && nx < R && ny >= 0 && ny < C && cave[nx][ny] == 'x' && !visited[nx][ny]) {
-                    queue.offer(new int[]{nx, ny});
-                    visited[nx][ny] = true;
-                }
+    static void dfs(int x, int y) {
+        visited[x][y] = true;
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (nx >= 0 && ny >= 0 && nx < R && ny < C && cave[nx][ny] == 'x' && !visited[nx][ny]) {
+                dfs(nx, ny);
             }
-        }
-    }
-
-    static int calculateDropDistance(List<int[]> cluster, boolean[][] visited) {
-        int minDrop = R;
-
-        for (int[] mineral : cluster) {
-            int row = mineral[0];
-            int col = mineral[1];
-            int drop = 0;
-
-            while (row + drop + 1 < R && cave[row + drop + 1][col] == '.') {
-                drop++;
-            }
-
-            if (row + drop + 1 < R && cave[row + drop + 1][col] == 'x' && !visited[row + drop + 1][col]) {
-                drop = 0;
-            }
-
-            minDrop = Math.min(minDrop, drop);
-        }
-
-        return minDrop;
-    }
-
-    static void dropCluster(List<int[]> cluster, int distance) {
-        for (int[] mineral : cluster) {
-            cave[mineral[0]][mineral[1]] = '.';
-        }
-
-        for (int[] mineral : cluster) {
-            cave[mineral[0] + distance][mineral[1]] = 'x';
         }
     }
 
     static void printCave() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < R; i++) {
-            System.out.println(cave[i]);
+            sb.append(cave[i]).append("\n");
         }
+        System.out.print(sb);
     }
 }
