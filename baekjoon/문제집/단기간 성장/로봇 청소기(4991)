@@ -26,3 +26,121 @@ o: 로봇 청소기의 시작 위치
 출력
 각각의 테스트 케이스마다 더러운 칸을 모두 깨끗한 칸으로 바꾸는 이동 횟수의 최솟값을 한 줄에 하나씩 출력한다. 만약, 방문할 수 없는 더러운 칸이 존재하는 경우에는 -1을 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int w, h;
+    static char[][] map;
+    static List<int[]> dirtyPositions;
+    static int[][] dist;
+    static int[][] dp;
+    static int dirtyCount;
+
+    // 방향 배열
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        while (true) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            w = Integer.parseInt(st.nextToken());
+            h = Integer.parseInt(st.nextToken());
+            if (w == 0 && h == 0) break;
+
+            map = new char[h][w];
+            dirtyPositions = new ArrayList<>();
+
+            int startX = -1, startY = -1;
+
+            for (int i = 0; i < h; i++) {
+                String line = br.readLine();
+                for (int j = 0; j < w; j++) {
+                    map[i][j] = line.charAt(j);
+                    if (map[i][j] == 'o') {
+                        startX = i;
+                        startY = j;
+                    } else if (map[i][j] == '*') {
+                        dirtyPositions.add(new int[]{i, j});
+                    }
+                }
+            }
+
+            dirtyPositions.add(0, new int[]{startX, startY}); // 로봇 시작점을 첫 번째로 추가
+            dirtyCount = dirtyPositions.size();
+
+            // 더러운 칸 사이 거리 계산
+            dist = new int[dirtyCount][dirtyCount];
+            if (!calculateDistances()) {
+                sb.append("-1\n"); // 연결되지 않은 칸이 있다면 -1 출력
+                continue;
+            }
+
+            // TSP를 이용해 최소 이동 거리 계산
+            dp = new int[dirtyCount][1 << dirtyCount];
+            for (int i = 0; i < dirtyCount; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+
+            sb.append(tsp(0, 1)).append("\n");
+        }
+
+        System.out.print(sb);
+    }
+
+    // 더러운 칸들 간의 최단 거리 계산
+    static boolean calculateDistances() {
+        for (int i = 0; i < dirtyCount; i++) {
+            int[] start = dirtyPositions.get(i);
+            int[][] visited = new int[h][w];
+            for (int[] row : visited) Arrays.fill(row, -1);
+
+            Queue<int[]> queue = new LinkedList<>();
+            queue.offer(new int[]{start[0], start[1]});
+            visited[start[0]][start[1]] = 0;
+
+            while (!queue.isEmpty()) {
+                int[] curr = queue.poll();
+                int x = curr[0];
+                int y = curr[1];
+
+                for (int d = 0; d < 4; d++) {
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
+
+                    if (nx >= 0 && ny >= 0 && nx < h && ny < w && map[nx][ny] != 'x' && visited[nx][ny] == -1) {
+                        visited[nx][ny] = visited[x][y] + 1;
+                        queue.offer(new int[]{nx, ny});
+                    }
+                }
+            }
+
+            // 다른 더러운 칸까지의 거리 저장
+            for (int j = 0; j < dirtyCount; j++) {
+                int[] end = dirtyPositions.get(j);
+                dist[i][j] = visited[end[0]][end[1]];
+                if (dist[i][j] == -1) return false; // 도달할 수 없는 칸이 있다면 false
+            }
+        }
+        return true;
+    }
+
+    // Traveling Salesman Problem (TSP) 최소 거리 계산
+    static int tsp(int current, int visited) {
+        if (visited == (1 << dirtyCount) - 1) return 0; // 모든 칸을 방문한 경우
+
+        if (dp[current][visited] != -1) return dp[current][visited];
+
+        int minDist = Integer.MAX_VALUE;
+        for (int next = 0; next < dirtyCount; next++) {
+            if ((visited & (1 << next)) == 0) { // 방문하지 않은 칸만
+                minDist = Math.min(minDist, dist[current][next] + tsp(next, visited | (1 << next)));
+            }
+        }
+
+        return dp[current][visited] = minDist;
+    }
+}
