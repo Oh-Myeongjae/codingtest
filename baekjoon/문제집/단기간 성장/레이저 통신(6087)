@@ -30,74 +30,98 @@ C: 레이저로 연결해야 하는 칸
 출력
 첫째 줄에 C를 연결하기 위해 설치해야 하는 거울 개수의 최솟값을 출력한다.
 */
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
     static int W, H;
     static char[][] map;
-    static int[][] dist;
-    static List<int[]> laserPoints = new ArrayList<>();
-    static int[] dx = {-1, 1, 0, 0};
+    static int[][][] dist; // 거리 배열 (x, y 좌표에서의 최소 거울 개수)
+    static int[] dx = {-1, 1, 0, 0}; // 상, 하, 좌, 우
     static int[] dy = {0, 0, -1, 1};
+    static List<int[]> lasers = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         W = Integer.parseInt(st.nextToken());
         H = Integer.parseInt(st.nextToken());
 
         map = new char[H][W];
-        dist = new int[H][W];
+        dist = new int[H][W][4]; // 각 방향에서의 최소 거울 개수 저장
+        for (int[][] layer : dist) {
+            for (int[] row : layer) {
+                Arrays.fill(row, Integer.MAX_VALUE); // 초기값은 무한대
+            }
+        }
 
         for (int i = 0; i < H; i++) {
             String line = br.readLine();
+            map[i] = line.toCharArray();
             for (int j = 0; j < W; j++) {
-                map[i][j] = line.charAt(j);
                 if (map[i][j] == 'C') {
-                    laserPoints.add(new int[]{i, j});
+                    lasers.add(new int[]{i, j});
                 }
-                dist[i][j] = Integer.MAX_VALUE;
             }
         }
 
-        System.out.println(findMinMirrors());
+        System.out.println(dijkstra());
     }
 
-    static int findMinMirrors() {
-    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[2], b[2]));
-    int startX = laserPoints.get(0)[0];
-    int startY = laserPoints.get(0)[1];
-    int endX = laserPoints.get(1)[0];
-    int endY = laserPoints.get(1)[1];
+    static int dijkstra() {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[2], b[2]));
+        int startX = lasers.get(0)[0];
+        int startY = lasers.get(0)[1];
+        int endX = lasers.get(1)[0];
+        int endY = lasers.get(1)[1];
 
-    pq.offer(new int[]{startX, startY, -1, 0});
-    dist[startX][startY] = 0;
-
-    while (!pq.isEmpty()) {
-        int[] current = pq.poll();
-        int x = current[0];
-        int y = current[1];
-        int direction = current[2];
-        int mirrors = current[3];
-
-        if (x == endX && y == endY) return mirrors;
-
+        // 초기 상태에서 모든 방향 탐색
         for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-            int nextMirrors = (direction == i || direction == -1) ? mirrors : mirrors + 1;
+            int nx = startX + dx[i];
+            int ny = startY + dy[i];
+            if (isValid(nx, ny)) {
+                pq.offer(new int[]{nx, ny, 0, i}); // (x, y, 거울 개수, 방향)
+                dist[nx][ny][i] = 0; // 초기 상태에서는 거울 0개
+            }
+        }
 
-            if (nx >= 0 && ny >= 0 && nx < H && ny < W && map[nx][ny] != '*') {
-                if (dist[nx][ny] > nextMirrors) {
-                    dist[nx][ny] = nextMirrors;
-                    pq.offer(new int[]{nx, ny, i, nextMirrors});
+        while (!pq.isEmpty()) {
+            int[] current = pq.poll();
+            int x = current[0];
+            int y = current[1];
+            int mirrors = current[2];
+            int direction = current[3];
+
+            // 종료 조건: 도착점에 도달했을 때
+            if (x == endX && y == endY) {
+                return mirrors;
+            }
+
+            // 직선 이동
+            int nx = x + dx[direction];
+            int ny = y + dy[direction];
+            if (isValid(nx, ny) && mirrors <= dist[nx][ny][direction]) {
+                dist[nx][ny][direction] = mirrors;
+                pq.offer(new int[]{nx, ny, mirrors, direction});
+            }
+
+            // 방향 전환
+            for (int i = 0; i < 4; i++) {
+                if (i == direction) continue; // 같은 방향으로는 거울을 놓을 필요 없음
+                nx = x + dx[i];
+                ny = y + dy[i];
+                if (isValid(nx, ny) && mirrors + 1 < dist[nx][ny][i]) {
+                    dist[nx][ny][i] = mirrors + 1;
+                    pq.offer(new int[]{nx, ny, mirrors + 1, i});
                 }
             }
         }
-    }
-    return -1;
-}
-}
 
+        return -1; // 연결 불가능한 경우
+    }
+
+    static boolean isValid(int x, int y) {
+        return x >= 0 && y >= 0 && x < H && y < W && map[x][y] != '*';
+    }
+}
