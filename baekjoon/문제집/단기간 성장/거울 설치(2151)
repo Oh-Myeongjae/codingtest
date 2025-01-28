@@ -35,7 +35,7 @@ public class Main {
     static char[][] house;
     static int[][][] visited;
     static int[] dx = {-1, 1, 0, 0}; // 상, 하, 좌, 우
-    static int[] dy = {0, 0, -1, 1};
+    static int[] dy = {0, 0, -1, 1}; // 상, 하, 좌, 우
     static List<int[]> doors = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
@@ -50,6 +50,7 @@ public class Main {
                 if (house[i][j] == '#') {
                     doors.add(new int[]{i, j});
                 }
+                Arrays.fill(visited[i][j], Integer.MAX_VALUE);
             }
         }
 
@@ -78,10 +79,12 @@ public class Main {
             int ny = current.y + dy[current.dir];
 
             while (isValid(nx, ny) && house[nx][ny] != '*') {
-                if (house[nx][ny] == '!' && visited[nx][ny][current.dir] > current.mirrors) {
+                if (visited[nx][ny][current.dir] > current.mirrors) {
                     visited[nx][ny][current.dir] = current.mirrors;
                     queue.offer(new Point(nx, ny, current.dir, current.mirrors));
+                }
 
+                if (house[nx][ny] == '!') {
                     for (int d = 0; d < 4; d++) {
                         if (d != current.dir && visited[nx][ny][d] > current.mirrors + 1) {
                             visited[nx][ny][d] = current.mirrors + 1;
