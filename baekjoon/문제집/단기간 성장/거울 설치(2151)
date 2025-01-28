@@ -16,3 +16,89 @@
 출력
 첫째 줄에 설치해야 할 거울의 최소 개수를 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static class Point {
+        int x, y, dir, mirrors;
+
+        public Point(int x, int y, int dir, int mirrors) {
+            this.x = x;
+            this.y = y;
+            this.dir = dir;
+            this.mirrors = mirrors;
+        }
+    }
+
+    static int N;
+    static char[][] house;
+    static int[][][] visited;
+    static int[] dx = {-1, 1, 0, 0}; // 상, 하, 좌, 우
+    static int[] dy = {0, 0, -1, 1};
+    static List<int[]> doors = new ArrayList<>();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        house = new char[N][N];
+        visited = new int[N][N][4];
+
+        for (int i = 0; i < N; i++) {
+            house[i] = br.readLine().toCharArray();
+            for (int j = 0; j < N; j++) {
+                if (house[i][j] == '#') {
+                    doors.add(new int[]{i, j});
+                }
+            }
+        }
+
+        int result = bfs();
+        System.out.println(result);
+    }
+
+    static int bfs() {
+        Queue<Point> queue = new LinkedList<>();
+        int startX = doors.get(0)[0], startY = doors.get(0)[1];
+        int endX = doors.get(1)[0], endY = doors.get(1)[1];
+
+        for (int i = 0; i < 4; i++) {
+            queue.offer(new Point(startX, startY, i, 0));
+            visited[startX][startY][i] = 0;
+        }
+
+        while (!queue.isEmpty()) {
+            Point current = queue.poll();
+
+            if (current.x == endX && current.y == endY) {
+                return current.mirrors;
+            }
+
+            int nx = current.x + dx[current.dir];
+            int ny = current.y + dy[current.dir];
+
+            while (isValid(nx, ny) && house[nx][ny] != '*') {
+                if (house[nx][ny] == '!' && visited[nx][ny][current.dir] > current.mirrors) {
+                    visited[nx][ny][current.dir] = current.mirrors;
+                    queue.offer(new Point(nx, ny, current.dir, current.mirrors));
+
+                    for (int d = 0; d < 4; d++) {
+                        if (d != current.dir && visited[nx][ny][d] > current.mirrors + 1) {
+                            visited[nx][ny][d] = current.mirrors + 1;
+                            queue.offer(new Point(nx, ny, d, current.mirrors + 1));
+                        }
+                    }
+                }
+
+                nx += dx[current.dir];
+                ny += dy[current.dir];
+            }
+        }
+
+        return -1;
+    }
+
+    static boolean isValid(int x, int y) {
+        return x >= 0 && x < N && y >= 0 && y < N;
+    }
+}
