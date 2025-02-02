@@ -27,3 +27,104 @@
 출력
 지워진 블록의 행과 열 위치를 출력하고, 어떤 블록이었는지를 출력한다.
 */
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int R, C;
+    static char[][] map;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static char[] pipeTypes = {'|', '-', '+', '1', '2', '3', '4'};
+    static int missingX, missingY;
+    
+    static char findMissingPipe() {
+        // 가능한 블록들
+        for (char pipe : pipeTypes) {
+            map[missingX][missingY] = pipe;
+            if (isValidPipeline()) {
+                return pipe;
+            }
+        }
+        return '.';
+    }
+
+    static boolean isValidPipeline() {
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[R][C];
+
+        // M 위치 찾기
+        int startX = 0, startY = 0;
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if (map[i][j] == 'M') {
+                    startX = i;
+                    startY = j;
+                    break;
+                }
+            }
+        }
+
+        queue.add(new int[]{startX, startY});
+        visited[startX][startY] = true;
+
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            int x = cur[0], y = cur[1];
+
+            for (int d = 0; d < 4; d++) {
+                int nx = x + dx[d];
+                int ny = y + dy[d];
+
+                if (nx < 0 || ny < 0 || nx >= R || ny >= C || visited[nx][ny] || map[nx][ny] == '.')
+                    continue;
+
+                if (canConnect(map[x][y], map[nx][ny], d)) {
+                    visited[nx][ny] = true;
+                    queue.add(new int[]{nx, ny});
+                }
+            }
+        }
+
+        // Z까지 도달했는지 확인
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if (map[i][j] == 'Z' && visited[i][j]) return true;
+            }
+        }
+        return false;
+    }
+
+    static boolean canConnect(char from, char to, int dir) {
+        if (to == '.') return false;
+
+        if (dir == 0) return from == '|' || from == '+' || from == '1' || from == '4';
+        if (dir == 1) return from == '|' || from == '+' || from == '2' || from == '3';
+        if (dir == 2) return from == '-' || from == '+' || from == '1' || from == '2';
+        if (dir == 3) return from == '-' || from == '+' || from == '3' || from == '4';
+
+        return false;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        map = new char[R][C];
+
+        for (int i = 0; i < R; i++) {
+            String line = br.readLine();
+            for (int j = 0; j < C; j++) {
+                map[i][j] = line.charAt(j);
+                if (map[i][j] == '.') {
+                    missingX = i;
+                    missingY = j;
+                }
+            }
+        }
+
+        char missingPipe = findMissingPipe();
+        System.out.println((missingX + 1) + " " + (missingY + 1) + " " + missingPipe);
+    }
+}
