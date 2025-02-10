@@ -27,127 +27,112 @@
 출력
 지워진 블록의 행과 열 위치를 출력하고, 어떤 블록이었는지를 출력한다.
 */
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int R, C;
-    static char[][] map;
-    static int[] start, end;
-    static int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // 상, 하, 좌, 우
-    static char[] blocks = {'|', '-', '+', '1', '2', '3', '4'};
-    static Map<Character, int[][]> pipeMap = new HashMap<>();
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        R = Integer.parseInt(st.nextToken());
-        C = Integer.parseInt(st.nextToken());
-        map = new char[R][C];
-
-        start = new int[2];
-        end = new int[2];
-
-        // 파이프 연결 정보 초기화
-        initPipeMap();
-
-        // 지도 입력
-        for (int i = 0; i < R; i++) {
-            String line = br.readLine();
-            for (int j = 0; j < C; j++) {
-                map[i][j] = line.charAt(j);
-                if (map[i][j] == 'M') start = new int[]{i, j};
-                if (map[i][j] == 'Z') end = new int[]{i, j};
-            }
-        }
-
-        // 빈칸 찾기
-        int[] missingPos = findMissingPipe();
-        char missingBlock = findCorrectBlock(missingPos[0], missingPos[1]);
-
-        System.out.println((missingPos[0] + 1) + " " + (missingPos[1] + 1) + " " + missingBlock);
-    }
-
-    static void initPipeMap() {
-        pipeMap.put('|', new int[][]{{-1, 0}, {1, 0}});  // 상, 하
-        pipeMap.put('-', new int[][]{{0, -1}, {0, 1}});  // 좌, 우
-        pipeMap.put('+', new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}); // 상, 하, 좌, 우
-        pipeMap.put('1', new int[][]{{1, 0}, {0, 1}});   // 하, 우
-        pipeMap.put('2', new int[][]{{-1, 0}, {0, 1}});  // 상, 우
-        pipeMap.put('3', new int[][]{{-1, 0}, {0, -1}}); // 상, 좌
-        pipeMap.put('4', new int[][]{{1, 0}, {0, -1}});  // 하, 좌
-    }
-
-    static int[] findMissingPipe() {
-        Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[R][C];
-
-        // 모스크바에서 출발
-        queue.add(start);
-        visited[start[0]][start[1]] = true;
-
-        while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int x = cur[0], y = cur[1];
-
-            if (map[x][y] == '.') return new int[]{x, y};  // 빈 칸 발견
-
-            // 현재 위치에서 이동할 수 있는 방향 확인
-            if (map[x][y] == 'M' || map[x][y] == 'Z') {
-                for (int[] dir : directions) {
-                    int nx = x + dir[0], ny = y + dir[1];
-                    if (isValid(nx, ny) && map[nx][ny] != '.' && map[nx][ny] != 'M' && map[nx][ny] != 'Z') {
-                        queue.add(new int[]{nx, ny});
-                        visited[nx][ny] = true;
-                    }
-                }
-            } else {
-                for (int[] dir : pipeMap.get(map[x][y])) {
-                    int nx = x + dir[0], ny = y + dir[1];
-                    if (isValid(nx, ny) && !visited[nx][ny]) {
-                        queue.add(new int[]{nx, ny});
-                        visited[nx][ny] = true;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    static char findCorrectBlock(int x, int y) {
-        boolean[] connected = new boolean[4]; // 상하좌우 연결 여부
-
-        for (int i = 0; i < 4; i++) {
-            int nx = x + directions[i][0], ny = y + directions[i][1];
-            if (isValid(nx, ny) && map[nx][ny] != '.' && map[nx][ny] != 'M' && map[nx][ny] != 'Z') {
-                for (int[] dir : pipeMap.get(map[nx][ny])) {
-                    if (nx + dir[0] == x && ny + dir[1] == y) {
-                        connected[i] = true;
-                    }
-                }
-            }
-        }
-
-        for (char block : blocks) {
-            boolean[] check = new boolean[4];
-            for (int[] dir : pipeMap.get(block)) {
-                int nx = x + dir[0], ny = y + dir[1];
-                if (isValid(nx, ny)) {
-                    for (int j = 0; j < 4; j++) {
-                        if (nx == x + directions[j][0] && ny == y + directions[j][1]) {
-                            check[j] = true;
-                        }
-                    }
-                }
-            }
-            if (Arrays.equals(connected, check)) return block;
-        }
-        return '?';
-    }
-
-    static boolean isValid(int x, int y) {
-        return x >= 0 && x < R && y >= 0 && y < C;
-    }
+	static int N, M;
+	static char map[][];
+	static int dr[] = {-1,0,1,0};
+	static int dc[] = {0,1,0,-1};
+	static int ansR,ansC,tmpr,tmpc;
+	static char ansType;
+	static int K=0;
+	static boolean visit[][];
+	static char arr[] = {' ','|','-','+','1','2','3','4'};
+	static boolean flag=false;
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(in.readLine(), " ");
+		N=Integer.valueOf(st.nextToken());
+		M=Integer.valueOf(st.nextToken());
+		map = new char[N][M];
+		visit = new boolean[N][M];
+		int startR=0, startC=0;
+		for(int i=0; i<N; i++) {
+			String str=in.readLine();
+			for(int j=0; j<M; j++) {
+				map[i][j] = str.charAt(j);
+				if(map[i][j]=='M') {
+					startR=i;
+					startC=j;
+				}
+				if(map[i][j]!='Z' && map[i][j]!='M' && map[i][j]!='.') {
+					K++;
+				}
+			}
+		}
+		K++;
+		for(int i=0; i<4; i++) {
+			int nr = startR+dr[i];
+			int nc = startC+dc[i];
+			if(nr<0 || nr>=N | nc<0 ||nc>=M) continue;
+			dfs(nr, nc, i, 0, true);
+		}
+		ansR+=1;
+		ansC+=1;
+		System.out.println(ansR+" "+ansC+" "+ansType);
+	}
+	static void dfs(int r, int c, int d, int cnt, boolean use) {
+		if(flag) return;
+		if(cnt==K) {
+			ansR=tmpr;
+			ansC=tmpc;
+			ansType=map[ansR][ansC];
+			flag = true;
+			return;
+		}
+		int nd = change(d, map[r][c]);
+		if(nd==-1) return;
+		int nr = r+dr[nd];
+		int nc = c+dc[nd];
+		if(nr<0 || nr>=N | nc<0 ||nc>=M) return;
+		if(map[nr][nc]=='.') {
+			if(use==true) {
+				//1~7까지 구하기
+				for(int i=1; i<8; i++) {
+					tmpr=nr; tmpc=nc;
+					map[nr][nc] = arr[i];
+					visit[nr][nc] = true;
+					dfs(nr, nc, nd, cnt+1, false);
+					map[nr][nc] ='.';
+					visit[nr][nc] = false;
+				}
+			}
+		}else {
+			if(visit[nr][nc]) {
+				dfs(nr, nc, nd, cnt, use);
+			}else {
+				visit[nr][nc] = true;
+				dfs(nr, nc, nd, cnt+1, use);
+				visit[nr][nc] = false;
+			}
+		}
+	}
+	
+	static int change(int d, char pipe) {
+		if(pipe=='|') {
+			if(d==0 || d==2) return d;
+		}else if(pipe =='-') {
+			 if(d==1 || d==3) return d;
+		}else if(pipe =='+') {
+			return d;
+		}else if(pipe=='1') {
+			if(d==3) return 2;
+			if(d==0) return 1;
+		}else if(pipe=='2') {
+			if(d==2) return 1;
+			if(d==3) return 0;
+		}else if(pipe=='3') {
+			if(d==1) return 0;
+			if(d==2) return 3;
+		}else if(pipe=='4') {
+			if(d==1) return 2;
+			if(d==0) return 3;
+		}
+		return -1;	
+	}
 }
 
