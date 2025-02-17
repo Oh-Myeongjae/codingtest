@@ -28,5 +28,75 @@ X	X	 	X	X
 출력
 첫째 줄에 경로의 개수를 출력한다. 이 값은 231-1보다 작거나 같다.
 
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int N, M, K;
+    static char[][] board;
+    static String word;
+    static int[][][] dp;
+    static int[] dr = {-1, 1, 0, 0}; // 상, 하, 좌, 우
+    static int[] dc = {0, 0, -1, 1};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+
+        board = new char[N][M];
+        for (int i = 0; i < N; i++) {
+            board[i] = br.readLine().toCharArray();
+        }
+
+        word = br.readLine();
+        dp = new int[N][M][word.length()];
+        for (int[][] layer : dp) {
+            for (int[] row : layer) {
+                Arrays.fill(row, -1); // -1: 아직 계산되지 않은 상태
+            }
+        }
+
+        int totalPaths = 0;
+        // 시작 문자를 찾아서 DFS 시작
+        for (int r = 0; r < N; r++) {
+            for (int c = 0; c < M; c++) {
+                if (board[r][c] == word.charAt(0)) {
+                    totalPaths += dfs(r, c, 0);
+                }
+            }
+        }
+
+        System.out.println(totalPaths);
+    }
+
+    // DFS + DP를 활용한 경로 탐색
+    static int dfs(int r, int c, int index) {
+        if (index == word.length() - 1) {
+            return 1; // 마지막 문자까지 도달했으면 1개의 경로 완성
+        }
+
+        if (dp[r][c][index] != -1) {
+            return dp[r][c][index]; // 이미 계산된 경우, 저장된 값 반환
+        }
+
+        int paths = 0;
+        for (int d = 0; d < 4; d++) {
+            for (int step = 1; step <= K; step++) { // 1~K 칸까지 이동 가능
+                int nr = r + dr[d] * step;
+                int nc = c + dc[d] * step;
+
+                if (nr >= 0 && nr < N && nc >= 0 && nc < M && board[nr][nc] == word.charAt(index + 1)) {
+                    paths += dfs(nr, nc, index + 1);
+                }
+            }
+        }
+
+        return dp[r][c][index] = paths; // DP에 결과 저장 후 반환
+    }
+}
 
 */
