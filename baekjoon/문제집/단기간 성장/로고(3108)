@@ -25,93 +25,79 @@ PD: 연필을 내린다.
 출력
 N개의 직사각형을 그리는 필요한 PU명령의 최솟값을 출력한다.
 */
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class Main {
     static int[] parent;
-    static int[] rank;
-    static int N;
-    static int[][] rectangles;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        rectangles = new int[N][4];
+        int N = Integer.parseInt(br.readLine());
+        Rectangle[] rectangles = new Rectangle[N];
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            rectangles[i][0] = Integer.parseInt(st.nextToken()); // x1
-            rectangles[i][1] = Integer.parseInt(st.nextToken()); // y1
-            rectangles[i][2] = Integer.parseInt(st.nextToken()); // x2
-            rectangles[i][3] = Integer.parseInt(st.nextToken()); // y2
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+            rectangles[i] = new Rectangle(x1, y1, x2, y2);
         }
 
-        // 서로소 집합 (Union-Find) 초기화
         parent = new int[N];
-        rank = new int[N];
         for (int i = 0; i < N; i++) {
             parent[i] = i;
-            rank[i] = 1;
         }
 
-        // 직사각형 간의 연결 관계를 찾아 Union 수행
         for (int i = 0; i < N; i++) {
             for (int j = i + 1; j < N; j++) {
-                if (isConnected(rectangles[i], rectangles[j])) {
+                if (rectangles[i].intersects(rectangles[j])) {
                     union(i, j);
                 }
             }
         }
 
-        // 그룹 개수 세기
-        HashSet<Integer> groups = new HashSet<>();
+        int puCount = 0;
         for (int i = 0; i < N; i++) {
-            groups.add(find(i));
-        }
-
-        // (0,0)이 어떤 직사각형에도 포함되지 않는다면 PU +1 필요
-        boolean startInside = false;
-        for (int i = 0; i < N; i++) {
-            if (isInside(0, 0, rectangles[i])) {
-                startInside = true;
-                break;
+            if (parent[i] == i) {
+                puCount++;
             }
         }
 
-        // 기본적으로 그룹 개수 - 1, 거북이가 처음에 직사각형 안에 없었다면 +1
-        System.out.println(groups.size() - 1 + (startInside ? 0 : 1));
+        System.out.println(Math.max(0, puCount - 1));
     }
 
-    // 직사각형이 연결되어 있는지 확인
-    static boolean isConnected(int[] r1, int[] r2) {
-        return !(r1[2] < r2[0] || r1[0] > r2[2] || r1[3] < r2[1] || r1[1] > r2[3]);
-    }
-
-    // (x, y)가 직사각형 안에 포함되는지 확인
-    static boolean isInside(int x, int y, int[] rect) {
-        return rect[0] <= x && x <= rect[2] && rect[1] <= y && y <= rect[3];
-    }
-
-    // Union-Find의 Find 연산 (경로 압축)
     static int find(int x) {
-        if (parent[x] == x) return x;
+        if (parent[x] == x) {
+            return x;
+        }
         return parent[x] = find(parent[x]);
     }
 
-    // Union-Find의 Union 연산 (랭크 기반 최적화)
     static void union(int x, int y) {
         int rootX = find(x);
         int rootY = find(y);
         if (rootX != rootY) {
-            if (rank[rootX] > rank[rootY]) {
-                parent[rootY] = rootX;
-            } else if (rank[rootX] < rank[rootY]) {
-                parent[rootX] = rootY;
-            } else {
-                parent[rootY] = rootX;
-                rank[rootX]++;
-            }
+            parent[rootY] = rootX;
         }
     }
 }
+
+class Rectangle {
+    int x1, y1, x2, y2;
+
+    Rectangle(int x1, int y1, int x2, int y2) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
+    boolean intersects(Rectangle other) {
+        return !(x2 < other.x1 || x1 > other.x2 || y2 < other.y1 || y1 > other.y2);
+    }
+}
+
