@@ -26,3 +26,65 @@ Data set n: yes
 Data set n: no
 과 같이 출력하라. 물론 n은 데이터집합의 순번으로 바뀌어야 한다. 아래의 예제 출력을 참고하라.
 */
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int testCase = Integer.parseInt(br.readLine());
+        
+        for (int t = 1; t <= testCase; t++) {
+            String[] words = br.readLine().split(" ");
+            String s1 = words[0];
+            String s2 = words[1];
+            String target = words[2];
+            
+            if (canForm(s1, s2, target)) {
+                System.out.println("Data set " + t + ": yes");
+            } else {
+                System.out.println("Data set " + t + ": no");
+            }
+        }
+    }
+    
+    private static boolean canForm(String s1, String s2, String target) {
+        int len1 = s1.length(), len2 = s2.length();
+        
+        if (len1 + len2 != target.length()) {
+            return false;
+        }
+        
+        boolean[][] dp = new boolean[len1 + 1][len2 + 1];
+        dp[0][0] = true;
+        
+        // 첫 번째 단어만 사용해 타겟을 만들 수 있는지 확인
+        for (int i = 1; i <= len1; i++) {
+            if (s1.charAt(i - 1) == target.charAt(i - 1)) {
+                dp[i][0] = dp[i - 1][0];
+            }
+        }
+        
+        // 두 번째 단어만 사용해 타겟을 만들 수 있는지 확인
+        for (int j = 1; j <= len2; j++) {
+            if (s2.charAt(j - 1) == target.charAt(j - 1)) {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+        
+        // DP 점화식 적용
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                char targetChar = target.charAt(i + j - 1);
+                if (s1.charAt(i - 1) == targetChar) {
+                    dp[i][j] |= dp[i - 1][j];
+                }
+                if (s2.charAt(j - 1) == targetChar) {
+                    dp[i][j] |= dp[i][j - 1];
+                }
+            }
+        }
+        
+        return dp[len1][len2];
+    }
+}
