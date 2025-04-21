@@ -25,3 +25,36 @@
 출력
 잘려진 조각의 총 개수를 나타내는 정수를 한 줄에 출력한다.
 */
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int answer = 0;
+        String str = br.readLine();
+        int count = -1;
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if(ch == '('){
+                if(str.charAt(i+1) == ')'){
+                    answer += count+1;
+                    i++;
+                }else {
+                    count++;
+                }
+            }else{
+                answer++;
+                count--;
+            }
+        }
+        bw.write(String.valueOf(answer));
+
+        bw.close();
+        br.close();
+    }
+}
