@@ -25,79 +25,199 @@ PD: 연필을 내린다.
 출력
 N개의 직사각형을 그리는 필요한 PU명령의 최솟값을 출력한다.
 */
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
+// Main 클래스
 public class Main {
-    static int[] parent;
+    // Segment 클래스: 직사각형의 변 (선분)을 나타냄
+    static class Segment {
+        int x1, y1, x2, y2;
+        boolean horizontal; // true면 수평선분, false면 수직선분
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        Rectangle[] rectangles = new Rectangle[N];
-
-        for (int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int x1 = Integer.parseInt(st.nextToken());
-            int y1 = Integer.parseInt(st.nextToken());
-            int x2 = Integer.parseInt(st.nextToken());
-            int y2 = Integer.parseInt(st.nextToken());
-            rectangles[i] = new Rectangle(x1, y1, x2, y2);
-        }
-
-        parent = new int[N];
-        for (int i = 0; i < N; i++) {
-            parent[i] = i;
-        }
-
-        for (int i = 0; i < N; i++) {
-            for (int j = i + 1; j < N; j++) {
-                if (rectangles[i].intersects(rectangles[j])) {
-                    union(i, j);
+        public Segment(int x1, int y1, int x2, int y2) {
+            // 선분을 정규화: 수평이면 왼쪽 좌표가, 수직이면 아래쪽 좌표가 먼저 오도록 한다.
+            if (y1 == y2) { // 수평 선분
+                this.horizontal = true;
+                if (x1 <= x2) {
+                    this.x1 = x1; this.x2 = x2;
+                } else {
+                    this.x1 = x2; this.x2 = x1;
                 }
+                this.y1 = y1; this.y2 = y2;
+            } else { // 수직 선분
+                this.horizontal = false;
+                if (y1 <= y2) {
+                    this.y1 = y1; this.y2 = y2;
+                } else {
+                    this.y1 = y2; this.y2 = y1;
+                }
+                this.x1 = x1; this.x2 = x2;
             }
         }
-
-        int puCount = 0;
-        for (int i = 0; i < N; i++) {
-            if (parent[i] == i) {
-                puCount++;
+        
+        // (x, y)가 이 선분 위에 있는지 확인하는 함수
+        public boolean isOnSegment(int x, int y) {
+            if (horizontal) {
+                // 수평이면 y좌표가 같고, x가 선의 범위 내에 있어야 함
+                return y == y1 && x >= x1 && x <= x2;
+            } else {
+                // 수직이면 x좌표가 같고, y가 선의 범위 내에 있어야 함
+                return x == x1 && y >= y1 && y <= y2;
             }
         }
-
-        System.out.println(Math.max(0, puCount - 1));
     }
-
-    static int find(int x) {
-        if (parent[x] == x) {
-            return x;
+    
+    // Union-Find (Disjoint Set) 구조 구현
+    static class UnionFind {
+        int[] parent;
+        int[] rank;
+        
+        public UnionFind(int n) {
+            parent = new int[n];
+            rank = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+                rank[i] = 0;
+            }
         }
-        return parent[x] = find(parent[x]);
-    }
-
-    static void union(int x, int y) {
-        int rootX = find(x);
-        int rootY = find(y);
-        if (rootX != rootY) {
-            parent[rootY] = rootX;
+        
+        // find 함수: 대표 원소를 찾음 (경로 압축 적용)
+        public int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+        
+        // union 함수: 두 원소의 집합을 합침 (랭크에 따라 합침)
+        public void union(int x, int y) {
+            int rx = find(x);
+            int ry = find(y);
+            if (rx == ry) return;
+            if (rank[rx] < rank[ry]) {
+                parent[rx] = ry;
+            } else if (rank[rx] > rank[ry]) {
+                parent[ry] = rx;
+            } else {
+                parent[ry] = rx;
+                rank[rx]++;
+            }
         }
     }
-}
-
-class Rectangle {
-    int x1, y1, x2, y2;
-
-    Rectangle(int x1, int y1, int x2, int y2) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+    
+    // 두 선분이 연결되어 있는지 체크하는 함수
+    // 즉, 두 선분이 접하거나 교차하는 경우를 확인한다.
+    static boolean areConnected(Segment s, Segment t) {
+        // 같은 방향인 경우: 수평 또는 수직
+        if (s.horizontal && t.horizontal) {
+            // 같은 y좌표에서 x범위가 겹치는 경우
+            if (s.y1 == t.y1) {
+                return !(s.x2 < t.x1 || t.x2 < s.x1);
+            }
+        } else if (!s.horizontal && !t.horizontal) {
+            // 수직: 같은 x좌표에서 y범위가 겹치는 경우
+            if (s.x1 == t.x1) {
+                return !(s.y2 < t.y1 || t.y2 < s.y1);
+            }
+        } else {
+            // 한 선분은 수평, 한 선분은 수직인 경우
+            Segment horizontalSeg = s.horizontal ? s : t;
+            Segment verticalSeg = s.horizontal ? t : s;
+            // 수평 선분의 y가 수직 선분의 y범위 내에 있고,
+            // 수직 선분의 x가 수평 선분의 x범위 내에 있는 경우
+            if (verticalSeg.x1 >= horizontalSeg.x1 && verticalSeg.x1 <= horizontalSeg.x2 &&
+                horizontalSeg.y1 >= verticalSeg.y1 && horizontalSeg.y1 <= verticalSeg.y2) {
+                return true;
+            }
+        }
+        return false;
     }
-
-    boolean intersects(Rectangle other) {
-        return !(x2 < other.x1 || x1 > other.x2 || y2 < other.y1 || y1 > other.y2);
+    
+    // 메인 함수
+    public static void main(String[] args) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String line;
+            // 테스트 케이스를 EOF까지 반복 처리
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                // 빈 줄 혹은 구분선(====)인 경우 무시
+                if (line.isEmpty() || line.startsWith("=")) continue;
+                
+                // 첫 번째 줄: 직사각형 개수 N
+                int N = Integer.parseInt(line);
+                // 선분들을 저장할 리스트 (각 직사각형마다 4개의 선분)
+                ArrayList<Segment> segments = new ArrayList<>();
+                
+                // N개의 직사각형 데이터를 읽어서 4개의 선분으로 변환
+                for (int i = 0; i < N; i++) {
+                    String[] parts = br.readLine().trim().split("\\s+");
+                    int x1 = Integer.parseInt(parts[0]);
+                    int y1 = Integer.parseInt(parts[1]);
+                    int x2 = Integer.parseInt(parts[2]);
+                    int y2 = Integer.parseInt(parts[3]);
+                    // 각 직사각형의 네 변
+                    // 아래쪽 변
+                    segments.add(new Segment(x1, y1, x2, y1));
+                    // 오른쪽 변
+                    segments.add(new Segment(x2, y1, x2, y2));
+                    // 위쪽 변
+                    segments.add(new Segment(x2, y2, x1, y2));
+                    // 왼쪽 변
+                    segments.add(new Segment(x1, y2, x1, y1));
+                }
+                
+                int M = segments.size();
+                UnionFind uf = new UnionFind(M);
+                
+                // 모든 선분 쌍에 대해 연결 여부를 확인하고 union을 수행함
+                for (int i = 0; i < M; i++) {
+                    for (int j = i + 1; j < M; j++) {
+                        if (areConnected(segments.get(i), segments.get(j))) {
+                            uf.union(i, j);
+                        }
+                    }
+                }
+                
+                // 각 연결 요소(컴포넌트) 별로 시작점 (0,0)을 포함하는지 체크
+                HashMap<Integer, Boolean> compHasStart = new HashMap<>();
+                // 각 선분에 대해 시작점을 포함하는지 확인
+                for (int i = 0; i < M; i++) {
+                    int rep = uf.find(i);
+                    if (segments.get(i).isOnSegment(0, 0)) {
+                        compHasStart.put(rep, true);
+                    } else {
+                        if (!compHasStart.containsKey(rep)) {
+                            compHasStart.put(rep, false);
+                        }
+                    }
+                }
+                
+                // 서로 다른 컴포넌트들의 대표 집합을 구함
+                HashSet<Integer> compSet = new HashSet<>();
+                for (int i = 0; i < M; i++) {
+                    compSet.add(uf.find(i));
+                }
+                
+                int numComponents = compSet.size();
+                // 시작점 (0,0)이 포함된 컴포넌트가 있다면, 그 컴포넌트는 초기 펜다운 상태로 그릴 수 있음
+                boolean hasStart = false;
+                for (int rep : compSet) {
+                    if (compHasStart.getOrDefault(rep, false)) {
+                        hasStart = true;
+                        break;
+                    }
+                }
+                
+                // 최소 PU 명령 횟수 계산
+                int result = hasStart ? numComponents - 1 : numComponents;
+                System.out.println(result);
+            }
+        } catch (IOException e) {
+            // 예외 처리
+            e.printStackTrace();
+        }
     }
 }
 
